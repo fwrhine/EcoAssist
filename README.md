@@ -5,3 +5,5 @@ To run:
 docker-compose build
 docker-compose up
 ```
+
+http://localhost:5000/
