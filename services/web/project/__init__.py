@@ -7,7 +7,8 @@ from flask import (
     send_from_directory,
     request,
     redirect,
-    url_for
+    url_for,
+    render_template
 )
 from flask_sqlalchemy import SQLAlchemy
 
@@ -30,7 +31,7 @@ class User(db.Model):
 
 @app.route("/")
 def hello_world():
-    return jsonify(hello="world")
+    return render_template("index.html")
 
 
 @app.route("/static/<path:filename>")
