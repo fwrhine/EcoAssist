@@ -1,14 +1,31 @@
-version: '3'
+version: '3.7'
 
 services:
   web:
-    image: aghniaprawira/team-clueless:latest
-    # command: python -u app.py
+    build: ./services/web
+    command: python manage.py run -h 0.0.0.0
+    volumes:
+      - ./services/web/:/usr/src/app/
     ports:
-      - "5000:5000"
-  #   volumes:
-  #     - .:/app
-  #   links:
-  #     - db
-  # db:
-  #   image: mongo:3.6.1
+      - 5000:5000
+    environment:
+      - FLASK_APP=project/__init__.py
+      - FLASK_ENV=development
+      - DATABASE_URL=postgresql://team_clueless:team_clueless@db:5432/team_clueless_dev
+      - SQL_HOST=db
+      - SQL_PORT=5432
+      - DATABASE=postgres
+      - APP_FOLDER=/usr/src/app
+    depends_on:
+      - db
+  db:
+    image: postgres:12-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=team_clueless
+      - POSTGRES_PASSWORD=team_clueless
+      - POSTGRES_DB=team_clueless_dev
+
+volumes:
+  postgres_data:
