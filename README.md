@@ -1,14 +1,14 @@
 # DECO3801 Team Clueless
 
 To run locally:
-    ```sh
+    ```
     $ docker-compose up -d --build
     ```
 
     http://localhost:5000
 
 To connect to local postgresql database:
-    ```sh
+    ```
     $ docker-compose exec db psql --username=team_clueless --dbname=team_clueless_dev
     ```
 
