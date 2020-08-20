@@ -8,8 +8,14 @@ services:
       - ./services/web/:/usr/src/app/
     ports:
       - 5000:5000
-    env_file:
-      - ./.env.dev
+    environment:
+      - FLASK_APP=project/__init__.py
+      - FLASK_ENV=development
+      - DATABASE_URL=postgresql://team_clueless:team_clueless@db:5432/team_clueless_dev
+      - SQL_HOST=db
+      - SQL_PORT=5432
+      - DATABASE=postgres
+      - APP_FOLDER=/usr/src/app
     depends_on:
       - db
   db:
