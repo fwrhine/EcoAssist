@@ -11,13 +11,13 @@ from flask import (
     render_template
 )
 from flask_sqlalchemy import SQLAlchemy
+from .models import db, User
 
 
 app = Flask(__name__)
 app.config.from_object("project.config.Config")
-db = SQLAlchemy(app)
+db.init_app(app)
 
-from .models import db, User
 
 @app.route("/")
 def hello_world():

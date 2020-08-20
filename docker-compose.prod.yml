@@ -3,10 +3,10 @@ version: '3.7'
 services:
   web:
     image: aghniaprawira/team-clueless:latest
-    build:
-      context: ./web
+    # build:
+    #   context: ./web
       # dockerfile: ./Dockerfile.prod
-    command: gunicorn --bind 0.0.0.0:5000 manage:app
+    # command: gunicorn --bind 0.0.0.0:5000 manage:app
     volumes:
       - static_volume:/home/app/web/project/static
       - media_volume:/home/app/web/project/media
