@@ -2,9 +2,10 @@ version: '3.7'
 
 services:
   web:
+    image: aghniaprawira/team-clueless:latest
     build:
-      context: ./services/web
-      dockerfile: Dockerfile.prod
+      context: ./web
+      # dockerfile: ./Dockerfile.prod
     command: gunicorn --bind 0.0.0.0:5000 manage:app
     volumes:
       - static_volume:/home/app/web/project/static
@@ -22,7 +23,8 @@ services:
     env_file:
       - ./.env.prod.db
   nginx:
-    build: ./services/nginx
+    image: aghniaprawira/team-clueless:nginx
+    # build: ./services/nginx
     volumes:
       - static_volume:/home/app/web/project/static
       - media_volume:/home/app/web/project/media
