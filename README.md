@@ -32,6 +32,6 @@ http://18.216.185.212:1337/
 ##### If you find this error ```standard_init_linux.go:211: exec user process caused "no such file or directory"```:
 
 Try checking the line ending type of the file ```entrypoint.sh```.
-If type is CLRF, change to LF.
+If type is CRLF, change to LF.
 
 ![image](./LF.jpg?raw=true)
