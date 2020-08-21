@@ -21,8 +21,18 @@ db.init_app(app)
 
 @app.route("/")
 def hello_world():
-    return render_template("index.html")
+    trial = db.session.execute("select * from trial;")
+    # trialList = []
+    # for i in trial:
+    #     tDict = dict(i)
+    #     t = tDict["id"]
+	# 	trialList.append(t)
 
+    return render_template("index.html",trial = trial)
+
+@app.route("/login")
+def loginPage():
+     return render_template("login.html")
 
 @app.route("/static/<path:filename>")
 def staticfiles(filename):
