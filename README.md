@@ -28,3 +28,5 @@ http://18.216.185.212:1337/
 
 Try checking the line ending type of the file ```entrypoint.sh```.
 If type is CLRF, change to LF.
+
+![image](./LF.jpg?raw=true)
