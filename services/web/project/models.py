@@ -12,3 +12,16 @@ class User(db.Model):
 
     def __init__(self, email):
         self.email = email
+
+class Task(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(128))
+    details = db.Column(db.String(128))
+    reason = db.Column(db.String(128))
+    points = db.Column(db.Integer)
+
+    def __init__(self, title, details, reason, points):
+        self.title = name;
+        self.details = details;
+        self.reason = reason;
+        self.points = points;

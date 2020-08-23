@@ -12,6 +12,7 @@ from flask import (
 )
 from flask_sqlalchemy import SQLAlchemy
 from .models import db, User
+from .forms import TaskForm
 
 
 app = Flask(__name__)
@@ -41,3 +42,9 @@ def upload_file():
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config["MEDIA_FOLDER"], filename))
     return render_template("upload.html")
+
+
+@app.route('/new-task')
+def create_task():
+    form = TaskForm()
+    return render_template('new_task.html', title='New Task', form=form)

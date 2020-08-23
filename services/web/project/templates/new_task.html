@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class='wrapper'>
+  <h1>New Task</h1>
+  <form action="" method="post" novalidate>
+      {{ form.hidden_tag() }}
+      <p>
+          {{ form.title.label }}<br>
+          {{ form.title() }}
+      </p>
+      <p>
+          {{ form.details.label }}<br>
+          {{ form.details() }}
+      </p>
+      <p>
+          {{ form.reason.label }}<br>
+          {{ form.reason() }}
+      </p>
+      <p>{{ form.submit() }}</p>
+  </form>
+</div>
+{% endblock %}
