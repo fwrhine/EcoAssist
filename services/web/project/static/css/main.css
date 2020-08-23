@@ -1,1 +1,27 @@
-body, html {height: 100%}
+body {
+  width: 100%;
+}
+
+.wrapper{
+    padding-top: 20px;
+    width: 90%;
+    margin: 0 100px auto;
+    min-height: 80vh;
+}
+
+/* ---------------------------- FOOTER ----------------------------*/
+footer p {
+    padding-top: 0px;
+    padding-bottom: 30px;
+    bottom:0px;
+    margin: 0 auto
+    position: absolute;
+    text-align: center;
+    flex: 0 0 50px;
+    margin-top: auto;
+}
+
+footer {
+    position:relative;
+    height: auto;
+}

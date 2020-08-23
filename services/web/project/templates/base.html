@@ -1,0 +1,52 @@
+	<!DOCTYPE html>
+	<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="{{author}}">
+    <!-- bootstrap csss -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		<link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+		<title>EcoAssist</title>
+	</head>
+
+	<body>
+		<header>
+			<nav class="navbar navbar-default navbar-static-top">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="{{ url_for('home') }}">EcoAssist</a>
+					</div>
+					<div id="navbar" class="navbar-collapse collapse" style='float:right'>
+						<ul class="nav navbar-nav">
+							<li style='float:right'><a href="#">Profile</a></li>
+							<li style='float:right'><a href="#">Leaderboard</a></li>
+							<li style='float:right'><a href="#">Tasks</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</header>
+
+		<content>
+			{% block content %}
+			<!-- content goes here -->
+			{% endblock %}
+		</content>
+
+		<footer>
+			</br>
+			<p style='font-size: 80%'>DECO3801 Team Clueless</p>
+		</footer>
+
+	</body>
+	</html>

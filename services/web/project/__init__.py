@@ -20,7 +20,7 @@ db.init_app(app)
 
 
 @app.route("/")
-def hello_world():
+def home():
     return render_template("index.html")
 
 
@@ -40,10 +40,4 @@ def upload_file():
         file = request.files["file"]
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config["MEDIA_FOLDER"], filename))
-    return """
-    <!doctype html>
-    <title>upload new File</title>
-    <form action="" method=post enctype=multipart/form-data>
-      <p><input type=file name=file><input type=submit value=Upload>
-    </form>
-    """
+    return render_template("upload.html")
