@@ -8,7 +8,8 @@ from flask import (
     request,
     redirect,
     url_for,
-    render_template
+    render_template,
+    session
 )
 from flask_sqlalchemy import SQLAlchemy
 from .models import db, User
@@ -18,42 +19,68 @@ app = Flask(__name__)
 app.config.from_object("project.config.Config")
 db.init_app(app)
 
+app.secret_key = "development-key"
 
 @app.route("/")
-def hello_world():
+def index():
     trial = db.session.execute("select * from trial;")
-    # trialList = []
-    # for i in trial:
-    #     tDict = dict(i)
-    #     t = tDict["id"]
-	# 	trialList.append(t)
-
     return render_template("index.html",trial = trial)
 
-@app.route("/login")
+@app.route("/loginpage",  methods=['POST', 'GET'])
 def loginPage():
      return render_template("login.html")
 
-@app.route("/static/<path:filename>")
-def staticfiles(filename):
-    return send_from_directory(app.config["STATIC_FOLDER"], filename)
+@app.route('/login', methods=['POST'])
+def login():
+    print(session['logged_in'])
+    reqUsername = request.form["username"]
+    print(reqUsername)
+    reqPassword = request.form["password"]
+    print(reqPassword)
+        
+    user = db.session.execute('select * from use')
+    for i in user:
+        userDict = dict(i)
+        name = userDict['username']
+        passw = userDict['password']
+        print(name+passw)
+
+        if name == reqUsername and passw == reqPassword:
+            print("suc")
+            session['logged_in'] = True
+            session['username'] = name
+            return homePage()
+           
+    print("fail")
+    return loginPage()
+        
+
+@app.route('/registerpage',methods=['POST', 'GET'])
+def registerPage():
+    return render_template('register.html')
+
+@app.route('/register', methods=['POST'])
+def register():
+    reqUsername = request.form["username"]
+    print(reqUsername)
+    reqPassword = request.form["password"]
+    print(reqPassword)
+
+    db.session.execute("insert into use(username, password) values('"+reqUsername+"', '"+reqPassword+"');")
+    db.session.commit()
+    # user = Use()
+    # db.session.add(user)
+    session['username'] = reqUsername
+    return homePage()
 
 
-@app.route("/media/<path:filename>")
-def mediafiles(filename):
-    return send_from_directory(app.config["MEDIA_FOLDER"], filename)
+@app.route('/homepage',methods=['POST', 'GET'])
+def homePage():
+    name = session['username']
+    return render_template('main.html', name = name)
 
-
-@app.route("/upload", methods=["GET", "POST"])
-def upload_file():
-    if request.method == "POST":
-        file = request.files["file"]
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config["MEDIA_FOLDER"], filename))
-    return """
-    <!doctype html>
-    <title>upload new File</title>
-    <form action="" method=post enctype=multipart/form-data>
-      <p><input type=file name=file><input type=submit value=Upload>
-    </form>
-    """
+@app.route("/logout", methods=['POST'])
+def logout():
+    session.clear()
+    session['logged_in'] = False
+    return index()

@@ -8,12 +8,15 @@
 		</head>
 		<body>
 			Clueless! again
-			<ul>
-				{% for item in trial %}
-					<li>{{item.id}}</li>
-					
-				{% endfor %}
-				</ul>
-
+			<div class="col-lg-5 p-3">
+				<form class="p-4 bg-light" action='/loginpage' method="post">
+				  <h4 class="mb-4 text-center">Log In&nbsp;</h4>
+					  <button type="submit" class="btn btn-primary">Login</button>
+				</form>
+				<form class="p-4 bg-light" action='/registerpage ' method="post">
+					<h4 class="mb-4 text-center">Register&nbsp;</h4>
+						<button type="submit" class="btn btn-primary">Register</button>
+				  </form>
+			  </div>
 		</body>
 	</html>
