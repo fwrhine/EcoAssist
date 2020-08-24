@@ -8,6 +8,7 @@ from flask import (
     request,
     redirect,
     url_for,
+    flash,
     render_template
 )
 from flask_sqlalchemy import SQLAlchemy
@@ -21,7 +22,7 @@ db.init_app(app)
 
 
 @app.route("/")
-def home():
+def index():
     return render_template("index.html")
 
 
@@ -44,7 +45,9 @@ def upload_file():
     return render_template("upload.html")
 
 
-@app.route('/new-task')
+@app.route('/new-task', methods=['GET', 'POST'])
 def create_task():
     form = TaskForm()
-    return render_template('new_task.html', title='New Task', form=form)
+    if form.validate_on_submit():
+        return redirect(url_for('.index'))
+    return render_template('new_task.html', form=form)
