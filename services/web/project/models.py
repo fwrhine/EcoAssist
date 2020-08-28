@@ -19,9 +19,3 @@ class Task(db.Model):
     details = db.Column(db.String(128))
     reason = db.Column(db.String(128))
     points = db.Column(db.Integer)
-
-    def __init__(self, title, details, reason, points):
-        self.title = name;
-        self.details = details;
-        self.reason = reason;
-        self.points = points;
