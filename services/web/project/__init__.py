@@ -13,6 +13,7 @@ from flask import (
 )
 from flask_sqlalchemy import SQLAlchemy
 from .models import db, User
+from .forms import *
 
 
 app = Flask(__name__)
@@ -26,52 +27,68 @@ def index():
     trial = db.session.execute("select * from trial;")
     return render_template("index.html",trial = trial)
 
-@app.route("/loginpage",  methods=['POST', 'GET'])
+@app.route("/login",  methods=['POST', 'GET'])
 def loginPage():
-     return render_template("login.html")
-
-@app.route('/login', methods=['POST'])
-def login():
-    print(session['logged_in'])
-    reqUsername = request.form["username"]
-    print(reqUsername)
-    reqPassword = request.form["password"]
-    print(reqPassword)
+    form = LoginForm()
+    if form.validate_on_submit():
+        # print(session['logged_in'])
+        reqUsername = form.email.data
+        print(reqUsername)
+        reqPassword = form.password.data
+        print(reqPassword)
         
-    user = db.session.execute('select * from use')
-    for i in user:
-        userDict = dict(i)
-        name = userDict['username']
-        passw = userDict['password']
-        print(name+passw)
+        user = db.session.execute('select * from users')
+        for i in user:
+            userDict = dict(i)
+            name = userDict['email']
+            passw = userDict['password']
+            print(name+passw)
 
-        if name == reqUsername and passw == reqPassword:
-            print("suc")
-            session['logged_in'] = True
-            session['username'] = name
-            return homePage()
-           
-    print("fail")
-    return loginPage()
+            if name == reqUsername and passw == reqPassword:
+                print("suc")
+                session['logged_in'] = True
+                session['username'] = name
+                return homePage()
+    return render_template("login.html", form = form)
         
 
-@app.route('/registerpage',methods=['POST', 'GET'])
-def registerPage():
-    return render_template('register.html')
-
-@app.route('/register', methods=['POST'])
+@app.route('/register',methods=['POST', 'GET'])
 def register():
-    reqUsername = request.form["username"]
-    print(reqUsername)
-    reqPassword = request.form["password"]
-    print(reqPassword)
+    form = RegisterForm()
+    if form.validate_on_submit():
+        print("yeay")
+        user = User(role=session['role'], email=form.email.data, first_name=form.first_name.data, last_name=form.last_name.data, password=form.password.data, school=form.school.data)
+        # db.session.execute("insert into use(username, password) values('"+reqUsername+"', '"+reqPassword+"');")
+        db.session.add(user)
+        db.session.commit()
+         # user = Use()
+        # db.session.add(user)
+        session['username'] = form.email.data
+        print("suk")
+        return redirect(url_for('homePage'))
+    print("fail")
+    return render_template('register.html', form = form)
 
-    db.session.execute("insert into use(username, password) values('"+reqUsername+"', '"+reqPassword+"');")
-    db.session.commit()
-    # user = Use()
-    # db.session.add(user)
-    session['username'] = reqUsername
-    return homePage()
+@app.route('/registerteacher', methods=['POST'])
+def registerTeacher():
+    session['role'] = 'teacher'
+    return redirect(url_for('register'))
+
+@app.route('/registerstudent', methods=['POST'])
+def registerStudent():
+    session['role'] = 'student'
+    return redirect(url_for('register'))
+
+# @app.route('/register', methods=['POST'])
+# def register():
+#     user = User(role=session['role'], email=form.email.data, first_name=form.first_name.data, last_name=form.last_name.data, password=forms.password.data, school=form.school.data)
+#     # db.session.execute("insert into use(username, password) values('"+reqUsername+"', '"+reqPassword+"');")
+#     db.session.add(User(user))
+#     db.session.commit()
+#     # user = Use()
+#     # db.session.add(user)
+#     session['username'] = form.email.data
+#     return homePage()
 
 
 @app.route('/homepage',methods=['POST', 'GET'])

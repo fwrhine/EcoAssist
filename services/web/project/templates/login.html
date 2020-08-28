@@ -9,15 +9,23 @@
 
 <body>
     <div class="col-lg-5 p-3">
-        <form class="p-4 bg-light" action='/login' method="post">
-          <h4 class="mb-4 text-center">Log In&nbsp;</h4>
-            <div class="form-group">
-                <label class="text-muted">Username</label>
-                <input name="username" type="text" class="form-control border-info" placeholder="username" required="required"> </div>
-              <div class="form-group">
-                <label class="text-muted">Password</label>
-                <input name="password" type="password" class="form-control border-info" placeholder="Password" required="required"> </div>
-              <button type="submit" class="btn btn-primary">Login</button>
+        <form class="p-4 bg-light" action='' method="post" novalidate>
+          {{ form.hidden_tag() }}
+        <p>
+            {{ form.email.label }}<br>
+            {{ form.email(size=32) }}
+            {% for error in form.email.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
         </form>
       </div>
 </body>
