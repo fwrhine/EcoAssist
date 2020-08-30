@@ -13,7 +13,7 @@ from flask import (
     render_template
 )
 from flask_sqlalchemy import SQLAlchemy
-from .models import db, User, TeacherClasses, Task
+from .models import db, User, TeacherClasses, Task, Learn
 from .forms import TaskForm
 
 
@@ -74,4 +74,5 @@ def task_completed():
 
 @app.route("/learn")
 def learn():
-    return render_template('learn.html')
+    learn_list = Learn.query.all()
+    return render_template('learn.html', learn_list=learn_list)

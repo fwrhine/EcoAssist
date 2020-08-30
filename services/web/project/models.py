@@ -52,3 +52,14 @@ class Task(db.Model):
     task_reason = db.Column(db.String(128), nullable=False)
     points = db.Column(db.Integer, nullable=False)
     class_id = db.Column(db.Integer, db.ForeignKey('teacher_classes.class_id'), nullable=False)
+    learn_id = db.Column(db.Integer, db.ForeignKey('learn.learn_id'), nullable=False)
+
+class Learn(db.Model):
+    __tablename__ = 'learn'
+
+    learn_id = db.Column(db.Integer, primary_key=True)
+
+    learn_title = db.Column(db.String(128), nullable=False)
+    learn_detail = db.Column(db.String(128), nullable=False)
+
+    tasks = db.relationship('Task', backref='learn', lazy='dynamic')

@@ -38,6 +38,15 @@ body {
   width: 25%;
 }
 
+.learn {
+  background-color: #ffd075;
+  padding: 20px;
+  margin: 10px;
+  display: inline-block;
+  width: 25%;
+  height: 400px;
+}
+
 .btn-icon {
   margin-left: 20px;
   display:inline;

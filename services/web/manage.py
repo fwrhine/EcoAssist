@@ -1,7 +1,7 @@
 from flask.cli import FlaskGroup
 
 from project import app, db
-from project.models import User, TeacherClasses, Task
+from project.models import User, TeacherClasses, Task, Learn
 
 
 cli = FlaskGroup(app)
@@ -29,10 +29,17 @@ def seed_tasks():
     db.session.add(class_2)
     db.session.add(class_3)
 
+    learn_1 = Learn(learn_title="Deforestation", learn_detail="Every day...")
+    learn_2 = Learn(learn_title="Pollution", learn_detail="9999 tonnes of rubbish...")
+    db.session.add(learn_1)
+    db.session.add(learn_2)
+
+    print("indonesia")
+
     task_1 = Task(task_name="Collect rubbish", task_detail="Collect rubbish...",
-    task_reason="Just because", points=10, class_=class_1)
+    task_reason="Just because", points=10, class_=class_1, learn=learn_2)
     task_2 = Task(task_name="Plant a tree", task_detail="Choose a tree seed...",
-    task_reason="Just because", points=5, class_=class_1)
+    task_reason="Just because", points=5, class_=class_1, learn=learn_1)
     db.session.add(task_1)
     db.session.add(task_2)
 
