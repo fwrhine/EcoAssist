@@ -2,15 +2,17 @@
 
 {% block content %}
 <div class='wrapper'>
-  <h1>Tasks</h1>
+  <h1 style="display:inline; vertical-align: middle;">Tasks</h1>
+  <!-- <button class="btn-icon" onclick="location.href='{{ url_for('create_task') }}'"><i class="fa fa-plus"></i></button> -->
+  <br>
   {% for task in tasks %}
   <div class="task">
-    <h3>{{task.title}}</h3>
+    <h3>{{task.task_name}}</h3>
     <h4>{{task.points}} points</h4>
-    <p>{{task.details}}</p>
+    <p>{{task.task_detail}}</p>
     <form method="post">
         <button class="btn task-button" name="task-complete" id="{{task.id}}" type="button">Task Complete</button>
-        <button class="btn" name="learn-more" id="{{task.id}}" type="button">Learn More</button>
+        <button class="btn" onclick="location.href='{{ url_for('learn') }}'" name="learn-more" id="{{task.id}}" type="button">Learn More</button>
     </form>
   </div>
   {% endfor %}
@@ -29,7 +31,7 @@
         },
   			type: 'POST',
   			success: function(response){
-          $(self).toggleClass("active");
+          $(self).toggleClass("completed");
           // $(self).html("Task Completed")
           console.log(response)
   			},

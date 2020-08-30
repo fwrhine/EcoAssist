@@ -2,14 +2,14 @@ body {
   width: 100%;
 }
 
-.wrapper{
+.wrapper {
   padding-top: 20px;
   width: 90%;
   margin: 0 100px auto;
   min-height: 80vh;
 }
 
-.btn{
+.btn {
   background-color: #FFFFFF;
   border: none;
   color: black;
@@ -22,22 +22,27 @@ body {
   cursor: pointer;
 }
 
-.btn:active .task-button{
+.btn:active .task-button {
   background-color: #26c983;
-  /* color: white; */
 }
 
-.active{
+.completed {
   background-color: #26c983;
-  /* color: white; */
 }
 
-.task{
+.task {
   background-color: #8FD4B5;
   padding: 20px;
   margin: 10px;
   display: inline-block;
   width: 25%;
+}
+
+.btn-icon {
+  margin-left: 20px;
+  display:inline;
+  vertical-align: middle;
+  cursor: pointer;
 }
 
 /* ---------------------------- FOOTER ----------------------------*/

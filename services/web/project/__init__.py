@@ -13,7 +13,7 @@ from flask import (
     render_template
 )
 from flask_sqlalchemy import SQLAlchemy
-from .models import db, User, Task
+from .models import db, User, TeacherClasses, Task
 from .forms import TaskForm
 
 
@@ -46,26 +46,32 @@ def upload_file():
     return render_template("upload.html")
 
 
-@app.route('/new-task', methods=['GET', 'POST'])
+@app.route('/create-task', methods=['GET', 'POST'])
 def create_task():
+    available_classes=db.session.query(TeacherClasses).filter(TeacherClasses.teacher_id == 1).all()
+    #Now forming the list of tuples for SelectField
+    class_list=[(i.class_id, i.class_name) for i in available_classes]
     form = TaskForm()
+    form.class_id.choices = class_list
     if form.validate_on_submit():
-        task = Task(title=form.title.data, details=form.details.data,
-        reason=form.reason.data, points=form.points.data)
+        task = Task(task_name=form.title.data, task_detail=form.details.data,
+        task_reason=form.reason.data, points=form.points.data, class_id=form.class_id.data)
         db.session.add(task)
         db.session.commit()
-        # get_task = Task.query.get(1)
-        # flash('Task {} created'.format(form.title.data))
-        # flash('Task {} created'.format(get_task.title))
         return redirect(url_for('.task_list'))
     return render_template('new_task.html', form=form)
 
 @app.route("/task-list")
 def task_list():
-    tasks = Task.query.all()
+    class_ = TeacherClasses.query.get(1)
+    tasks = class_.class_task.all()
     return render_template('task_list.html', tasks=tasks)
 
 @app.route('/task-completed', methods=['POST'])
 def task_completed():
     id = request.form.get("task_id")
     return json.dumps({'status':'OK','task_id':id})
+
+@app.route("/learn")
+def learn():
+    return render_template('learn.html')

@@ -9,6 +9,7 @@
     <meta name="author" content="{{author}}">
     <!-- bootstrap csss -->
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
 		<title>EcoAssist</title>
 
@@ -31,6 +32,7 @@
 					<div id="navbar" class="navbar-collapse collapse" style='float:right'>
 						<ul class="nav navbar-nav">
 							<li style='float:right'><a href="#">Profile</a></li>
+							<li style='float:right'><a href="#">Learn</a></li>
 							<li style='float:right'><a href="#">Leaderboard</a></li>
 							<li style='float:right'><a href="{{ url_for('task_list') }}">Tasks</a></li>
 						</ul>
