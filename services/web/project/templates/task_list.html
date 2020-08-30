@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class='wrapper'>
+  <h1>Tasks</h1>
+  {% for task in tasks %}
+  <div class="task">
+    <h3>{{task.title}}</h3>
+    <h4>{{task.points}} points</h4>
+    <p>{{task.details}}</p>
+    <form method="post">
+        <button class="btn task-button" name="task-complete" id="{{task.id}}" type="button">Task Complete</button>
+        <button class="btn" name="learn-more" id="{{task.id}}" type="button">Learn More</button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+
+{% block javascript %}
+<script>
+  $(function(){
+  	$('button[name ="task-complete"]').click(function(){
+  		var id = this.id;
+      var self = this;
+  		$.ajax({
+  			url: '/task-completed',
+  			data: {
+          task_id: id,
+        },
+  			type: 'POST',
+  			success: function(response){
+          $(self).toggleClass("active");
+          // $(self).html("Task Completed")
+          console.log(response)
+  			},
+  			error: function(error){
+          console.log("NOPE")
+  				console.log(error);
+  			}
+  		});
+  	});
+  });
+</script>
+{% endblock %}
+{% endblock %}

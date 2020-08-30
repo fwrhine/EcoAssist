@@ -3,25 +3,56 @@ body {
 }
 
 .wrapper{
-    padding-top: 20px;
-    width: 90%;
-    margin: 0 100px auto;
-    min-height: 80vh;
+  padding-top: 20px;
+  width: 90%;
+  margin: 0 100px auto;
+  min-height: 80vh;
+}
+
+.btn{
+  background-color: #FFFFFF;
+  border: none;
+  color: black;
+  width: 170px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.btn:active .task-button{
+  background-color: #26c983;
+  /* color: white; */
+}
+
+.active{
+  background-color: #26c983;
+  /* color: white; */
+}
+
+.task{
+  background-color: #8FD4B5;
+  padding: 20px;
+  margin: 10px;
+  display: inline-block;
+  width: 25%;
 }
 
 /* ---------------------------- FOOTER ----------------------------*/
 footer p {
-    padding-top: 0px;
-    padding-bottom: 30px;
-    bottom:0px;
-    margin: 0 auto
-    position: absolute;
-    text-align: center;
-    flex: 0 0 50px;
-    margin-top: auto;
+  padding-top: 0px;
+  padding-bottom: 30px;
+  bottom:0px;
+  margin: 0 auto
+  position: absolute;
+  text-align: center;
+  flex: 0 0 50px;
+  margin-top: auto;
 }
 
 footer {
-    position:relative;
-    height: auto;
+  position:relative;
+  height: auto;
 }

@@ -6,13 +6,14 @@ from flask import (
     jsonify,
     send_from_directory,
     request,
+    json,
     redirect,
     url_for,
     flash,
     render_template
 )
 from flask_sqlalchemy import SQLAlchemy
-from .models import db, User
+from .models import db, User, Task
 from .forms import TaskForm
 
 
@@ -49,5 +50,22 @@ def upload_file():
 def create_task():
     form = TaskForm()
     if form.validate_on_submit():
-        return redirect(url_for('.index'))
+        task = Task(title=form.title.data, details=form.details.data,
+        reason=form.reason.data, points=form.points.data)
+        db.session.add(task)
+        db.session.commit()
+        # get_task = Task.query.get(1)
+        # flash('Task {} created'.format(form.title.data))
+        # flash('Task {} created'.format(get_task.title))
+        return redirect(url_for('.task_list'))
     return render_template('new_task.html', form=form)
+
+@app.route("/task-list")
+def task_list():
+    tasks = Task.query.all()
+    return render_template('task_list.html', tasks=tasks)
+
+@app.route('/task-completed', methods=['POST'])
+def task_completed():
+    id = request.form.get("task_id")
+    return json.dumps({'status':'OK','task_id':id})
