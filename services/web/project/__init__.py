@@ -12,7 +12,7 @@ from flask import (
     session
 )
 from flask_sqlalchemy import SQLAlchemy
-from .models import db, User
+from .models import *
 from .forms import *
 
 
@@ -29,7 +29,7 @@ def index():
 @app.route("/login",  methods=['POST', 'GET'])
 def loginPage():
     form = LoginForm()
-    if form.validate_on_submit():
+    if form.validate_on_submit():   
         reqUsername = form.email.data
         print(reqUsername)
         reqPassword = form.password.data
@@ -55,9 +55,18 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         print("yeay")
-        user = User(role=session['role'], email=form.email.data, first_name=form.first_name.data, last_name=form.last_name.data, password=form.password.data, school=form.school.data)
+        user = User(email=form.email.data, role=session['role'], password=form.password.data, first_name=form.first_name.data, last_name=form.last_name.data, school=form.school.data)
         db.session.add(user)
         db.session.commit()
+        if session['role'] == 'teacher':
+            teacher = Teacher(email=form.email.data)
+            db.session.add(teacher)
+            db.session.commit()
+        else:
+            student = Student(email=form.email.data)
+            db.session.add(student)
+            db.session.commit()
+        
         session['username'] = form.email.data
         session['logged_in'] = True
         print("suk")
