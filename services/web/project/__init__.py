@@ -76,3 +76,8 @@ def task_completed():
 def learn():
     learn_list = Learn.query.all()
     return render_template('learn.html', learn_list=learn_list)
+
+@app.route("/learn/<id>")
+def learn_details(id):
+    learn = Learn.query.get(id)
+    return render_template('learn_details.html', learn=learn)

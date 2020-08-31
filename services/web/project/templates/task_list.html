@@ -13,7 +13,7 @@
     <p>{{task.task_detail}}</p>
     <form method="post">
         <button class="btn task-button" name="task-complete" id="{{task.id}}" type="button">Task Complete</button>
-        <button class="btn" onclick="location.href='{{ url_for('learn') }}'" name="learn-more" id="{{task.id}}" type="button">Learn More</button>
+        <button class="btn" onclick="location.href='{{ url_for('learn') }}/{{task.learn_id}}'" name="learn-more" type="button">Learn More</button>
     </form>
   </div>
   {% endfor %}

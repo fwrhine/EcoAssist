@@ -34,8 +34,6 @@ def seed_tasks():
     db.session.add(learn_1)
     db.session.add(learn_2)
 
-    print("indonesia")
-
     task_1 = Task(task_name="Collect rubbish", task_detail="Collect rubbish...",
     task_reason="Just because", points=10, class_=class_1, learn=learn_2)
     task_2 = Task(task_name="Plant a tree", task_detail="Choose a tree seed...",
