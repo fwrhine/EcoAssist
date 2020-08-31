@@ -24,8 +24,7 @@ app.secret_key = "development-key"
 
 @app.route("/")
 def index():
-    trial = db.session.execute("select * from trial;")
-    return render_template("index.html",trial = trial)
+    return render_template("index.html")
 
 @app.route("/login",  methods=['POST', 'GET'])
 def loginPage():
