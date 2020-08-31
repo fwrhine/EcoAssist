@@ -30,23 +30,3 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-class New(db.Model):
-    __tablename__ = "new"
-
-    id = db.Column(db.Integer, primary_key=True)
-    role = db.Column(db.String(10),nullable=False)
-    email = db.Column(db.String(128), unique=True, nullable=False)
-    def __init__(self, role, email):
-        self.role = role
-        self.email = email
-
-
-class Yur(db.Model):
-    __tablename__ = "yur"
-
-    id = db.Column(db.Integer, primary_key=True)
-    role = db.Column(db.String(10),nullable=False)
-    email = db.Column(db.String(128), unique=True, nullable=False)
-    def __init__(self, role, email):
-        self.role = role
-        self.email = email

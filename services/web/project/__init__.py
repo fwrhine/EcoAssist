@@ -30,7 +30,6 @@ def index():
 def loginPage():
     form = LoginForm()
     if form.validate_on_submit():
-        # print(session['logged_in'])
         reqUsername = form.email.data
         print(reqUsername)
         reqPassword = form.password.data
@@ -57,12 +56,10 @@ def register():
     if form.validate_on_submit():
         print("yeay")
         user = User(role=session['role'], email=form.email.data, first_name=form.first_name.data, last_name=form.last_name.data, password=form.password.data, school=form.school.data)
-        # db.session.execute("insert into use(username, password) values('"+reqUsername+"', '"+reqPassword+"');")
         db.session.add(user)
         db.session.commit()
-         # user = Use()
-        # db.session.add(user)
         session['username'] = form.email.data
+        session['logged_in'] = True
         print("suk")
         return redirect(url_for('homePage'))
     print("fail")
@@ -77,18 +74,6 @@ def registerTeacher():
 def registerStudent():
     session['role'] = 'student'
     return redirect(url_for('register'))
-
-# @app.route('/register', methods=['POST'])
-# def register():
-#     user = User(role=session['role'], email=form.email.data, first_name=form.first_name.data, last_name=form.last_name.data, password=forms.password.data, school=form.school.data)
-#     # db.session.execute("insert into use(username, password) values('"+reqUsername+"', '"+reqPassword+"');")
-#     db.session.add(User(user))
-#     db.session.commit()
-#     # user = Use()
-#     # db.session.add(user)
-#     session['username'] = form.email.data
-#     return homePage()
-
 
 @app.route('/homepage',methods=['POST', 'GET'])
 def homePage():
