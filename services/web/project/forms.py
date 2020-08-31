@@ -8,5 +8,6 @@ class TaskForm(FlaskForm):
     details = TextAreaField('Details')
     reason = TextAreaField('Why this task?')
     points = IntegerField('Points', validators=[DataRequired()])
+    learn_id = SelectField('Learn more', coerce=int, validators=[InputRequired()])
     class_id = SelectField('Assign to', coerce=int, validators=[InputRequired()])
     submit = SubmitField('Create')

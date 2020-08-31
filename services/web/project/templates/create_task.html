@@ -16,14 +16,21 @@
           {{ form.details.label }}<br>
           {{ form.details() }}
       </p>
-      <p>
+      <!-- <p>
           {{ form.reason.label }}<br>
           {{ form.reason() }}
-      </p>
+      </p> -->
       <p>
           {{ form.points.label }}<br>
           {{ form.points() }}
           {% for error in form.points.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+          {{ form.learn_id.label }}<br>
+          {{ form.learn_id() }}
+          {% for error in form.learn_id.errors %}
           <span style="color: red;">[{{ error }}]</span>
           {% endfor %}
       </p>

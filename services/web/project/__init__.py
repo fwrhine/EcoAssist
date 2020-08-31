@@ -49,17 +49,22 @@ def upload_file():
 @app.route('/create-task', methods=['GET', 'POST'])
 def create_task():
     available_classes=db.session.query(TeacherClasses).filter(TeacherClasses.teacher_id == 1).all()
-    #Now forming the list of tuples for SelectField
     class_list=[(i.class_id, i.class_name) for i in available_classes]
+
+    available_learn=Learn.query.all()
+    learn_list=[(i.learn_id, i.learn_title) for i in available_learn]
+
     form = TaskForm()
+    form.learn_id.choices = learn_list
     form.class_id.choices = class_list
+
     if form.validate_on_submit():
         task = Task(task_name=form.title.data, task_detail=form.details.data,
-        task_reason=form.reason.data, points=form.points.data, class_id=form.class_id.data)
+        task_reason=form.reason.data, points=form.points.data, class_id=form.class_id.data, learn_id=form.learn_id.data)
         db.session.add(task)
         db.session.commit()
         return redirect(url_for('.task_list'))
-    return render_template('new_task.html', form=form)
+    return render_template('create_task.html', form=form)
 
 @app.route("/task-list")
 def task_list():
