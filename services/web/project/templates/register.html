@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Register</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div class="col-lg-5 p-3">
+      <form class="p-4 bg-light" action='' method="post" novalidate>
+        {{ form.hidden_tag() }}
+      <p>
+          {{ form.email.label }}<br>
+          {{ form.email(size=32) }}
+          {% for error in form.email.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+        {{ form.first_name.label }}<br>
+        {{ form.first_name(size=32) }}
+        {% for error in form.first_name.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+      {{ form.last_name.label }}<br>
+      {{ form.last_name(size=32) }}
+      {% for error in form.last_name.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+  </p>
+  
+      <p>
+          {{ form.password.label }}<br>
+          {{ form.password(size=32) }}
+          {% for error in form.password.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+        {{ form.school.label }}<br>
+        {{ form.school(size=32) }}
+        {% for error in form.school.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+      <p>{{ form.submit() }}</p>
+      </form>
+      </div>
+</body>
+
+</html>
