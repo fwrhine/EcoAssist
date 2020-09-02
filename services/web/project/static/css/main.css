@@ -9,6 +9,15 @@ body {
   min-height: 80vh;
 }
 
+.btn {
+  background-color: #38AD70;
+  color: white;
+  border: none;
+  width: 180px;
+  padding: 15px;
+  text-align: center;
+}
+
 .btn-task {
   background-color: #FFFFFF;
   border: none;
