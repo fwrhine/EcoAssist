@@ -2,9 +2,11 @@
 
 {% block content %}
 <div class='wrapper'>
-  <!-- <h1 style="display:inline; vertical-align: middle;">Tasks</h1> -->
-  <h1>Tasks</h1>
-  <!-- <button class="btn-icon" onclick="location.href='{{ url_for('create_task') }}'"><i class="fa fa-plus"></i></button> -->
+  <h1 style="display:inline">Tasks</h1>
+  {% if session['role'] == 'teacher' %}
+  <button class="btn-icon" onclick="location.href='{{ url_for('create_task') }}'"><i class="fa fa-plus"></i></button>
+  {% endif %}
+  <br>
   <br>
   {% for task in tasks %}
   <div class="task">
@@ -12,8 +14,10 @@
     <h4>{{task.points}} points</h4>
     <p>{{task.task_detail}}</p>
     <form method="post">
-        <button class="btn task-button" name="task-complete" id="{{task.id}}" type="button">Task Complete</button>
-        <button class="btn" onclick="location.href='{{ url_for('learn') }}/{{task.learn_id}}'" name="learn-more" type="button">Learn More</button>
+      {% if session['role'] == 'student' %}
+        <button class="btn-task task-button" name="task-complete" id="{{task.id}}" type="button">Task Complete</button>
+      {% endif %}
+        <button class="btn-task" onclick="location.href='{{ url_for('learn') }}/{{task.resource_id}}'" name="learn-more" type="button">Learn More</button>
     </form>
   </div>
   {% endfor %}

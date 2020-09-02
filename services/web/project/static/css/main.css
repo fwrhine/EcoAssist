@@ -9,11 +9,11 @@ body {
   min-height: 80vh;
 }
 
-.btn {
+.btn-task {
   background-color: #FFFFFF;
   border: none;
   color: black;
-  width: 170px;
+  width: 180px;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
@@ -49,10 +49,13 @@ body {
 
 .btn-icon {
   margin-left: 20px;
-  display:inline;
+  display:inline-block;
   vertical-align: middle;
   cursor: pointer;
 }
+
+/* ---------------------------- NAVBAR ----------------------------*/
+
 
 /* ---------------------------- FOOTER ----------------------------*/
 footer p {

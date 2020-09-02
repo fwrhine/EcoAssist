@@ -9,8 +9,8 @@ class TaskForm(FlaskForm):
     details = TextAreaField('Details')
     reason = TextAreaField('Why this task?')
     points = IntegerField('Points', validators=[DataRequired()])
-    learn_id = SelectField('Learn more', coerce=int, validators=[InputRequired()])
-    class_id = SelectField('Assign to', coerce=int, validators=[InputRequired()])
+    resource_id = SelectField('Theme', coerce=int, validators=[InputRequired()])
+    class_id = SelectField('For Class', coerce=int, validators=[InputRequired()])
     submit = SubmitField('Create')
 
 class RegisterForm(FlaskForm):
@@ -29,4 +29,4 @@ class RegisterForm(FlaskForm):
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Sign In')
+    submit = SubmitField('Login')

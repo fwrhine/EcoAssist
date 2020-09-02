@@ -3,6 +3,7 @@
 {% block content %}
 <div class='wrapper'>
   <h1>New Task</h1>
+  <br>
   <form action="" method="post" novalidate>
       {{ form.hidden_tag() }}
       <p>
@@ -28,9 +29,9 @@
           {% endfor %}
       </p>
       <p>
-          {{ form.learn_id.label }}<br>
-          {{ form.learn_id() }}
-          {% for error in form.learn_id.errors %}
+          {{ form.resource_id.label }}<br>
+          {{ form.resource_id() }}
+          {% for error in form.resource_id.errors %}
           <span style="color: red;">[{{ error }}]</span>
           {% endfor %}
       </p>
@@ -41,6 +42,7 @@
           <span style="color: red;">[{{ error }}]</span>
           {% endfor %}
       </p>
+      <br>
       <p>{{ form.submit() }}</p>
   </form>
 </div>

@@ -1,33 +1,26 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
 
-<head>
-  <title>Login</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-
-<body>
-    <div class="col-lg-5 p-3">
-        <form class="p-4 bg-light" action='' method="post" novalidate>
-          {{ form.hidden_tag() }}
-        <p>
-            {{ form.email.label }}<br>
-            {{ form.email(size=32) }}
-            {% for error in form.email.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}
-            {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-        </form>
-      </div>
-</body>
-
-</html>
+{% block content %}
+<div class='wrapper'>
+  <div class="col-lg-5 p-3">
+    <form class="p-4 bg-light" action='' method="post" novalidate>
+      {{ form.hidden_tag() }}
+      <p>
+        {{ form.email.label }}<br>
+        {{ form.email(size=32) }}
+        {% for error in form.email.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+      </p>
+      <p>
+        {{ form.password.label }}<br>
+        {{ form.password(size=32) }}
+        {% for error in form.password.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+      </p>
+      <p>{{ form.submit() }}</p>
+    </form>
+  </div>
+</div>
+{% endblock %}

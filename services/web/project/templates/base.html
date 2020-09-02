@@ -18,27 +18,9 @@
 
 	<body>
 		<header>
-			<nav class="navbar navbar-default navbar-static-top">
-				<div class="container">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand" href="{{ url_for('index') }}">EcoAssist</a>
-					</div>
-					<div id="navbar" class="navbar-collapse collapse" style='float:right'>
-						<ul class="nav navbar-nav">
-							<li style='float:right'><a href="#">Profile</a></li>
-							<li style='float:right'><a href="{{ url_for('learn') }}">Learn</a></li>
-							<li style='float:right'><a href="#">Leaderboard</a></li>
-							<li style='float:right'><a href="{{ url_for('task_list') }}">Tasks</a></li>
-						</ul>
-					</div>
-				</div>
-			</nav>
+			{% block header %}
+        {% include "header.html" %}
+      {% endblock %}
 		</header>
 
 		<content>

@@ -6,10 +6,10 @@
   <h1>Learn</h1>
   <!-- <button class="btn-icon" onclick="location.href='{{ url_for('create_task') }}'"><i class="fa fa-plus"></i></button> -->
   <br>
-  {% for learn in learn_list %}
+  {% for resource in resource_list %}
   <div class="learn">
-    <h3>{{learn.learn_title}}</h3>
-    <h4>{{learn.learn_detail}}</h4>
+    <h3>{{resource.resource_title}}</h3>
+    <h4>{{resource.resource_detail}}</h4>
   </div>
   {% endfor %}
 </div>

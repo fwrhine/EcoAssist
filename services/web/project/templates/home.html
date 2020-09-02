@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class='wrapper'>
+	{% if session['logged_in'] %}
+	<div class='wrapper'>
+    <h3>Welcome {{ session['first_name'] }}!</h3>
+	</div>
+	{% else %}
+	<div class="col-lg-5 p-3">
+		<form class="p-4 bg-light" action='/registerstudent ' method="post">
+			<h4 class="mb-4">Register&nbsp;</h4>
+				<button type="submit" class="btn btn-primary">Register as a Student</button>
+			</form>
+			<form class="p-4 bg-light" action='/registerteacher ' method="post">
+				<button type="submit" class="btn btn-primary">Register as a Teacher</button>
+			</form>
+	</div>
+	{% endif %}
+</div>
+{% endblock %}
