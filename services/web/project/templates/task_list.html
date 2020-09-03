@@ -15,7 +15,7 @@
     <p>{{task.task_detail}}</p>
     <form method="post">
       {% if session['role'] == 'student' %}
-        <button class="btn-task task-button" name="task-complete" id="{{task.id}}" type="button">Task Complete</button>
+        <button class="btn-task task-button" name="task-complete" id="{{task.task_id}}" type="button">Task Complete</button>
       {% endif %}
         <button class="btn-task" onclick="location.href='{{ url_for('learn') }}/{{task.resource_id}}'" name="learn-more" type="button">Learn More</button>
     </form>
@@ -41,7 +41,6 @@
           console.log(response)
   			},
   			error: function(error){
-          console.log("NOPE")
   				console.log(error);
   			}
   		});

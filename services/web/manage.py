@@ -21,13 +21,13 @@ def seed_db():
 
 @cli.command("seed_tasks")
 def seed_tasks():
-    user_1 = User(email="test@gmail.com", password="test", role="teacher", first_name="qq", last_name="qq",school="uq")
-    user_2 = User(email="test2@gmail.com", password="test", role="teacher", first_name="qq", last_name="qq",school="uq")
+    user_1 = User(email="teacher@gmail.com", password="test", role="teacher", first_name="qq", last_name="qq",school="uq")
+    user_2 = User(email="student@gmail.com", password="test", role="student", first_name="qq", last_name="qq",school="uq")
     db.session.add(user_1)
     db.session.add(user_2)
 
-    teacher = Teacher(email="test@gmail.com")
-    student = Student(email="test2@gmail.com")
+    teacher = Teacher(email="teacher@gmail.com")
+    student = Student(email="student@gmail.com")
     db.session.add(teacher)
     db.session.add(student)
 

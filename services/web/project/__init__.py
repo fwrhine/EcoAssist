@@ -63,10 +63,12 @@ def register():
         db.session.add(user)
         db.session.commit()
         if session['role'] == 'teacher':
+            print("add teacher to database")
             teacher = Teacher(email=form.email.data)
             db.session.add(teacher)
             db.session.commit()
         else:
+            print("add student to database")
             student = Student(email=form.email.data)
             db.session.add(student)
             db.session.commit()
@@ -127,14 +129,27 @@ def create_task():
 @app.route("/task-list")
 def task_list():
     class_members = ClassMembers.query.get(1)
-    # class_members = ClassMembers.quer
     tasks = class_members.class_task.all()
     return render_template('task_list.html', tasks=tasks, session=session)
 
 @app.route('/task-completed', methods=['POST'])
 def task_completed():
-    id = request.form.get("task_id")
-    return json.dumps({'status':'OK','task_id':id})
+    task_id = request.form.get("task_id")
+    student = Student.query.filter_by(email=session['username']).first()
+    student_id = student.student_id
+
+    existing = TaskComplete.query.filter_by(student_id=student_id, task_id=task_id).first()
+
+    if existing is None:
+        task_complete = TaskComplete(student_id=student_id, task_id=task_id)
+        db.session.add(task_complete)
+        status = "add"
+    else:
+        db.session.delete(existing)
+        status = "delete"
+
+    db.session.commit()
+    return json.dumps({'status':status,'task_id':task_id, 'student_id':student_id})
 
 @app.route("/learn")
 def learn():
