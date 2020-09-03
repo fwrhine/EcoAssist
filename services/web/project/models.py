@@ -50,6 +50,7 @@ class TeacherClasses(db.Model):
 
     teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.teacher_id'), nullable=False)
     class_name = db.Column(db.String(128), default=True, nullable=False)
+    class_code = db.Column(db.String(128), default=True, nullable=False)
 
     class_no = db.relationship('ClassMembers', backref='class_', lazy='dynamic')
 

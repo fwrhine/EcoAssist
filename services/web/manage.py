@@ -31,9 +31,9 @@ def seed_tasks():
     db.session.add(teacher)
     db.session.add(student)
 
-    class_1 = TeacherClasses(class_name="2K", teacher=teacher)
-    class_2 = TeacherClasses(class_name="2J", teacher=teacher)
-    class_3 = TeacherClasses(class_name="6K", teacher=teacher)
+    class_1 = TeacherClasses(class_name="2K", class_code="2KJVC", teacher=teacher)
+    class_2 = TeacherClasses(class_name="2J", class_code="6JUIO", teacher=teacher)
+    class_3 = TeacherClasses(class_name="6K", class_code="0KFPR", teacher=teacher)
     db.session.add(class_1)
     db.session.add(class_2)
     db.session.add(class_3)

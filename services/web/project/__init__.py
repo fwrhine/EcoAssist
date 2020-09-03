@@ -70,7 +70,9 @@ def register():
         else:
             print("add student to database")
             student = Student(email=form.email.data)
+            class_member = ClassMembers(class_id=1, student=student)
             db.session.add(student)
+            db.session.add(class_member)
             db.session.commit()
 
         # session['username'] = form.email.data
@@ -161,3 +163,23 @@ def learn():
 def resource_details(id):
     resource = Resource.query.get(id)
     return render_template('learn_details.html', learn=resource)
+
+@app.route("/class")
+def class_list():
+    teacher = Teacher.query.filter_by(email=session['username']).first()
+    class_list = teacher.classes.all()
+    return render_template('class_list.html', class_list=class_list)
+
+import random, string
+@app.route('/create-class', methods=['GET', 'POST'])
+def create_class():
+    form = ClassForm()
+
+    if form.validate_on_submit():
+        teacher = Teacher.query.filter_by(email=session['username']).first()
+        code = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(5))
+        teacher_classes = TeacherClasses(class_name=form.class_name.data, class_code=code, teacher=teacher)
+        db.session.add(teacher_classes)
+        db.session.commit()
+        return redirect(url_for('.class_list'))
+    return render_template('create_class.html', form=form)

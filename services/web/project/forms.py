@@ -30,3 +30,7 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
+
+class ClassForm(FlaskForm):
+    class_name = StringField('Class Name', validators=[DataRequired()])
+    submit = SubmitField('Create')
