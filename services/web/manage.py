@@ -26,13 +26,23 @@ def seed_tasks():
                   role="teacher", first_name="qq", last_name="qq", school="uq")
     user_2 = User(email="student@gmail.com", password="test",
                   role="student", first_name="qq", last_name="qq", school="uq")
+    user_3 = User(email="student1@gmail.com", password="test",
+                  role="student", first_name="qq", last_name="qq", school="uq")
+    user_4 = User(email="student2@gmail.com", password="test",
+                  role="student", first_name="qq", last_name="qq", school="uq")
     db.session.add(user_1)
     db.session.add(user_2)
+    db.session.add(user_3)
+    db.session.add(user_4)
 
     teacher = Teacher(email="teacher@gmail.com")
     student = Student(email="student@gmail.com")
+    student1 = Student(email="student1@gmail.com")
+    student2 = Student(email="student2@gmail.com")
     db.session.add(teacher)
     db.session.add(student)
+    db.session.add(student1)
+    db.session.add(student2)
 
     class_1 = TeacherClasses(
         class_name="2K", class_code="2KJVC", teacher=teacher)
@@ -46,6 +56,10 @@ def seed_tasks():
 
     class_members_1 = ClassMembers(class_=class_1, student=student)
     db.session.add(class_members_1)
+    class_members_2 = ClassMembers(class_=class_1, student=student1)
+    db.session.add(class_members_2)
+    class_members_3 = ClassMembers(class_=class_1, student=student2)
+    db.session.add(class_members_3)
 
     resource_1 = Resource(resource_title="Deforestation",
                           resource_detail="Every day...")

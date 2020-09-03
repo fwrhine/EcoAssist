@@ -47,6 +47,7 @@ def loginPage():
             last_name = userDict['last_name']
             role = userDict['role']
             password = userDict['password']
+            school = userDict['school']
 
             if username == reqUsername and password == reqPassword:
                 print("login success")
@@ -55,6 +56,7 @@ def loginPage():
                 session['first_name'] = first_name
                 session['last_name'] = last_name
                 session['role'] = role
+                session['school'] = school
                 return redirect(url_for('home'))
     return render_template("login.html", form=form)
 
@@ -228,3 +230,51 @@ def create_class():
         db.session.commit()
         return redirect(url_for('.class_list'))
     return render_template('create_class.html', form=form)
+
+@app.route("/profile")
+def profile():
+    
+    if (session['role'] == "teacher"):
+        teacher = Teacher.query.filter_by(email=session['username']).first()
+        class_list = teacher.classes.all()
+        return render_template('profile.html', email=session['username'], first_name=session['first_name'], last_name=session['last_name'], 
+                                    role=session['role'], school=session['school'], classes=class_list)
+    else:
+        if session['role']=="student":
+            student = Student.query.filter_by(email=session['username']).first()
+            print('student id : ' + str(student.student_id)) 
+            class_members = student.classes_student.first()
+            print(class_members.class_id)
+            all_members = ClassMembers.query.filter_by(class_id=class_members.class_id).all()
+            print(all_members)
+            leaderboard = {}
+
+            for i in all_members:
+                points = 0
+                all_task_completed = TaskComplete.query.filter_by(student_id=i.student_id).all()
+                for j in all_task_completed:
+                    task = Task.query.filter_by(task_id=j.task_id).first()
+                    points += task.points
+                print(points)
+                new = {i.student_id:points}
+                leaderboard.update(new)
+                
+            sorted_leaderboard = sorted(leaderboard.items(), key=lambda x: x[1], reverse=True)
+            print('leaderboard : ' + str(leaderboard))
+
+            rank = 1
+            point = 0
+            for j in sorted_leaderboard:
+                id = int(j[0])
+                if not (id == student.student_id):
+                    rank += 1
+                else:
+                    point = j[1]
+                    break
+
+            # return render_template('student_leaderboard.html', leaderboard=sorted_leaderboard)
+
+            return render_template('profile.html', email=session['username'], first_name=session['first_name'], last_name=session['last_name'], 
+                                        role="Student", school=session['school'], leaderboard=sorted_leaderboard, ranking=rank, total=len(leaderboard), points=point)
+
+
