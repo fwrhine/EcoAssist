@@ -262,6 +262,25 @@ def leaderboard():
         print(leaderboard)
         return render_template('student_leaderboard.html', leaderboard=sorted_leaderboard)
     else:
-        return render_template('teacher_leaderboard.html')
+        teacher = Teacher.query.filter_by(email=session['username']).first()
+        class_list = teacher.classes.all()
+        print(class_list)
+        leaderboard = {}
+
+        for i in class_list:
+            points = 0
+            all_members = ClassMembers.query.filter_by(class_id=i.class_id).all()
+            for j in all_members:
+                all_task_completed = TaskComplete.query.filter_by(student_id=j.student_id).all()
+                for k in all_task_completed:
+                    task = Task.query.filter_by(task_id=k.task_id).first()
+                    points += task.points
+            # print(points)
+            new = {i.class_id:points}
+            leaderboard.update(new)
+            
+        sorted_leaderboard = sorted(leaderboard.items(), key=lambda x: x[1], reverse=True)
+        print(leaderboard)
+        return render_template('teacher_leaderboard.html',leaderboard=sorted_leaderboard)
 
     
