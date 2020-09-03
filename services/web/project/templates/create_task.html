@@ -5,45 +5,41 @@
   <h1>New Task</h1>
   <br>
   <form action="" method="post" novalidate>
-      {{ form.hidden_tag() }}
-      <p>
-          {{ form.title.label }}<br>
-          {{ form.title() }}
-          {% for error in form.title.errors %}
-          <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-      </p>
-      <p>
-          {{ form.details.label }}<br>
-          {{ form.details() }}
-      </p>
-      <!-- <p>
-          {{ form.reason.label }}<br>
-          {{ form.reason() }}
-      </p> -->
-      <p>
-          {{ form.points.label }}<br>
-          {{ form.points() }}
-          {% for error in form.points.errors %}
-          <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-      </p>
-      <p>
-          {{ form.resource_id.label }}<br>
-          {{ form.resource_id() }}
-          {% for error in form.resource_id.errors %}
-          <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-      </p>
-      <p>
-          {{ form.class_id.label }}<br>
-          {{ form.class_id() }}
-          {% for error in form.class_id.errors %}
-          <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-      </p>
-      <br>
-      <p>{{ form.submit() }}</p>
+    {{ form.hidden_tag() }}
+    <p>
+      {{ form.title.label }}<br>
+      {{ form.title() }}
+      {% for error in form.title.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.details.label }}<br>
+      {{ form.details() }}
+    </p>
+    <p>
+      {{ form.points.label }}<br>
+      {{ form.points() }}
+      {% for error in form.points.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.resource_id.label }}<br>
+      {{ form.resource_id() }}
+      {% for error in form.resource_id.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.class_id.label }}<br>
+      {{ form.class_id() }}
+      {% for error in form.class_id.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <br>
+    <p>{{ form.submit() }}</p>
   </form>
 </div>
 {% endblock %}

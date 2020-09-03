@@ -9,16 +9,19 @@ class TaskForm(FlaskForm):
     details = TextAreaField('Details')
     reason = TextAreaField('Why this task?')
     points = IntegerField('Points', validators=[DataRequired()])
-    resource_id = SelectField('Theme', coerce=int, validators=[InputRequired()])
-    class_id = SelectField('For Class', coerce=int, validators=[InputRequired()])
+    resource_id = SelectField(
+        'Theme', coerce=int, validators=[InputRequired()])
+    class_id = SelectField('For Class', coerce=int,
+                           validators=[InputRequired()])
     submit = SubmitField('Create')
+
 
 class RegisterForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
-    first_name = StringField('First Name',validators=[DataRequired()])
-    last_name = StringField('Last Name',validators=[DataRequired()])
+    first_name = StringField('First Name', validators=[DataRequired()])
+    last_name = StringField('Last Name', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    school = StringField('School',validators=[DataRequired()])
+    school = StringField('School', validators=[DataRequired()])
     class_code = StringField('Class Code')
     submit = SubmitField('Create')
 
@@ -27,10 +30,12 @@ class RegisterForm(FlaskForm):
         if user is not None:
             raise ValidationError('Please use a different email address.')
 
+
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
+
 
 class ClassForm(FlaskForm):
     class_name = StringField('Class Name', validators=[DataRequired()])

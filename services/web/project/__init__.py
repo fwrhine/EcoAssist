@@ -1,3 +1,5 @@
+import string
+import random
 import os
 
 from werkzeug.utils import secure_filename
@@ -24,9 +26,11 @@ db.init_app(app)
 
 app.secret_key = "development-key"
 
+
 @app.route("/")
 def home():
     return render_template("home.html", session=session)
+
 
 @app.route("/login",  methods=['POST', 'GET'])
 def loginPage():
@@ -52,14 +56,15 @@ def loginPage():
                 session['last_name'] = last_name
                 session['role'] = role
                 return redirect(url_for('home'))
-    return render_template("login.html", form = form)
+    return render_template("login.html", form=form)
 
 
-@app.route('/register',methods=['POST', 'GET'])
+@app.route('/register', methods=['POST', 'GET'])
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        user = User(email=form.email.data, role=session['role'], password=form.password.data, first_name=form.first_name.data, last_name=form.last_name.data, school=form.school.data)
+        user = User(email=form.email.data, role=session['role'], password=form.password.data,
+                    first_name=form.first_name.data, last_name=form.last_name.data, school=form.school.data)
         db.session.add(user)
         db.session.commit()
         if session['role'] == 'teacher':
@@ -70,24 +75,29 @@ def register():
         else:
             print("add student to database")
             student = Student(email=form.email.data)
-            teacher_classes = TeacherClasses.query.filter_by(class_code=form.class_code.data).first()
-            class_member = ClassMembers(class_=teacher_classes, student=student)
+            teacher_classes = TeacherClasses.query.filter_by(
+                class_code=form.class_code.data).first()
+            class_member = ClassMembers(
+                class_=teacher_classes, student=student)
             db.session.add(student)
             db.session.add(class_member)
             db.session.commit()
 
         return redirect(url_for('home'))
-    return render_template('register.html', form = form)
+    return render_template('register.html', form=form)
+
 
 @app.route('/registerteacher', methods=['POST'])
 def registerTeacher():
     session['role'] = 'teacher'
     return redirect(url_for('register'))
 
+
 @app.route('/registerstudent', methods=['POST'])
 def registerStudent():
     session['role'] = 'student'
     return redirect(url_for('register'))
+
 
 @app.route("/logout", methods=['GET', 'POST'])
 def logout():
@@ -111,8 +121,9 @@ def create_task():
     available_classes = teacher.classes.all()
     class_list = [(i.class_id, i.class_name) for i in available_classes]
 
-    available_resource=Resource.query.all()
-    resource_list=[(i.resource_id, i.resource_title) for i in available_resource]
+    available_resource = Resource.query.all()
+    resource_list = [(i.resource_id, i.resource_title)
+                     for i in available_resource]
 
     form = TaskForm()
     form.resource_id.choices = resource_list
@@ -120,12 +131,13 @@ def create_task():
 
     if form.validate_on_submit():
         task = Task(task_name=form.title.data, task_detail=form.details.data,
-        task_reason=form.reason.data, points=form.points.data,
-        class_id=form.class_id.data, resource_id=form.resource_id.data, teacher=teacher)
+                    task_reason=form.reason.data, points=form.points.data,
+                    class_id=form.class_id.data, resource_id=form.resource_id.data, teacher=teacher)
         db.session.add(task)
         db.session.commit()
         return redirect(url_for('.task_list'))
     return render_template('create_task.html', form=form)
+
 
 @app.route("/task-list")
 def task_list():
@@ -145,7 +157,8 @@ def task_list():
         class_name = teacher_classes.class_name
 
         if session['role'] == "student":
-            task_complete = TaskComplete.query.filter_by(student_id=student.student_id, task_id=i.task_id).first()
+            task_complete = TaskComplete.query.filter_by(
+                student_id=student.student_id, task_id=i.task_id).first()
             if task_complete is not None:
                 done = True
             else:
@@ -159,13 +172,15 @@ def task_list():
 
     return render_template('task_list.html', tasks=tasks, session=session)
 
+
 @app.route('/task-completed', methods=['POST'])
 def task_completed():
     task_id = request.form.get("task_id")
     student = Student.query.filter_by(email=session['username']).first()
     student_id = student.student_id
 
-    existing = TaskComplete.query.filter_by(student_id=student_id, task_id=task_id).first()
+    existing = TaskComplete.query.filter_by(
+        student_id=student_id, task_id=task_id).first()
 
     if existing is None:
         task_complete = TaskComplete(student_id=student_id, task_id=task_id)
@@ -176,7 +191,8 @@ def task_completed():
         status = "delete"
 
     db.session.commit()
-    return json.dumps({'status':status,'task_id':task_id, 'student_id':student_id})
+    return json.dumps({'status': status, 'task_id': task_id, 'student_id': student_id})
+
 
 @app.route("/learn")
 def learn():
@@ -184,10 +200,12 @@ def learn():
     print(resource_list)
     return render_template('learn.html', resource_list=resource_list)
 
+
 @app.route("/learn/<id>")
 def resource_details(id):
     resource = Resource.query.get(id)
     return render_template('learn_details.html', learn=resource)
+
 
 @app.route("/class")
 def class_list():
@@ -195,15 +213,17 @@ def class_list():
     class_list = teacher.classes.all()
     return render_template('class_list.html', class_list=class_list)
 
-import random, string
+
 @app.route('/create-class', methods=['GET', 'POST'])
 def create_class():
     form = ClassForm()
 
     if form.validate_on_submit():
         teacher = Teacher.query.filter_by(email=session['username']).first()
-        code = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(5))
-        teacher_classes = TeacherClasses(class_name=form.class_name.data, class_code=code, teacher=teacher)
+        code = ''.join(random.choice(string.ascii_uppercase +
+                                     string.digits) for _ in range(5))
+        teacher_classes = TeacherClasses(
+            class_name=form.class_name.data, class_code=code, teacher=teacher)
         db.session.add(teacher_classes)
         db.session.commit()
         return redirect(url_for('.class_list'))

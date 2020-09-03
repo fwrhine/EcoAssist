@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
+
 class User(db.Model):
     __tablename__ = "users"
 
@@ -14,22 +15,22 @@ class User(db.Model):
     school = db.Column(db.String(100), nullable=False)
     first_name = db.Column(db.String(100), nullable=False)
     last_name = db.Column(db.String(100), nullable=False)
-    #   active = db.Column(db.Boolean(), default=True, nullable=False)
 
-    teacher_email = db.relationship('Teacher', backref='teacher', lazy='dynamic')
-    student_email = db.relationship('Student', backref='student', lazy='dynamic')
-
-    # def __init__(self, email):
-    #     self.email = email
+    teacher_email = db.relationship(
+        'Teacher', backref='teacher', lazy='dynamic')
+    student_email = db.relationship(
+        'Student', backref='student', lazy='dynamic')
 
 
 class Teacher(db.Model):
     __tablename__ = 'teachers'
 
     teacher_id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(128), db.ForeignKey('users.email'), nullable=False)
+    email = db.Column(db.String(128), db.ForeignKey(
+        'users.email'), nullable=False)
 
-    classes = db.relationship('TeacherClasses', backref='teacher', lazy='dynamic')
+    classes = db.relationship(
+        'TeacherClasses', backref='teacher', lazy='dynamic')
     tasks = db.relationship('Task', backref='teacher', lazy='dynamic')
 
 
@@ -37,11 +38,15 @@ class Student(db.Model):
     __tablename__ = 'students'
 
     student_id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(128), db.ForeignKey('users.email'), nullable=False)
+    email = db.Column(db.String(128), db.ForeignKey(
+        'users.email'), nullable=False)
 
-    classes_student = db.relationship('ClassMembers', backref='student', lazy='dynamic')
-    student_task_done = db.relationship('TaskComplete', backref='student', lazy='dynamic')
-    student_points = db.relationship('Points', backref='student', lazy='dynamic')
+    classes_student = db.relationship(
+        'ClassMembers', backref='student', lazy='dynamic')
+    student_task_done = db.relationship(
+        'TaskComplete', backref='student', lazy='dynamic')
+    student_points = db.relationship(
+        'Points', backref='student', lazy='dynamic')
 
 
 class TeacherClasses(db.Model):
@@ -49,11 +54,13 @@ class TeacherClasses(db.Model):
 
     class_id = db.Column(db.Integer, primary_key=True)
 
-    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.teacher_id'), nullable=False)
+    teacher_id = db.Column(db.Integer, db.ForeignKey(
+        'teachers.teacher_id'), nullable=False)
     class_name = db.Column(db.String(128), default=True, nullable=False)
     class_code = db.Column(db.String(128), default=True, nullable=False)
 
-    class_no = db.relationship('ClassMembers', backref='class_', lazy='dynamic')
+    class_no = db.relationship(
+        'ClassMembers', backref='class_', lazy='dynamic')
     class_task = db.relationship('Task', backref='class_', lazy='dynamic')
 
 
@@ -62,8 +69,11 @@ class ClassMembers(db.Model):
 
     class_member_id = db.Column(db.Integer, primary_key=True)
 
-    class_id = db.Column(db.Integer, db.ForeignKey('teacher_classes.class_id'), nullable=False)
-    student_id = db.Column(db.Integer, db.ForeignKey('students.student_id'), nullable=False)
+    class_id = db.Column(db.Integer, db.ForeignKey(
+        'teacher_classes.class_id'), nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey(
+        'students.student_id'), nullable=False)
+
 
 class Task(db.Model):
     __tablename__ = 'task'
@@ -74,9 +84,12 @@ class Task(db.Model):
     task_detail = db.Column(db.String(128), nullable=False)
     task_reason = db.Column(db.String(128), nullable=False)
     points = db.Column(db.Integer, nullable=False)
-    class_id = db.Column(db.Integer, db.ForeignKey('teacher_classes.class_id'), nullable=False)
-    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.teacher_id'), nullable=False)
-    resource_id = db.Column(db.Integer, db.ForeignKey('resource.resource_id'), nullable=False)
+    class_id = db.Column(db.Integer, db.ForeignKey(
+        'teacher_classes.class_id'), nullable=False)
+    teacher_id = db.Column(db.Integer, db.ForeignKey(
+        'teachers.teacher_id'), nullable=False)
+    resource_id = db.Column(db.Integer, db.ForeignKey(
+        'resource.resource_id'), nullable=False)
 
     task_done = db.relationship('TaskComplete', backref='task', lazy='dynamic')
 
@@ -86,8 +99,10 @@ class TaskComplete(db.Model):
 
     task_complete_id = db.Column(db.Integer, primary_key=True)
 
-    student_id = db.Column(db.Integer, db.ForeignKey('students.student_id'), nullable=False)
-    task_id = db.Column(db.Integer, db.ForeignKey('task.task_id'), nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey(
+        'students.student_id'), nullable=False)
+    task_id = db.Column(db.Integer, db.ForeignKey(
+        'task.task_id'), nullable=False)
 
 
 class Resource(db.Model):
@@ -108,4 +123,5 @@ class Points(db.Model):
 
     date = db.Column(db.DateTime, nullable=False)
     points = db.Column(db.Integer,  nullable=False)
-    student_id = db.Column(db.Integer, db.ForeignKey('students.student_id'), nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey(
+        'students.student_id'), nullable=False)

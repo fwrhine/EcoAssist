@@ -5,16 +5,16 @@
   <h1>New Class</h1>
   <br>
   <form action="" method="post" novalidate>
-      {{ form.hidden_tag() }}
-      <p>
-          {{ form.class_name.label }}<br>
-          {{ form.class_name() }}
-          {% for error in form.class_name.errors %}
-          <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-      </p>
-      <br>
-      <p>{{ form.submit() }}</p>
+    {{ form.hidden_tag() }}
+    <p>
+      {{ form.class_name.label }}<br>
+      {{ form.class_name() }}
+      {% for error in form.class_name.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <br>
+    <p>{{ form.submit() }}</p>
   </form>
 </div>
 {% endblock %}

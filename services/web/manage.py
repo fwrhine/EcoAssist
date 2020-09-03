@@ -19,10 +19,13 @@ def seed_db():
     db.session.add(User(email="test@gmail.com"))
     db.session.commit()
 
+
 @cli.command("seed_tasks")
 def seed_tasks():
-    user_1 = User(email="teacher@gmail.com", password="test", role="teacher", first_name="qq", last_name="qq",school="uq")
-    user_2 = User(email="student@gmail.com", password="test", role="student", first_name="qq", last_name="qq",school="uq")
+    user_1 = User(email="teacher@gmail.com", password="test",
+                  role="teacher", first_name="qq", last_name="qq", school="uq")
+    user_2 = User(email="student@gmail.com", password="test",
+                  role="student", first_name="qq", last_name="qq", school="uq")
     db.session.add(user_1)
     db.session.add(user_2)
 
@@ -31,9 +34,12 @@ def seed_tasks():
     db.session.add(teacher)
     db.session.add(student)
 
-    class_1 = TeacherClasses(class_name="2K", class_code="2KJVC", teacher=teacher)
-    class_2 = TeacherClasses(class_name="2J", class_code="6JUIO", teacher=teacher)
-    class_3 = TeacherClasses(class_name="6K", class_code="0KFPR", teacher=teacher)
+    class_1 = TeacherClasses(
+        class_name="2K", class_code="2KJVC", teacher=teacher)
+    class_2 = TeacherClasses(
+        class_name="2J", class_code="6JUIO", teacher=teacher)
+    class_3 = TeacherClasses(
+        class_name="6K", class_code="0KFPR", teacher=teacher)
     db.session.add(class_1)
     db.session.add(class_2)
     db.session.add(class_3)
@@ -41,19 +47,22 @@ def seed_tasks():
     class_members_1 = ClassMembers(class_=class_1, student=student)
     db.session.add(class_members_1)
 
-    resource_1 = Resource(resource_title="Deforestation", resource_detail="Every day...")
-    resource_2 = Resource(resource_title="Pollution", resource_detail="9999 tonnes of rubbish...")
+    resource_1 = Resource(resource_title="Deforestation",
+                          resource_detail="Every day...")
+    resource_2 = Resource(resource_title="Pollution",
+                          resource_detail="9999 tonnes of rubbish...")
     db.session.add(resource_1)
     db.session.add(resource_2)
 
     task_1 = Task(task_name="Collect rubbish", task_detail="Collect rubbish...",
-    task_reason="Just because", points=10, class_=class_1, resource=resource_2, teacher=teacher)
+                  task_reason="Just because", points=10, class_=class_1, resource=resource_2, teacher=teacher)
     task_2 = Task(task_name="Plant a tree", task_detail="Choose a tree seed...",
-    task_reason="Just because", points=5, class_=class_1, resource=resource_1, teacher=teacher)
+                  task_reason="Just because", points=5, class_=class_1, resource=resource_1, teacher=teacher)
     db.session.add(task_1)
     db.session.add(task_2)
 
     db.session.commit()
+
 
 if __name__ == "__main__":
     cli()
