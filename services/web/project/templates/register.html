@@ -43,6 +43,16 @@
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
       </p>
+      {% if session['role'] == 'student' %}
+      <p>
+        {{ form.class_code.label }}<br>
+        {{ form.class_code(size=32) }}
+        {% for error in form.class_code.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+      </p>
+      {% endif %}
+      <br>
       <p>{{ form.submit() }}</p>
     </form>
   </div>

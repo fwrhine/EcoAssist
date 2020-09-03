@@ -70,15 +70,12 @@ def register():
         else:
             print("add student to database")
             student = Student(email=form.email.data)
-            class_member = ClassMembers(class_id=1, student=student)
+            teacher_classes = TeacherClasses.query.filter_by(class_code=form.class_code.data).first()
+            class_member = ClassMembers(class_=teacher_classes, student=student)
             db.session.add(student)
             db.session.add(class_member)
             db.session.commit()
 
-        # session['username'] = form.email.data
-        # session['logged_in'] = True
-        # session['first_name'] = form.first_name.data
-        # session['last_name'] = form.last_name.data
         return redirect(url_for('home'))
     return render_template('register.html', form = form)
 
@@ -110,8 +107,9 @@ def upload_file():
 
 @app.route('/create-task', methods=['GET', 'POST'])
 def create_task():
-    available_classes=db.session.query(TeacherClasses).filter(TeacherClasses.teacher_id == 1).all()
-    class_list=[(i.class_id, i.class_name) for i in available_classes]
+    teacher = Teacher.query.filter_by(email=session['username']).first()
+    available_classes = teacher.classes.all()
+    class_list = [(i.class_id, i.class_name) for i in available_classes]
 
     available_resource=Resource.query.all()
     resource_list=[(i.resource_id, i.resource_title) for i in available_resource]
@@ -122,7 +120,8 @@ def create_task():
 
     if form.validate_on_submit():
         task = Task(task_name=form.title.data, task_detail=form.details.data,
-        task_reason=form.reason.data, points=form.points.data, class_id=form.class_id.data, resource_id=form.resource_id.data)
+        task_reason=form.reason.data, points=form.points.data,
+        class_id=form.class_id.data, resource_id=form.resource_id.data, teacher=teacher)
         db.session.add(task)
         db.session.commit()
         return redirect(url_for('.task_list'))
@@ -130,8 +129,14 @@ def create_task():
 
 @app.route("/task-list")
 def task_list():
-    class_members = ClassMembers.query.get(1)
-    tasks = class_members.class_task.all()
+    if session['role'] == "student":
+        student = Student.query.filter_by(email=session['username']).first()
+        class_members = student.classes_student.first()
+        teacher_classes = TeacherClasses.query.get(class_members.class_id)
+        tasks = teacher_classes.class_task.all()
+    else:
+        teacher = Teacher.query.filter_by(email=session['username']).first()
+        tasks = teacher.tasks.all()
     return render_template('task_list.html', tasks=tasks, session=session)
 
 @app.route('/task-completed', methods=['POST'])

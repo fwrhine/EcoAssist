@@ -19,6 +19,7 @@ class RegisterForm(FlaskForm):
     last_name = StringField('Last Name',validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     school = StringField('School',validators=[DataRequired()])
+    class_code = StringField('Class Code')
     submit = SubmitField('Create')
 
     def validate_email(self, email):

@@ -30,6 +30,7 @@ class Teacher(db.Model):
     email = db.Column(db.String(128), db.ForeignKey('users.email'), nullable=False)
 
     classes = db.relationship('TeacherClasses', backref='teacher', lazy='dynamic')
+    tasks = db.relationship('Task', backref='teacher', lazy='dynamic')
 
 
 class Student(db.Model):
@@ -53,6 +54,7 @@ class TeacherClasses(db.Model):
     class_code = db.Column(db.String(128), default=True, nullable=False)
 
     class_no = db.relationship('ClassMembers', backref='class_', lazy='dynamic')
+    class_task = db.relationship('Task', backref='class_', lazy='dynamic')
 
 
 class ClassMembers(db.Model):
@@ -63,9 +65,6 @@ class ClassMembers(db.Model):
     class_id = db.Column(db.Integer, db.ForeignKey('teacher_classes.class_id'), nullable=False)
     student_id = db.Column(db.Integer, db.ForeignKey('students.student_id'), nullable=False)
 
-    class_task = db.relationship('Task', backref='class_', lazy='dynamic')
-
-
 class Task(db.Model):
     __tablename__ = 'task'
 
@@ -75,7 +74,8 @@ class Task(db.Model):
     task_detail = db.Column(db.String(128), nullable=False)
     task_reason = db.Column(db.String(128), nullable=False)
     points = db.Column(db.Integer, nullable=False)
-    class_id = db.Column(db.Integer, db.ForeignKey('class_members.class_member_id'), nullable=False)
+    class_id = db.Column(db.Integer, db.ForeignKey('teacher_classes.class_id'), nullable=False)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.teacher_id'), nullable=False)
     resource_id = db.Column(db.Integer, db.ForeignKey('resource.resource_id'), nullable=False)
 
     task_done = db.relationship('TaskComplete', backref='task', lazy='dynamic')

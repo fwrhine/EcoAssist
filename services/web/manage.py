@@ -47,9 +47,9 @@ def seed_tasks():
     db.session.add(resource_2)
 
     task_1 = Task(task_name="Collect rubbish", task_detail="Collect rubbish...",
-    task_reason="Just because", points=10, class_=class_members_1, resource=resource_2)
+    task_reason="Just because", points=10, class_=class_1, resource=resource_2, teacher=teacher)
     task_2 = Task(task_name="Plant a tree", task_detail="Choose a tree seed...",
-    task_reason="Just because", points=5, class_=class_members_1, resource=resource_1)
+    task_reason="Just because", points=5, class_=class_1, resource=resource_1, teacher=teacher)
     db.session.add(task_1)
     db.session.add(task_2)
 
