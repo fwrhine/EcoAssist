@@ -72,6 +72,10 @@ def register():
             teacher = Teacher(email=form.email.data)
             db.session.add(teacher)
             db.session.commit()
+            session['logged_in'] = True
+            session['username'] = form.email.data
+            session['first_name'] = form.first_name.data
+            session['last_name'] = form.last_name.data
         else:
             print("add student to database")
             student = Student(email=form.email.data)
@@ -82,6 +86,10 @@ def register():
             db.session.add(student)
             db.session.add(class_member)
             db.session.commit()
+            session['logged_in'] = True
+            session['username'] = form.email.data
+            session['first_name'] = form.first_name.data
+            session['last_name'] = form.last_name.data
 
         return redirect(url_for('home'))
     return render_template('register.html', form=form)
@@ -228,3 +236,32 @@ def create_class():
         db.session.commit()
         return redirect(url_for('.class_list'))
     return render_template('create_class.html', form=form)
+
+@app.route('/leaderboard', methods=['GET'])
+def leaderboard():
+    if session['role']=="student":
+        student = Student.query.filter_by(email=session['username']).first()
+        print(student.student_id) 
+        class_members = student.classes_student.first()
+        print(class_members.class_id)
+        all_members = ClassMembers.query.filter_by(class_id=class_members.class_id).all()
+        print(all_members)
+        leaderboard = {}
+
+        for i in all_members:
+            points = 0
+            all_task_completed = TaskComplete.query.filter_by(student_id=i.student_id).all()
+            for j in all_task_completed:
+                task = Task.query.filter_by(task_id=j.task_id).first()
+                points += task.points
+            print(points)
+            new = {i.student_id:points}
+            leaderboard.update(new)
+            
+        sorted_leaderboard = sorted(leaderboard.items(), key=lambda x: x[1], reverse=True)
+        print(leaderboard)
+        return render_template('student_leaderboard.html', leaderboard=sorted_leaderboard)
+    else:
+        return render_template('teacher_leaderboard.html')
+
+    

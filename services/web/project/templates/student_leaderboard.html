@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class='wrapper'>
+  <h1>My Classes</h1>
+  <br>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Student</th>
+      <th>Points</th>
+    </tr>
+    {% for i in leaderboard %}
+    <tr>
+      <td></td>
+      <td>{{i[0]}}</td>
+      <td>{{i[1]}}</td>
+      
+    </tr>
+    {% endfor %}
+  </table>
+  <br>
+</div>
+{% endblock %}
