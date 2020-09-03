@@ -133,10 +133,30 @@ def task_list():
         student = Student.query.filter_by(email=session['username']).first()
         class_members = student.classes_student.first()
         teacher_classes = TeacherClasses.query.get(class_members.class_id)
-        tasks = teacher_classes.class_task.all()
+        task_list = teacher_classes.class_task.all()
     else:
         teacher = Teacher.query.filter_by(email=session['username']).first()
-        tasks = teacher.tasks.all()
+        task_list = teacher.tasks.all()
+
+    tasks = []
+
+    for i in task_list:
+        teacher_classes = TeacherClasses.query.get(i.class_id)
+        class_name = teacher_classes.class_name
+
+        if session['role'] == "student":
+            task_complete = TaskComplete.query.filter_by(student_id=student.student_id, task_id=i.task_id).first()
+            if task_complete is not None:
+                done = True
+            else:
+                done = False
+        else:
+            done = False
+
+        tasks.append([i, class_name, done])
+
+    print(tasks)
+
     return render_template('task_list.html', tasks=tasks, session=session)
 
 @app.route('/task-completed', methods=['POST'])
