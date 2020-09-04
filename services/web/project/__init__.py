@@ -241,32 +241,46 @@ def create_class():
 def leaderboard():
     if session['role']=="student":
         student = Student.query.filter_by(email=session['username']).first()
-        print(student.student_id) 
         class_members = student.classes_student.first()
-        print(class_members.class_id)
+
+        # get teacher's name
+        teacher_classes = TeacherClasses.query.filter_by(class_id=class_members.class_id).first()
+        teacher = Teacher.query.filter_by(teacher_id=teacher_classes.teacher_id).first()
+        teacher_user = User.query.filter_by(email=teacher.email).first()
+        teacher_name = teacher_user.first_name + " " + teacher_user.last_name
+        if teacher_name[-1] == 's':
+            teacher_name = teacher_name + "'"
+        else:
+            teacher_name = teacher_name + "'s"
+
+        # get all members of class
         all_members = ClassMembers.query.filter_by(class_id=class_members.class_id).all()
-        print(all_members)
         leaderboard = {}
 
+        # calculate points
         for i in all_members:
             points = 0
             all_task_completed = TaskComplete.query.filter_by(student_id=i.student_id).all()
             for j in all_task_completed:
                 task = Task.query.filter_by(task_id=j.task_id).first()
                 points += task.points
-            print(points)
-            new = {i.student_id:points}
+
+            current_student = Student.query.filter_by(student_id=i.student_id).first()
+            current_user = User.query.filter_by(email=current_student.email).first()
+            name = current_user.first_name + " " + current_user.last_name
+            new = {i.student_id:(name, points)}
+            # key being student_id instead of name is intentional
             leaderboard.update(new)
-            
-        sorted_leaderboard = sorted(leaderboard.items(), key=lambda x: x[1], reverse=True)
-        print(leaderboard)
-        return render_template('student_leaderboard.html', leaderboard=sorted_leaderboard)
+
+        sorted_leaderboard = sorted(leaderboard.items(), key=lambda x: x[1][1], reverse=True)
+        return render_template('student_leaderboard.html', leaderboard=sorted_leaderboard,
+        teacher=teacher_name, class_name=teacher_classes.class_name)
     else:
         teacher = Teacher.query.filter_by(email=session['username']).first()
         class_list = teacher.classes.all()
-        print(class_list)
         leaderboard = {}
 
+        # calculate points
         for i in class_list:
             points = 0
             all_members = ClassMembers.query.filter_by(class_id=i.class_id).all()
@@ -275,12 +289,9 @@ def leaderboard():
                 for k in all_task_completed:
                     task = Task.query.filter_by(task_id=k.task_id).first()
                     points += task.points
-            # print(points)
-            new = {i.class_id:points}
+            new = {i.class_id:(i.class_name, points)}
+            # key being class_id instead of name is intentional
             leaderboard.update(new)
-            
-        sorted_leaderboard = sorted(leaderboard.items(), key=lambda x: x[1], reverse=True)
-        print(leaderboard)
-        return render_template('teacher_leaderboard.html',leaderboard=sorted_leaderboard)
 
-    
+        sorted_leaderboard = sorted(leaderboard.items(), key=lambda x: x[1][1], reverse=True)
+        return render_template('teacher_leaderboard.html',leaderboard=sorted_leaderboard)

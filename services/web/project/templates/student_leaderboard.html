@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 <div class='wrapper'>
-  <h1>My Classes</h1>
+  <h1>Leaderboard</h1>
   <br>
+  <p>{{ teacher }} Class | {{ class_name }}<p>
   <table class="css-serial">
     <tr>
       <th>Rank</th>
@@ -12,8 +13,8 @@
     {% for i in leaderboard %}
     <tr>
       <td></td>
-      <td>{{i[0]}}</td>
-      <td>{{i[1]}}</td>
+      <td>{{i[1][0]}}</td>
+      <td>{{i[1][1]}}</td>
 
     </tr>
     {% endfor %}
