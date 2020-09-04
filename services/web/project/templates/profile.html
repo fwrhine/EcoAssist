@@ -2,26 +2,32 @@
 
 {% block content %}
 <div class='wrapper'>
-    <div>
-        <p>Home</p>
-        <p>My Profile</p>
-
-        <div class= my-profile>
-            <h3>{{first_name}} {{last_name}}</h3>
-            <p>Email  | {{email}}</p>
-            <p>Role   | {{role}}</p>
-            <p>School | {{school}}</p>
-            <p>Classes:</p>
-            {%for x in classes%}
-                            <p>{{x.class_name}}</p>
-            </p>
-            {% endfor %}
-        </div>
-        <p>points: {{points}}</p>
-        <p>ranking: {{ranking}} / {{total}}</p>
-
-
-
+  <h3>My Profile</h3>
+  <br>
+  <div>
+    <div class=my-profile>
+      <h2>{{first_name}} {{last_name}}</h2>
+      <br>
+      <p>Email: {{email}}</p>
+      <p>Role: {{role}}</p>
+      <p>School: {{school}}</p>
+      {% if session['role'] == 'teacher' %}
+        <p>Classes:</p>
+        {%for x in classes%}
+          <li style="padding-left:20px;">{{x.class_name}}</li>
+        {% endfor %}
+      {% elif session['role'] == 'student' %}
+        <p>Class: {{ class_name }}</p>
+      {% endif %}
     </div>
+    {% if session['role'] == 'student' %}
+      <p>Points: {{points}}</p>
+      <p>Ranking: {{ranking}} / {{total}}</p>
+    {% endif %}
+  </div>
+  <br>
+  <form class="p-4 bg-light" action='/logout ' method="post">
+    <button type="submit" class="btn btn-primary" style='background-color: #d42008'>Logout</button>
+  </form>
 </div>
 {% endblock %}

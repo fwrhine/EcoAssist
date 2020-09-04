@@ -34,7 +34,7 @@
       console.log(role);
       console.log(logged_in);
       $("#navbar-content").html(
-        "<li style='float:right'><a href='{{ url_for('logout') }}'>Logout</a></li>" +
+        "<li style='float:right'><a href='{{ url_for('profile') }}'>{{ session['first_name'] }} {{ session['last_name'] }}</a></li>" +
         "<li style='float:right'><a href='{{ url_for('learn') }}'>Learn</a></li>" +
         "<li style='float:right'><a href='{{ url_for('leaderboard') }}'>Leaderboard</a></li>" +
         "<li style='float:right'><a href='{{ url_for('task_list') }}'>Tasks</a></li>"
@@ -43,9 +43,9 @@
       console.log(role);
       console.log(logged_in);
       $("#navbar-content").html(
-        "<li style='float:right'><a href='{{ url_for('logout') }}'>Logout</a></li>" +
-        "<li style='float:right'><a href='{{ url_for('task_list') }}'>Tasks</a></li>" +
+        "<li style='float:right'><a href='{{ url_for('profile') }}'>{{ session['first_name'] }} {{ session['last_name'] }}</a></li>" +
         "<li style='float:right'><a href='{{ url_for('leaderboard') }}'>Leaderboard</a></li>" +
+        "<li style='float:right'><a href='{{ url_for('task_list') }}'>Tasks</a></li>" +
         "<li style='float:right'><a href='{{ url_for('class_list') }}'>Class</a></li>"
       );
     }

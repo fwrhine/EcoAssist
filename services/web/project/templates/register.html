@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class='wrapper'>
-  <h1>Register</h1>
+  <h1>Register - {% if session['role']=='teacher' %}Teacher{% else %}Student{% endif %}</h1>
   <br>
   <div class="col-lg-5 p-3">
     <form class="p-4 bg-light" action='' method="post" novalidate>

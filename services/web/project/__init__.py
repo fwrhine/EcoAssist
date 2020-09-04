@@ -29,7 +29,7 @@ app.secret_key = "development-key"
 
 @app.route("/")
 def home():
-    return render_template("home.html", session=session)
+    return render_template("home.html")
 
 
 @app.route("/login",  methods=['POST', 'GET'])
@@ -78,6 +78,7 @@ def register():
             session['username'] = form.email.data
             session['first_name'] = form.first_name.data
             session['last_name'] = form.last_name.data
+            session['school'] = form.school.data
         else:
             print("add student to database")
             student = Student(email=form.email.data)
@@ -92,8 +93,10 @@ def register():
             session['username'] = form.email.data
             session['first_name'] = form.first_name.data
             session['last_name'] = form.last_name.data
-
+            session['school'] = form.school.data
         return redirect(url_for('home'))
+    else:
+        print("this")
     return render_template('register.html', form=form)
 
 
@@ -179,7 +182,7 @@ def task_list():
 
     print(tasks)
 
-    return render_template('task_list.html', tasks=tasks, session=session)
+    return render_template('task_list.html', tasks=tasks)
 
 
 @app.route('/task-completed', methods=['POST'])
@@ -303,7 +306,7 @@ def profile():
         teacher = Teacher.query.filter_by(email=session['username']).first()
         class_list = teacher.classes.all()
         return render_template('profile.html', email=session['username'], first_name=session['first_name'], last_name=session['last_name'],
-                                    role=session['role'], school=session['school'], classes=class_list)
+                                    role="Teacher", school=session['school'], classes=class_list)
     else:
         if session['role']=="student":
             student = Student.query.filter_by(email=session['username']).first()
@@ -313,6 +316,9 @@ def profile():
             all_members = ClassMembers.query.filter_by(class_id=class_members.class_id).all()
             print(all_members)
             leaderboard = {}
+
+            # get class name
+            class_name = TeacherClasses.query.filter_by(class_id=class_members.class_id).first().class_name
 
             for i in all_members:
                 points = 0
@@ -337,5 +343,7 @@ def profile():
                     point = j[1]
                     break
 
-            return render_template('profile.html', email=session['username'], first_name=session['first_name'], last_name=session['last_name'],
-                                        role="Student", school=session['school'], leaderboard=sorted_leaderboard, ranking=rank, total=len(leaderboard), points=point)
+            return render_template('profile.html', email=session['username'],
+                first_name=session['first_name'], last_name=session['last_name'],
+                role="Student", school=session['school'], leaderboard=sorted_leaderboard,
+                ranking=rank, total=len(leaderboard), points=point, class_name=class_name)
