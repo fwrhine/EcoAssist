@@ -3,18 +3,18 @@
 <div class='wrapper'>
   <h1>My Classes</h1>
   <br>
-  <table>
+  <table class="css-serial">
     <tr>
-      <th>ID</th>
-      <th>Student</th>
-      <th>Points</th>
+      <th>Rank</th>
+      <th>Class</th>
+      <th>Total Points</th>
     </tr>
     {% for id in leaderboard %}
     <tr>
       <td></td>
       <td>{{id[0]}}</td>
       <td>{{id[1]}}</td>
-      
+
     </tr>
     {% endfor %}
   </table>
