@@ -14,9 +14,8 @@
     <h4>{{task.0.points}} points</h4>
     <p>{{task.0.task_detail}}</p>
     {% if session['role'] == 'teacher' %}
-    <p>Assigned to: Class {{task.1}}
-    <p>
-      {% endif %}
+    <p>Assigned to: Class {{task.1}}</p>
+    {% endif %}
     <form method="post">
       {% if session['role'] == 'student' %}
       {% if task.2 %}
@@ -45,7 +44,6 @@
         type: 'POST',
         success: function(response) {
           $(self).toggleClass("completed");
-          // $(self).html("Task Completed")
           console.log(response)
         },
         error: function(error) {
