@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class='wrapper'>
+    <div>
+        <p>Home</p>
+        <p>My Profile</p>
+
+        <div class= my-profile>
+            <h3>{{first_name}} {{last_name}}</h3>
+            <p>Email  | {{email}}</p>
+            <p>Role   | {{role}}</p>
+            <p>School | {{school}}</p>
+            <p>Classes:</p>
+            {%for x in classes%}
+                            <p>{{x.class_name}}</p>
+            </p>
+            {% endfor %}
+        </div>
+        <p>points: {{points}}</p>
+        <p>ranking: {{ranking}} / {{total}}</p>
+
+
+
+    </div>
+</div>
+{% endblock %}

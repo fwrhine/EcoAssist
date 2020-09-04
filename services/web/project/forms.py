@@ -7,7 +7,6 @@ from .models import User
 class TaskForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     details = TextAreaField('Details')
-    reason = TextAreaField('Why this task?')
     points = IntegerField('Points', validators=[DataRequired()])
     resource_id = SelectField(
         'Theme', coerce=int, validators=[InputRequired()])
