@@ -107,6 +107,14 @@ body, html {
   justify-content: center;
 }
 
+.inner-content-home {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 h1, h2, label, button, input, .content {
   font-family: siteFont, Helvetica, sans-serif;
   font-style: normal;
@@ -119,6 +127,10 @@ h2 {
 
 label, button {
   font-size: 1.2em;
+}
+
+p, li {
+  font-size: 1.1em;
 }
 
 /* ---------------------------- HEADER ----------------------------*/
@@ -175,9 +187,11 @@ input, select {
 input[type="submit"] {
   padding: 10px 50px 10px 50px;
   margin-bottom: 10px;
+  font-size: 1.1em;
 }
 
-/* ---------------------------- NEXT SECTION ----------------------------*/
+/* ---------------------------- HOME PAGE ----------------------------*/
+
 .startButton {
   background-color: #FFFFFF;
   background-blend-mode: luminosity;
@@ -189,6 +203,7 @@ input[type="submit"] {
   text-align: center;
   padding: 5px 110px 5px 110px;
   left: 37%;
+  font-size: 1.2em;
 }
 
 #teacherButton {
@@ -199,17 +214,14 @@ input[type="submit"] {
   top: 55%;
 }
 
-#description {
-  height: 100px;
-  width: 500px;
-}
-
 .welcome {
   width: 30%;
+  height: 100%;
   text-align: left;
   padding-left: 50px;
   padding-right: 50px;
   border-right: 1px solid #000000;
+  float: left;
 }
 
 .welcome h2 {
@@ -218,54 +230,43 @@ input[type="submit"] {
 
 .homeLinks {
   width: 70%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 16px;
+  grid-row-gap: 16px;
 }
 
 .homeImageContainer, .studentHomeImageContainer {
-  height: 50%;
-  width: 50%;
-  ;
+  /* To correctly align image, regardless of content height: */
+  vertical-align: top;
+  display: inline-block;
+  /* To horizontally center images and caption */
   text-align: center;
-  padding-top: 5px;
-}
-
-#homeImage1 {
-  left: 0;
-  top: 0;
-  float: left;
-}
-
-#homeImage2 {
-  left: 50%;
-  top: 0;
-  float: left;
-}
-
-#homeImage3 {
-  left: 0;
-  top: 50%;
-  float: left;
-}
-
-#homeImage4 {
-  left: 50%;
-  top: 50%;
-  float: left;
+  /* The width of the container also implies margin around the images. */
+  /* width: 120px; */
 }
 
 .homeImageContainer img {
-  height: 65%;
   width: 50%;
+  height: auto;
 }
 
 .homeImageContainer h2 {
   border: none;
+  display: block;
+}
+
+/* ---------------------------- NEXT SECTION ----------------------------*/
+
+#description {
+  height: 100px;
+  width: 500px;
 }
 
 .homeSidebar {
   width: 15%;
   text-align: center;
   border-right: 1px solid #000000;
-  ;
 }
 
 .infoSection {

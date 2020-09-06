@@ -2,7 +2,51 @@
 {% block content %}
 
 {% if session['logged_in'] %}
-<h3>Welcome {{ session['first_name'] }} {{ session['last_name'] }}!</h3>
+<div class="content">
+	<div class='inner-content-home'>
+	<div class="welcome">
+		<br>
+		<h2>Welcome {{ session['first_name'] }} {{ session['last_name'] }}!</h2>
+		<br>
+		<h3>My Classes</h3>
+		<ul>
+			<li>View class information</li>
+			<li>Create new classes</li>
+			<li>Manage classes</li>
+		</ul>
+		<h3>Class rankings</h3>
+		<ul>
+			<li>Compare class scores</li>
+		</ul>
+		<h3>Learning resources</h3>
+		<ul>
+			<li>View available resources</li>
+		</ul>
+		<h3>Profile</h3>
+		<ul>
+			<li>View personal information</li>
+		</ul>
+	</div>
+	<div class="homeLinks">
+		<div class="homeImageContainer" id="homeImage1">
+			<img src="static/images/classroomlogo.jpg" alt="My classes">
+			<h2>My Classes</h2>
+		</div>
+		<div class="homeImageContainer" id="homeImage2">
+			<img src="static/images/task.png" alt="New task">
+			<h2>New Task</h2>
+		</div>
+		<div class="homeImageContainer" id="homeImage3">
+			<img src="static/images/profilelogo.jpg" alt="Profile">
+			<h2>Profile</h2>
+		</div>
+		<div class="homeImageContainer" id="homeImage4">
+			<img src="static/images/onlineresources.jpg" alt="Learning resources">
+			<h2>Learning Resources</h2>
+		</div>
+	</div>
+	</div>
+</div>
 {% else %}
 <form action='/registerteacher ' method="post">
 	<button class="startButton" id="teacherButton">
