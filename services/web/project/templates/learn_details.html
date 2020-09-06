@@ -1,12 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class='wrapper'>
-  <h1>Learn</h1>
-  <br>
-  <div class="learn">
-    <h3>{{learn.resource_title}}</h3>
-    <h4>{{learn.resource_detail}}</h4>
+<div class='content'>
+  <div class="homeSidebar">
+    <a href="{{ url_for('home') }}">
+      <h2>Home</h2>
+    </a>
+  </div>
+  <div class="infoSection">
+    <h2>Learn</h2>
+    <br>
+    <div class="learn">
+      <h3>{{resource.resource_title}}</h3>
+      {% if resource.resource_title == "Pollution" %}
+      <img src="static/images/pollution.jpg" alt="pollution">
+      {% elif resource.resource_title == "Deforestation" %}
+      <img src="static/images/deforestation.png" alt="deforestation">
+      {% endif %}
+      <br>
+      <br>
+      <h4>{{resource.resource_detail}}</h4>
+    </div>
   </div>
 </div>
 {% endblock %}

@@ -55,9 +55,9 @@ def seed_tasks():
     db.session.add(class_members_2)
 
     resource_1 = Resource(resource_title="Deforestation",
-                          resource_detail="Every day...")
+                          resource_detail="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque...")
     resource_2 = Resource(resource_title="Pollution",
-                          resource_detail="9999 tonnes of rubbish...")
+                          resource_detail="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque...")
     db.session.add(resource_1)
     db.session.add(resource_2)
 
@@ -69,7 +69,7 @@ def seed_tasks():
     db.session.add(task_2)
 
     db.session.commit()
-    
+
 
 if __name__ == "__main__":
     cli()

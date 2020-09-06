@@ -1,13 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class='wrapper'>
-  <h1>New Class</h1>
+<div class='content'>
+  <div class="homeSidebar">
+    <a href="{{ url_for('home') }}">
+    <h2>Home</h2>
+    </a>
+  </div>
+  <div class="infoSection">
+  <h2>New Class</h2>
   <br>
   <form action="" method="post" novalidate>
     {{ form.hidden_tag() }}
     <p>
-      {{ form.class_name.label }}<br>
+      {{ form.class_name.label }}
       {{ form.class_name() }}
       {% for error in form.class_name.errors %}
       <span style="color: red;">[{{ error }}]</span>
@@ -16,5 +22,6 @@
     <br>
     <p>{{ form.submit() }}</p>
   </form>
+</div>
 </div>
 {% endblock %}

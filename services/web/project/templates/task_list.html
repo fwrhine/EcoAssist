@@ -1,33 +1,48 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class='wrapper'>
-  <h1 style="display:inline">Tasks</h1>
-  {% if session['role'] == 'teacher' %}
-  <button class="btn-icon" onclick="location.href='{{ url_for('create_task') }}'"><i class="fa fa-plus"></i></button>
-  {% endif %}
-  <br>
-  <br>
-  {% for task in tasks %}
-  <div class="task">
-    <h3>{{task.0.task_name}}</h3>
-    <h4>{{task.0.points}} points</h4>
-    <p>{{task.0.task_detail}}</p>
+<div class='content'>
+  <div class="homeSidebar">
+    <a href="{{ url_for('home') }}">
+    <h2>Home</h2>
+    </a>
     {% if session['role'] == 'teacher' %}
-    <p>Assigned to: Class {{task.1}}</p>
+    <a href="{{ url_for('create_task') }}">
+    <h2>New Task</h2>
+    </a>
     {% endif %}
-    <form method="post">
-      {% if session['role'] == 'student' %}
-      {% if task.2 %}
-      <button class="btn-task task-button completed" name="task-complete" id="{{task.0.task_id}}" type="button">Task Complete</button>
-      {% else %}
-      <button class="btn-task task-button" name="task-complete" id="{{task.0.task_id}}" type="button">Task Complete</button>
-      {% endif %}
-      {% endif %}
-      <button class="btn-task" onclick="location.href='{{ url_for('learn') }}/{{task.0.resource_id}}'" name="learn-more" type="button">Learn More</button>
-    </form>
   </div>
-  {% endfor %}
+  <div class="infoSection">
+    <h2>Tasks</h2>
+    {% if session['role'] == 'teacher' %}
+    <br>
+    {% endif %}
+    <div class="infoContainer">
+      {% for task in tasks %}
+      <div class="task">
+        <h2>{{task.0.task_name}}</h2>
+        <br>
+        <h3>{{task.0.points}} points</h3>
+        <p>{{task.0.task_detail}}</p>
+        {% if session['role'] == 'teacher' %}
+        <p>Assigned to: Class {{task.1}}</p>
+        {% endif %}
+        <br>
+        <br>
+        <form method="post">
+          {% if session['role'] == 'student' %}
+          {% if task.2 %}
+          <button class="taskButton completed" name="task-complete" id="{{task.0.task_id}}" type="button">Task Complete</button>
+          {% else %}
+          <button class="taskButton" name="task-complete" id="{{task.0.task_id}}" type="button">Task Complete</button>
+          {% endif %}
+          {% endif %}
+          <button class="taskButton" onclick="location.href='{{ url_for('learn') }}/{{task.0.resource_id}}'" name="learn-more" type="button">Learn More</button>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
 </div>
 
 {% block javascript %}

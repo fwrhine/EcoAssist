@@ -2,59 +2,109 @@
 {% block content %}
 
 {% if session['logged_in'] %}
+{% if session['role'] == "teacher" %}
 <div class="content">
 	<div class='inner-content-home'>
-	<div class="welcome">
-		<br>
-		<h2>Welcome {{ session['first_name'] }} {{ session['last_name'] }}!</h2>
-		<br>
-		<h3>My Classes</h3>
-		<ul>
-			<li>View class information</li>
-			<li>Create new classes</li>
-			<li>Manage classes</li>
-		</ul>
-		<h3>Class rankings</h3>
-		<ul>
-			<li>Compare class scores</li>
-		</ul>
-		<h3>Learning resources</h3>
-		<ul>
-			<li>View available resources</li>
-		</ul>
-		<h3>Profile</h3>
-		<ul>
-			<li>View personal information</li>
-		</ul>
-	</div>
-	<div class="homeLinks">
-		<div class="homeImageContainer" id="homeImage1">
-			<img src="static/images/classroomlogo.jpg" alt="My classes">
-			<h2>My Classes</h2>
+		<div class="welcome">
+			<h2>Welcome {{ session['first_name'] }} {{ session['last_name'] }}!</h2>
+			<br>
+			<h3>My Classes</h3>
+			<ul>
+				<li>View class information</li>
+				<li>Create new classes</li>
+				<li>Manage classes</li>
+			</ul>
+			<h3>Class rankings</h3>
+			<ul>
+				<li>Compare class scores</li>
+			</ul>
+			<h3>Learning resources</h3>
+			<ul>
+				<li>View available resources</li>
+			</ul>
+			<h3>Profile</h3>
+			<ul>
+				<li>View personal information</li>
+			</ul>
 		</div>
-		<div class="homeImageContainer" id="homeImage2">
-			<img src="static/images/task.png" alt="New task">
-			<h2>New Task</h2>
+		<div class="homeLinks">
+			<div class="homeImageContainer" id="homeImage1">
+				<a href="{{ url_for('class_list') }}">
+					<img src="static/images/classroomlogo.png" alt="My classes">
+					<h2>My Classes</h2>
+				</a>
+			</div>
+			<div class="homeImageContainer" id="homeImage2">
+				<a href="{{ url_for('create_task') }}">
+					<img src="static/images/task.png" alt="New task">
+					<h2>New Task</h2>
+				</a>
+			</div>
+			<div class="homeImageContainer" id="homeImage3">
+				<a href="{{ url_for('profile') }}">
+					<img src="static/images/profilelogo.jpg" alt="Profile">
+					<h2>Profile</h2>
+				</a>
+			</div>
+
+			<div class="homeImageContainer" id="homeImage4">
+				<a href="{{ url_for('learn') }}">
+					<img src="static/images/onlineresources.png" alt="Learning resources">
+					<h2>Learning Resources</h2>
+				</a>
+			</div>
 		</div>
-		<div class="homeImageContainer" id="homeImage3">
-			<img src="static/images/profilelogo.jpg" alt="Profile">
-			<h2>Profile</h2>
-		</div>
-		<div class="homeImageContainer" id="homeImage4">
-			<img src="static/images/onlineresources.jpg" alt="Learning resources">
-			<h2>Learning Resources</h2>
-		</div>
-	</div>
 	</div>
 </div>
 {% else %}
-<form action='/registerteacher ' method="post">
+<div class="content">
+	<div class='inner-content-home'>
+		<div class="welcome">
+			<h2>Welcome {{ session['first_name'] }} {{ session['last_name'] }}!</h2>
+			<br>
+			<p><b>Tasks</b> will contain new challenges for you to complete.</p>
+			<p><b>Leaderboard</b> will show how you stack up against your classmates.</p>
+			<p><b>Learn</b> more to better understand the importance of these challenges.</p>
+			<p><b>Profile</b> view will display your personal information and achievements.</p>
+		</div>
+		<div class="homeLinks">
+			<div class="homeImageContainer" id="homeImage1">
+				<a href="{{ url_for('task_list') }}">
+					<img src="static/images/shovel.png" alt="My classes">
+					<h2>Tasks</h2>
+				</a>
+			</div>
+			<div class="homeImageContainer" id="homeImage2">
+				<a href="{{ url_for('leaderboard') }}">
+					<img src="static/images/classroomlogo.png" alt="New task">
+					<h2>Leaderboard</h2>
+				</a>
+			</div>
+			<div class="homeImageContainer" id="homeImage3">
+				<a href="{{ url_for('learn') }}">
+					<img src="static/images/profilelogo.jpg" alt="Profile">
+					<h2>Learn</h2>
+				</a>
+			</div>
+
+			<div class="homeImageContainer" id="homeImage4">
+				<a href="{{ url_for('profile') }}">
+					<img src="static/images/onlineresources.png" alt="Learning resources">
+					<h2>Profile</h2>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+{% else %}
+<form action="{{ url_for('registerTeacher') }}" method="post">
 	<button class="startButton" id="teacherButton">
 		<text>Teachers, Start Here</text>
 	</button>
 </form>
 
-<form action='/registerstudent ' method="post">
+<form action="{{ url_for('registerStudent') }}" method="post">
 	<button class="startButton" id="studentButton">
 		<text>Students, Start Here</text>
 	</button>

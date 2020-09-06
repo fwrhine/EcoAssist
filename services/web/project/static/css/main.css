@@ -31,27 +31,6 @@
   background-color: #26c983;
 }
 
-.completed {
-  background-color: #26c983;
-}
-
-.task {
-  background-color: #8FD4B5;
-  padding: 20px;
-  margin: 10px;
-  display: inline-block;
-  width: 25%;
-}
-
-.learn {
-  background-color: #ffd075;
-  padding: 20px;
-  margin: 10px;
-  display: inline-block;
-  width: 25%;
-  height: 400px;
-}
-
 .btn-icon {
   margin-left: 20px;
   display: inline-block;
@@ -133,6 +112,10 @@ p, li {
   font-size: 1.1em;
 }
 
+a {
+  color: black;
+}
+
 /* ---------------------------- HEADER ----------------------------*/
 header {
   background-color: #FFFFFF;
@@ -172,11 +155,27 @@ label {
   text-align: left;
 }
 
+#create-task-form label {
+  display: inline-block;
+  width: 120px;
+  text-align: center;
+}
+
 input[type=text], input[type=password], input[type=textarea], input[type="submit"], select {
   background: #FFFFFF;
   border: 3px solid #000000;
   box-sizing: border-box;
   border-radius: 39px;
+}
+
+textarea {
+  background: #FFFFFF;
+  border: 3px solid #000000;
+  box-sizing: border-box;
+  border-radius: 39px;
+  width: 300px;
+  height: 100px;
+  padding: 10px;
 }
 
 input, select {
@@ -220,6 +219,7 @@ input[type="submit"] {
   text-align: left;
   padding-left: 50px;
   padding-right: 50px;
+  padding-top: 30px;
   border-right: 1px solid #000000;
   float: left;
 }
@@ -247,31 +247,36 @@ input[type="submit"] {
 }
 
 .homeImageContainer img {
-  width: 50%;
+  width: 65%;
   height: auto;
 }
 
 .homeImageContainer h2 {
   border: none;
   display: block;
+  margin: 0px;
+  font-size: 27px;
 }
 
-/* ---------------------------- NEXT SECTION ----------------------------*/
-
-#description {
-  height: 100px;
-  width: 500px;
-}
+/* ---------------------------- TASK LIST ----------------------------*/
 
 .homeSidebar {
   width: 15%;
+  height: 100%;
   text-align: center;
+  /* padding-left: 25px; */
   border-right: 1px solid #000000;
+  float: left;
+}
+
+.homeSidebar h2 {
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .infoSection {
   width: 85%;
-  text-align: center;
+  float: right;
 }
 
 .infoContainer {
@@ -279,67 +284,66 @@ input[type="submit"] {
 }
 
 .task {
-  width: 200px;
-  background: linear-gradient(180deg, #75C286 0%, rgba(255, 255, 255, 0) 100%), #A5FFB9;
+  width: 300px;
+  /* background: linear-gradient(180deg, #75C286 0%, rgba(255, 255, 255, 0) 100%), #A5FFB9; */
+  background: #8FD4B5;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  margin-left: 20px;
-  margin-bottom: 20px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 20px;
 }
 
-.taskButton, .learnButton {
-  width: 150px;
+.taskButton {
+  width: 200px;
   background-color: #FFFFFF;
-  padding: 10px;
+  border: none;
+  padding: 15px;
   margin-bottom: 10px;
 }
 
-.homeSidebar h3 {
-  border-bottom: 1px solid #000000;
+.completed {
+  background-color: #26c983;
 }
 
 .infoSection select {
   margin-right: 60px;
 }
 
-.viewTasks {
-  background: #FFC9C9;
-  border: 3px solid #000000;
-  box-sizing: border-box;
-  border-radius: 39px;
-  margin-bottom: 10px;
-}
+/* ---------------------------- LEARN ----------------------------*/
 
-.deleteTask {
-  height: 5%;
-  width: 10%;
-}
-
-.jobComplete {
-  width: 150px;
-  background-color: green;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.learningResource {
-  width: 200px;
-  background: linear-gradient(180deg, #FFB03A 0%, rgba(255, 255, 255, 0) 100%), #FFE0A5;
+.learn {
+  width: 35%;
+  height: 400px;
+  background: #ffd075;
+  display: inline-block;
+  vertical-align: top;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  margin-left: 20px;
-  margin-bottom: 20px;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
-#learn1 img, #learn3 img {
-  width: 90%;
+.learn img {
+  width: 80%;
 }
 
-#learn2 img {
-  width: 70%;
+.learnButton {
+  width: 200px;
+  background-color: #FFFFFF;
+  border: none;
+  padding: 15px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+/* ---------------------------- PROFILE ----------------------------*/
+
+.my-profile {
+  text-align: left;
+  padding-left: 50px;
 }
 
 /* ---------------------------- TABLE ----------------------------*/
 table {
-  font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }

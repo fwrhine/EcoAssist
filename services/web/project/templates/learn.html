@@ -1,14 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class='wrapper'>
-  <h1>Learn</h1>
-  <br>
-  {% for resource in resource_list %}
-  <div class="learn">
-    <h3>{{resource.resource_title}}</h3>
-    <h4>{{resource.resource_detail}}</h4>
+<div class='content'>
+  <div class="homeSidebar">
+    <a href="{{ url_for('home') }}">
+      <h2>Home</h2>
+    </a>
   </div>
-  {% endfor %}
+  <div class="infoSection">
+    <h2>Learn</h2>
+    <br>
+    {% for resource in resource_list %}
+    <div class="learn">
+      <h3>{{resource.resource_title}}</h3>
+      {% if resource.resource_title == "Pollution" %}
+      <img src="static/images/pollution.jpg" alt="pollution">
+      {% elif resource.resource_title == "Deforestation" %}
+      <img src="static/images/deforestation.png" alt="deforestation">
+      {% endif %}
+      <br>
+      <br>
+      <h4>{{resource.resource_detail}}</h4>
+      <!-- <button class="learnButton" onclick="location.href='{{ url_for('learn') }}/{{resource.resource_id}}'" name="learn-more" type="button">Learn More</button> -->
+    </div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

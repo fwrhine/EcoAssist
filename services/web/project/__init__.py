@@ -224,7 +224,7 @@ def learn():
 @app.route("/learn/<id>")
 def resource_details(id):
     resource = Resource.query.get(id)
-    return render_template('learn_details.html', learn=resource)
+    return render_template('learn_details.html', resource=resource)
 
 
 @app.route("/class")

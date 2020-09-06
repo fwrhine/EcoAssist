@@ -1,12 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class='wrapper'>
-  <h3>My Profile</h3>
+<div class='content'>
+<div class="homeSidebar">
+  <a href="{{ url_for('home') }}">
+  <h2>Home</h2>
+  </a>
+</div>
+<div class="infoSection">
+  <h2>My Profile</h2>
   <br>
-  <div>
-    <div class=my-profile>
-      <h2>{{first_name}} {{last_name}}</h2>
+  <div class=my-profile>
+    <div>
+      <h3>{{first_name}} {{last_name}}</h3>
       <br>
       <p>Email: {{email}}</p>
       <p>Role: {{role}}</p>
@@ -24,10 +30,8 @@
     <p>Points: {{points}}</p>
     <p>Ranking: {{ranking}} / {{total}}</p>
     {% endif %}
+    <br>
   </div>
-  <br>
-  <form class="p-4 bg-light" action='/logout ' method="post">
-    <button type="submit" class="btn btn-primary" style='background-color: #d42008'>Logout</button>
-  </form>
+</div>
 </div>
 {% endblock %}

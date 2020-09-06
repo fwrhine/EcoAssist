@@ -1,7 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-<div class='wrapper'>
-  <h1>My Classes</h1>
+<div class='content'>
+  <div class="homeSidebar">
+    <a href="{{ url_for('home') }}">
+    <h2>Home</h2>
+    </a>
+    <a href="{{ url_for('leaderboard') }}">
+    <h2>Class Rankings</h2>
+    </a>
+  </div>
+  <div class="infoSection">
+  <h2>My Classes</h2>
   <br>
   <table>
     <tr>
@@ -20,5 +29,6 @@
   <br>
   <button class="btn-icon" onclick="location.href='{{ url_for('create_class') }}'">
     New Class<i class="fa fa-plus" style="padding-left:10px;"></i></button>
+</div>
 </div>
 {% endblock %}
