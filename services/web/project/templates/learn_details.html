@@ -6,16 +6,22 @@
     <a href="{{ url_for('home') }}">
       <h2>Home</h2>
     </a>
+    <a href="{{ url_for('task_list') }}">
+      <h2>Tasks</h2>
+    </a>
+    <a href="{{ url_for('learn') }}">
+      <h2>Learn</h2>
+    </a>
   </div>
   <div class="infoSection">
-    <h2>Learn</h2>
+    <h2>Learn - {{resource.resource_title}}</h2>
     <br>
     <div class="learn">
       <h3>{{resource.resource_title}}</h3>
       {% if resource.resource_title == "Pollution" %}
-      <img src="static/images/pollution.jpg" alt="pollution">
+      <img src="{{ url_for('static', filename='images/pollution.jpg') }}"" alt="pollution">
       {% elif resource.resource_title == "Deforestation" %}
-      <img src="static/images/deforestation.png" alt="deforestation">
+      <img src="{{ url_for('static', filename='images/deforestation.png') }}" alt="deforestation">
       {% endif %}
       <br>
       <br>

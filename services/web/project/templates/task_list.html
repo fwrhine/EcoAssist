@@ -11,6 +11,11 @@
     <h2>New Task</h2>
     </a>
     {% endif %}
+    {% if session['role'] == 'student' %}
+    <a href="{{ url_for('leaderboard') }}">
+    <h2 style="font-size:25px;">Leaderboard</h2>
+    </a>
+    {% endif %}
   </div>
   <div class="infoSection">
     <h2>Tasks</h2>
@@ -37,7 +42,7 @@
           <button class="taskButton" name="task-complete" id="{{task.0.task_id}}" type="button">Task Complete</button>
           {% endif %}
           {% endif %}
-          <button class="taskButton" onclick="location.href='{{ url_for('learn') }}/{{task.0.resource_id}}'" name="learn-more" type="button">Learn More</button>
+          <button class="taskButton" onclick="location.href='learn/{{task.0.resource_id}}'" name="learn-more" type="button">Learn More</button>
         </form>
       </div>
       {% endfor %}

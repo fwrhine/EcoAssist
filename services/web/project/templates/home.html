@@ -30,26 +30,26 @@
 		<div class="homeLinks">
 			<div class="homeImageContainer" id="homeImage1">
 				<a href="{{ url_for('class_list') }}">
-					<img src="static/images/classroomlogo.png" alt="My classes">
+					<img src="{{ url_for('static', filename='images/classroomlogo.png') }}" alt="My classes">
 					<h2>My Classes</h2>
 				</a>
 			</div>
 			<div class="homeImageContainer" id="homeImage2">
 				<a href="{{ url_for('create_task') }}">
-					<img src="static/images/task.png" alt="New task">
+					<img src="{{ url_for('static', filename='images/shovel.png') }}" alt="New task">
 					<h2>New Task</h2>
 				</a>
 			</div>
 			<div class="homeImageContainer" id="homeImage3">
 				<a href="{{ url_for('profile') }}">
-					<img src="static/images/profilelogo.jpg" alt="Profile">
+					<img src="{{ url_for('static', filename='images/profilelogo.jpg') }}" alt="Profile">
 					<h2>Profile</h2>
 				</a>
 			</div>
 
 			<div class="homeImageContainer" id="homeImage4">
 				<a href="{{ url_for('learn') }}">
-					<img src="static/images/onlineresources.png" alt="Learning resources">
+					<img src="{{ url_for('static', filename='images/onlineresources.png') }}" alt="Learning resources">
 					<h2>Learning Resources</h2>
 				</a>
 			</div>
@@ -81,16 +81,16 @@
 				</a>
 			</div>
 			<div class="homeImageContainer" id="homeImage3">
-				<a href="{{ url_for('learn') }}">
+				<a href="{{ url_for('profile') }}">
 					<img src="static/images/profilelogo.jpg" alt="Profile">
-					<h2>Learn</h2>
+					<h2>Profile</h2>
 				</a>
 			</div>
 
 			<div class="homeImageContainer" id="homeImage4">
-				<a href="{{ url_for('profile') }}">
+				<a href="{{ url_for('learn') }}">
 					<img src="static/images/onlineresources.png" alt="Learning resources">
-					<h2>Profile</h2>
+					<h2>Learn</h2>
 				</a>
 			</div>
 		</div>

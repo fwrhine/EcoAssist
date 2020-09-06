@@ -342,6 +342,14 @@ input[type="submit"] {
   padding-left: 50px;
 }
 
+.my-profile img {
+  width: 25%;
+  height: auto;
+  float: left;
+  padding-bottom: 100px;
+  padding-right: 30px;
+}
+
 /* ---------------------------- TABLE ----------------------------*/
 table {
   border-collapse: collapse;
