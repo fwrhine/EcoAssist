@@ -118,6 +118,14 @@ def logout():
     session['logged_in'] = False
     return redirect(url_for('home'))
 
+@app.route("/static/<path:filename>")
+def staticfiles(filename):
+    return send_from_directory(app.config["STATIC_FOLDER"], filename)
+
+
+@app.route("/media/<path:filename>")
+def mediafiles(filename):
+    return send_from_directory(app.config["MEDIA_FOLDER"], filename)
 
 @app.route("/upload", methods=["GET", "POST"])
 def upload_file():

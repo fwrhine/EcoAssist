@@ -1,21 +1,14 @@
-<nav class="navbar navbar-default navbar-static-top">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="{{ url_for('home') }}">EcoAssist</a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse" style='float:right'>
-      <ul class="nav navbar-nav" id="navbar-content">
-
-      </ul>
-    </div>
-  </div>
-</nav>
+<div class="loginContainer">
+  <a id=loginButton href="/logout" style="color: black">
+    <button class="loginButton">
+      <text id="buttonText">Logout</text>
+    </button>
+  </a>
+</div>
+<header>
+  <img src="static/images/friendlytree.jpg" alt="tree logo">
+  <h1>EcoAssist</h1>
+</header>
 
 <script>
   window.onload = function() {
@@ -23,31 +16,8 @@
 
     if (logged_in === "False") {
       console.log("not logged in");
-      $("#navbar-content").html(
-        "<li style='float:right'><a href='{{ url_for('loginPage') }}'>Login</a></li>"
-      );
-    }
-
-    var role = "{{ session['role'] }}";
-
-    if (logged_in === "True" && role === "student") {
-      console.log(role);
-      console.log(logged_in);
-      $("#navbar-content").html(
-        "<li style='float:right'><a href='{{ url_for('profile') }}'>{{ session['first_name'] }} {{ session['last_name'] }}</a></li>" +
-        "<li style='float:right'><a href='{{ url_for('learn') }}'>Learn</a></li>" +
-        "<li style='float:right'><a href='{{ url_for('leaderboard') }}'>Leaderboard</a></li>" +
-        "<li style='float:right'><a href='{{ url_for('task_list') }}'>Tasks</a></li>"
-      );
-    } else if (logged_in === "True" && role === 'teacher') {
-      console.log(role);
-      console.log(logged_in);
-      $("#navbar-content").html(
-        "<li style='float:right'><a href='{{ url_for('profile') }}'>{{ session['first_name'] }} {{ session['last_name'] }}</a></li>" +
-        "<li style='float:right'><a href='{{ url_for('leaderboard') }}'>Leaderboard</a></li>" +
-        "<li style='float:right'><a href='{{ url_for('task_list') }}'>Tasks</a></li>" +
-        "<li style='float:right'><a href='{{ url_for('class_list') }}'>Class</a></li>"
-      );
+      $("#buttonText").text('Login');
+      $("#loginButton").attr('href', '/login');
     }
   };
 </script>

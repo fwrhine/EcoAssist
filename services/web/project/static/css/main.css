@@ -1,7 +1,3 @@
-body {
-  width: 100%;
-}
-
 .wrapper {
   padding-top: 20px;
   width: 90%;
@@ -58,9 +54,286 @@ body {
 
 .btn-icon {
   margin-left: 20px;
-  display:inline-block;
+  display: inline-block;
   vertical-align: middle;
   cursor: pointer;
+}
+
+/* ---------------------------- NEW ----------------------------*/
+@font-face {
+  font-family: siteFont;
+  src: url(../font/Amaranth-Regular.ttf);
+}
+
+body, html {
+  height: 100%;
+}
+
+.background {
+  background-image: url(../images/environmentalbackground.jpg);
+  height: 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.contentContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.contentContainer h2 {
+  border-bottom: 1px solid #000000;
+}
+
+.content {
+  background-color: #FFFFFF;
+  width: 70%;
+  height: 90%;
+  margin-bottom: 1%;
+  border-radius: 49px;
+  display: inline-block;
+  text-align: center;
+}
+
+.inner-content {
+  height: 90%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h1, h2, label, button, input, .content {
+  font-family: siteFont, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+h2 {
+  padding-bottom: 10px;
+}
+
+label, button {
+  font-size: 1.2em;
+}
+
+/* ---------------------------- HEADER ----------------------------*/
+header {
+  background-color: #FFFFFF;
+  text-align: center;
+}
+
+header img {
+  vertical-align: middle;
+  height: 60px;
+}
+
+header h1 {
+  color: #000000;
+  text-align: center;
+  margin: auto;
+  display: inline;
+}
+
+/* ---------------------------- LOGIN ----------------------------*/
+.loginContainer {
+  text-align: right;
+}
+
+.loginButton {
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding-right: 20px;
+  padding-top: 10px;
+  background-color: #FFFFFF;
+  border: none;
+}
+
+/* ---------------------------- FORM ----------------------------*/
+
+label {
+  display: inline-block;
+  width: 120px;
+  text-align: left;
+}
+
+input[type=text], input[type=password], input[type=textarea], input[type="submit"], select {
+  background: #FFFFFF;
+  border: 3px solid #000000;
+  box-sizing: border-box;
+  border-radius: 39px;
+}
+
+input, select {
+  padding: 10px;
+  margin: 10px 10px 10px 10px;
+}
+
+input[type="submit"] {
+  padding: 10px 50px 10px 50px;
+  margin-bottom: 10px;
+}
+
+/* ---------------------------- NEXT SECTION ----------------------------*/
+.startButton {
+  background-color: #FFFFFF;
+  background-blend-mode: luminosity;
+  mix-blend-mode: normal;
+  border: 1px solid #FBF8F8;
+  box-sizing: border-box;
+  border-radius: 214px;
+  position: absolute;
+  text-align: center;
+  padding: 5px 110px 5px 110px;
+  left: 37%;
+}
+
+#teacherButton {
+  top: 45%;
+}
+
+#studentButton {
+  top: 55%;
+}
+
+#description {
+  height: 100px;
+  width: 500px;
+}
+
+.welcome {
+  width: 30%;
+  text-align: left;
+  padding-left: 50px;
+  padding-right: 50px;
+  border-right: 1px solid #000000;
+}
+
+.welcome h2 {
+  border: none;
+}
+
+.homeLinks {
+  width: 70%;
+}
+
+.homeImageContainer, .studentHomeImageContainer {
+  height: 50%;
+  width: 50%;
+  ;
+  text-align: center;
+  padding-top: 5px;
+}
+
+#homeImage1 {
+  left: 0;
+  top: 0;
+  float: left;
+}
+
+#homeImage2 {
+  left: 50%;
+  top: 0;
+  float: left;
+}
+
+#homeImage3 {
+  left: 0;
+  top: 50%;
+  float: left;
+}
+
+#homeImage4 {
+  left: 50%;
+  top: 50%;
+  float: left;
+}
+
+.homeImageContainer img {
+  height: 65%;
+  width: 50%;
+}
+
+.homeImageContainer h2 {
+  border: none;
+}
+
+.homeSidebar {
+  width: 15%;
+  text-align: center;
+  border-right: 1px solid #000000;
+  ;
+}
+
+.infoSection {
+  width: 85%;
+  text-align: center;
+}
+
+.infoContainer {
+  display: inline-flex;
+}
+
+.task {
+  width: 200px;
+  background: linear-gradient(180deg, #75C286 0%, rgba(255, 255, 255, 0) 100%), #A5FFB9;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.taskButton, .learnButton {
+  width: 150px;
+  background-color: #FFFFFF;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.homeSidebar h3 {
+  border-bottom: 1px solid #000000;
+}
+
+.infoSection select {
+  margin-right: 60px;
+}
+
+.viewTasks {
+  background: #FFC9C9;
+  border: 3px solid #000000;
+  box-sizing: border-box;
+  border-radius: 39px;
+  margin-bottom: 10px;
+}
+
+.deleteTask {
+  height: 5%;
+  width: 10%;
+}
+
+.jobComplete {
+  width: 150px;
+  background-color: green;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.learningResource {
+  width: 200px;
+  background: linear-gradient(180deg, #FFB03A 0%, rgba(255, 255, 255, 0) 100%), #FFE0A5;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+#learn1 img, #learn3 img {
+  width: 90%;
+}
+
+#learn2 img {
+  width: 70%;
 }
 
 /* ---------------------------- TABLE ----------------------------*/
@@ -82,27 +355,13 @@ tr:nth-child(even) {
 
 /*adding row numbers through css*/
 .css-serial {
-    counter-reset: serial-number; /* Set the serial number counter to 0 */
+  counter-reset: serial-number;
+  /* Set the serial number counter to 0 */
 }
 
 .css-serial td:first-child:before {
-    counter-increment: serial-number; /* Increment the serial number counter */
-    content: counter(serial-number); /* Display the counter */
-}
-
-/* ---------------------------- FOOTER ----------------------------*/
-footer p {
-  padding-top: 0px;
-  padding-bottom: 30px;
-  bottom:0px;
-  margin: 0 auto
-  position: absolute;
-  text-align: center;
-  flex: 0 0 50px;
-  margin-top: auto;
-}
-
-footer {
-  position:relative;
-  height: auto;
+  counter-increment: serial-number;
+  /* Increment the serial number counter */
+  content: counter(serial-number);
+  /* Display the counter */
 }

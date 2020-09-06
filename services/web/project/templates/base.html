@@ -24,9 +24,13 @@
 		</header>
 
 		<content>
-			{% block content %}
-			<!-- content goes here -->
-			{% endblock %}
+			<div class="background">
+				<div class="contentContainer">
+					{% block content %}
+					<!-- content goes here -->
+					{% endblock %}
+				</div>
+			</div>
 		</content>
 
 		{% with messages = get_flashed_messages() %}
@@ -38,12 +42,6 @@
 		</ul>
 		{% endif %}
 		{% endwith %}
-
-		<footer>
-			</br>
-			<p style='font-size: 80%'>DECO3801 Team Clueless</p>
-		</footer>
-
 	</body>
 
 	</html>
