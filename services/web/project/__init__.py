@@ -223,7 +223,41 @@ def resource_details(id):
 def class_list():
     teacher = Teacher.query.filter_by(email=session['username']).first()
     class_list = teacher.classes.all()
+    total_student = {}
+    for i in class_list:
+        class_no = i.class_no.all()
+        # print(i.class_id)
+        total = len(class_no)
+        # print(total)
+        total_student[i.class_id]=total
+        # print(new_list)
+    return render_template('class_list.html', class_list=class_list, total_student=total_student)
+
+@app.route("/manage")
+def manage():
+    teacher = Teacher.query.filter_by(email=session['username']).first()
+    class_list = teacher.classes.all()
     return render_template('class_list.html', class_list=class_list)
+
+
+@app.route("/manage/<id>")
+def manage_class(id):
+    print(id)
+
+    teacher_classes = TeacherClasses.query.filter_by(class_code=id).first()
+    print(teacher_classes)
+    class_no = teacher_classes.class_no.all()
+    print(class_no)
+    student_list=[]
+    for i in class_no:
+        print(i.student_id)
+        student = Student.query.get(i.student_id)
+        user = User.query.filter_by(email=student.email).first()
+        student_list.append(user)
+
+    print(student_list)
+
+    return render_template('student_list.html', student_list=student_list)
 
 
 @app.route('/create-class', methods=['GET', 'POST'])

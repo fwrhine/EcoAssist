@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class='wrapper'>
+  <h1>My Classes</h1>
+  <br>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>name</th>
+    </tr>
+    {% for student in student_list %}
+    <tr>
+      <td></td>
+      <td>{{student.first_name}}</td>
+      <td>
+     </td>
+    </tr>
+    {% endfor %}
+  </table>
+  <br>
+</div>
+{% endblock %}
