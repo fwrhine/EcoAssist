@@ -22,7 +22,7 @@ class RegisterForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     school = StringField('School', validators=[DataRequired()])
     class_code = StringField('Class Code')
-    submit = SubmitField('Create')
+    submit = SubmitField('Register')
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
