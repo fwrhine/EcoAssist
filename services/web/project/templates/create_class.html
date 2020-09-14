@@ -2,26 +2,29 @@
 
 {% block content %}
 <div class='content'>
-  <div class="homeSidebar">
+  <div class="side-bar-menu">
     <a href="{{ url_for('home') }}">
-    <h2>Home</h2>
+      <h2>Home</h2>
+    </a>
+    <a href="{{ url_for('class_list') }}">
+      <h2>My Classes</h2>
     </a>
   </div>
-  <div class="infoSection">
-  <h2>New Class</h2>
-  <br>
-  <form action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
-    <p>
-      {{ form.class_name.label }}
-      {{ form.class_name() }}
-      {% for error in form.class_name.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
+  <div class="inner-content">
+    <h2>New Class</h2>
     <br>
-    <p>{{ form.submit() }}</p>
-  </form>
-</div>
+    <form action="" method="post" novalidate>
+      {{ form.hidden_tag() }}
+      <p>
+        {{ form.class_name.label }}
+        {{ form.class_name() }}
+        {% for error in form.class_name.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+      </p>
+      <br>
+      <p>{{ form.submit() }}</p>
+    </form>
+  </div>
 </div>
 {% endblock %}

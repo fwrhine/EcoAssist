@@ -2,19 +2,12 @@ body, html {
   height: 100%;
 }
 
-.wrapper {
-  padding-top: 20px;
-  width: 90%;
-  margin: 0 100px auto;
-  min-height: 80vh;
-}
-
 @font-face {
   font-family: siteFont;
   src: url(../font/Amaranth-Regular.ttf);
 }
 
-/* ---------------------------- CONTAINERS ----------------------------*/
+/* ---------------------------- BASE CONTAINERS ----------------------------*/
 
 .background {
   background-image: url(../images/environmentalbackground.jpg);
@@ -38,7 +31,27 @@ body, html {
   text-align: center;
 }
 
-/* login and register page container
+/* Side menu */
+.side-bar-menu {
+  width: 15%;
+  height: 100%;
+  text-align: center;
+  border-right: 1px solid #000000;
+  float: left;
+}
+
+.side-bar-menu h2 {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+/* Right of sidebar */
+.inner-content {
+  width: 85%;
+  float: right;
+}
+
+/* Login and register page container
     (centering items with title header)*/
 .inner-content-login {
   height: 90%;
@@ -48,7 +61,7 @@ body, html {
   justify-content: center;
 }
 
-/* home page container
+/* Home page container
     (centering items without title header)*/
 .inner-content-home {
   height: 100%;
@@ -81,6 +94,39 @@ p, li {
 
 a {
   color: black;
+}
+
+/* ---------------------------- BUTTONS ----------------------------*/
+
+/* Button with icon */
+.btn-icon {
+  margin-left: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+/* Teachers, students start here button */
+.start-button {
+  background-color: #FFFFFF;
+  background-blend-mode: luminosity;
+  mix-blend-mode: normal;
+  border: 1px solid #FBF8F8;
+  box-sizing: border-box;
+  border-radius: 214px;
+  position: absolute;
+  text-align: center;
+  padding: 5px 110px 5px 110px;
+  left: 37%;
+  font-size: 1.2em;
+}
+
+#teacher-button {
+  top: 45%;
+}
+
+#student-button {
+  top: 55%;
 }
 
 /* ---------------------------- HEADER ----------------------------*/
@@ -154,35 +200,7 @@ input[type="submit"] {
 
 /* ---------------------------- HOME PAGE ----------------------------*/
 
-.btn-icon {
-  margin-left: 20px;
-  display: inline-block;
-  vertical-align: middle;
-  cursor: pointer;
-}
-
-.startButton {
-  background-color: #FFFFFF;
-  background-blend-mode: luminosity;
-  mix-blend-mode: normal;
-  border: 1px solid #FBF8F8;
-  box-sizing: border-box;
-  border-radius: 214px;
-  position: absolute;
-  text-align: center;
-  padding: 5px 110px 5px 110px;
-  left: 37%;
-  font-size: 1.2em;
-}
-
-#teacherButton {
-  top: 45%;
-}
-
-#studentButton {
-  top: 55%;
-}
-
+/* Welcome text section to the left */
 .welcome {
   width: 30%;
   height: 100%;
@@ -198,7 +216,8 @@ input[type="submit"] {
   border: none;
 }
 
-.homeLinks {
+/* Home page menu links */
+.home-links {
   width: 70%;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -206,14 +225,12 @@ input[type="submit"] {
   grid-row-gap: 16px;
 }
 
-.homeImageContainer, .studentHomeImageContainer {
+.homeImageContainer {
   /* To correctly align image, regardless of content height: */
   vertical-align: top;
   display: inline-block;
   /* To horizontally center images and caption */
   text-align: center;
-  /* The width of the container also implies margin around the images. */
-  /* width: 120px; */
 }
 
 .homeImageContainer img {
@@ -230,29 +247,6 @@ input[type="submit"] {
 
 /* ---------------------------- TASK LIST ----------------------------*/
 
-.homeSidebar {
-  width: 15%;
-  height: 100%;
-  text-align: center;
-  /* padding-left: 25px; */
-  border-right: 1px solid #000000;
-  float: left;
-}
-
-.homeSidebar h2 {
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-.infoSection {
-  width: 85%;
-  float: right;
-}
-
-.infoContainer {
-  display: inline-flex;
-}
-
 .task {
   width: 300px;
   /* background: linear-gradient(180deg, #75C286 0%, rgba(255, 255, 255, 0) 100%), #A5FFB9; */
@@ -263,7 +257,7 @@ input[type="submit"] {
   margin: 20px;
 }
 
-.taskButton {
+.task-button {
   width: 200px;
   background-color: #FFFFFF;
   border: none;
@@ -273,10 +267,6 @@ input[type="submit"] {
 
 .completed {
   background-color: #26c983;
-}
-
-.infoSection select {
-  margin-right: 60px;
 }
 
 /* ---------------------------- LEARN ----------------------------*/
@@ -296,7 +286,7 @@ input[type="submit"] {
   width: 80%;
 }
 
-.learnButton {
+.learn-button {
   width: 200px;
   background-color: #FFFFFF;
   border: none;

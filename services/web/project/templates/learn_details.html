@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class='content'>
-  <div class="homeSidebar">
+  <div class="side-bar-menu">
     <a href="{{ url_for('home') }}">
       <h2>Home</h2>
     </a>
@@ -13,13 +13,13 @@
       <h2>Learn</h2>
     </a>
   </div>
-  <div class="infoSection">
+  <div class="inner-content">
     <h2>Learn - {{resource.resource_title}}</h2>
     <br>
     <div class="learn">
       <h3>{{resource.resource_title}}</h3>
       {% if resource.resource_title == "Pollution" %}
-      <img src="{{ url_for('static', filename='images/pollution.jpg') }}"" alt="pollution">
+      <img src="{{ url_for('static', filename='images/pollution.jpg') }}"" alt=" pollution">
       {% elif resource.resource_title == "Deforestation" %}
       <img src="{{ url_for('static', filename='images/deforestation.png') }}" alt="deforestation">
       {% endif %}

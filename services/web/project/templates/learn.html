@@ -2,12 +2,12 @@
 
 {% block content %}
 <div class='content'>
-  <div class="homeSidebar">
+  <div class="side-bar-menu">
     <a href="{{ url_for('home') }}">
       <h2>Home</h2>
     </a>
   </div>
-  <div class="infoSection">
+  <div class="inner-content">
     <h2>Learn</h2>
     <br>
     {% for resource in resource_list %}
@@ -21,7 +21,7 @@
       <br>
       <br>
       <h4>{{resource.resource_detail}}</h4>
-      <button class="learnButton" onclick="location.href='{{ url_for('learn') }}/{{resource.resource_id}}'" name="learn-more" type="button">Learn More</button>
+      <button class="learn-button" onclick="location.href='{{ url_for('learn') }}/{{resource.resource_id}}'" name="learn-more" type="button">Learn More</button>
     </div>
     {% endfor %}
   </div>

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% block content %}
 
+{% block content %}
 {% if session['logged_in'] %}
 {% if session['role'] == "teacher" %}
 <div class="content">
@@ -27,7 +27,7 @@
 				<li>View personal information</li>
 			</ul>
 		</div>
-		<div class="homeLinks">
+		<div class="home-links">
 			<div class="homeImageContainer" id="homeImage1">
 				<a href="{{ url_for('class_list') }}">
 					<img src="{{ url_for('static', filename='images/classroomlogo.png') }}" alt="My classes">
@@ -67,7 +67,7 @@
 			<p><b>Learn</b> more to better understand the importance of these challenges.</p>
 			<p><b>Profile</b> view will display your personal information and achievements.</p>
 		</div>
-		<div class="homeLinks">
+		<div class="home-links">
 			<div class="homeImageContainer" id="homeImage1">
 				<a href="{{ url_for('task_list') }}">
 					<img src="static/images/shovel.png" alt="My classes">
@@ -99,16 +99,15 @@
 {% endif %}
 {% else %}
 <form action="{{ url_for('registerTeacher') }}" method="post">
-	<button class="startButton" id="teacherButton">
+	<button class="start-button" id="teacher-button">
 		<text>Teachers, Start Here</text>
 	</button>
 </form>
 
 <form action="{{ url_for('registerStudent') }}" method="post">
-	<button class="startButton" id="studentButton">
+	<button class="start-button" id="student-button">
 		<text>Students, Start Here</text>
 	</button>
 </form>
 {% endif %}
-
 {% endblock %}

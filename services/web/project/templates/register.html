@@ -4,55 +4,55 @@
 <div class='content'>
   <h2>Register - {% if session['role']=='teacher' %}Teacher{% else %}Student{% endif %}</h2>
   <div class='inner-content-login'>
-  <form action='' method="post" novalidate>
-    {{ form.hidden_tag() }}
-    <p>
-      {{ form.email.label }}
-      {{ form.email(size=32) }}
-      {% for error in form.email.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>
-      {{ form.first_name.label }}
-      {{ form.first_name(size=32) }}
-      {% for error in form.first_name.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>
-      {{ form.last_name.label }}
-      {{ form.last_name(size=32) }}
-      {% for error in form.last_name.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
+    <form action='' method="post" novalidate>
+      {{ form.hidden_tag() }}
+      <p>
+        {{ form.email.label }}
+        {{ form.email(size=32) }}
+        {% for error in form.email.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+      </p>
+      <p>
+        {{ form.first_name.label }}
+        {{ form.first_name(size=32) }}
+        {% for error in form.first_name.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+      </p>
+      <p>
+        {{ form.last_name.label }}
+        {{ form.last_name(size=32) }}
+        {% for error in form.last_name.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+      </p>
 
-    <p>
-      {{ form.password.label }}
-      {{ form.password(size=32) }}
-      {% for error in form.password.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>
-      {{ form.school.label }}
-      {{ form.school(size=32) }}
-      {% for error in form.school.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    {% if session['role'] == 'student' %}
-    <p>
-      {{ form.class_code.label }}
-      {{ form.class_code(size=32) }}
-      {% for error in form.class_code.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    {% endif %}
-    <p>{{ form.submit() }}</p>
-  </form>
+      <p>
+        {{ form.password.label }}
+        {{ form.password(size=32) }}
+        {% for error in form.password.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+      </p>
+      <p>
+        {{ form.school.label }}
+        {{ form.school(size=32) }}
+        {% for error in form.school.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+      </p>
+      {% if session['role'] == 'student' %}
+      <p>
+        {{ form.class_code.label }}
+        {{ form.class_code(size=32) }}
+        {% for error in form.class_code.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+      </p>
+      {% endif %}
+      <p>{{ form.submit() }}</p>
+    </form>
   </div>
 </div>
 {% endblock %}
