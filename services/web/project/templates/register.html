@@ -3,7 +3,7 @@
 {% block content %}
 <div class='content'>
   <h2>Register - {% if session['role']=='teacher' %}Teacher{% else %}Student{% endif %}</h2>
-  <div class='inner-content'>
+  <div class='inner-content-login'>
   <form action='' method="post" novalidate>
     {{ form.hidden_tag() }}
     <p>

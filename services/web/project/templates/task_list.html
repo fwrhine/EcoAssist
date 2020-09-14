@@ -4,24 +4,21 @@
 <div class='content'>
   <div class="homeSidebar">
     <a href="{{ url_for('home') }}">
-    <h2>Home</h2>
+      <h2>Home</h2>
     </a>
     {% if session['role'] == 'teacher' %}
     <a href="{{ url_for('create_task') }}">
-    <h2>New Task</h2>
+      <h2>New Task</h2>
     </a>
     {% endif %}
     {% if session['role'] == 'student' %}
     <a href="{{ url_for('leaderboard') }}">
-    <h2 style="font-size:25px;">Leaderboard</h2>
+      <h2 style="font-size:25px;">Leaderboard</h2>
     </a>
     {% endif %}
   </div>
   <div class="infoSection">
     <h2>Tasks</h2>
-    {% if session['role'] == 'teacher' %}
-    <br>
-    {% endif %}
     <div class="infoContainer">
       {% for task in tasks %}
       <div class="task">

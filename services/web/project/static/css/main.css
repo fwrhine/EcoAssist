@@ -1,3 +1,7 @@
+body, html {
+  height: 100%;
+}
+
 .wrapper {
   padding-top: 20px;
   width: 90%;
@@ -5,48 +9,12 @@
   min-height: 80vh;
 }
 
-.btn {
-  background-color: #38AD70;
-  color: white;
-  border: none;
-  width: 180px;
-  padding: 15px;
-  text-align: center;
-}
-
-.btn-task {
-  background-color: #FFFFFF;
-  border: none;
-  color: black;
-  width: 180px;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
-
-.btn:active .task-button {
-  background-color: #26c983;
-}
-
-.btn-icon {
-  margin-left: 20px;
-  display: inline-block;
-  vertical-align: middle;
-  cursor: pointer;
-}
-
-/* ---------------------------- NEW ----------------------------*/
 @font-face {
   font-family: siteFont;
   src: url(../font/Amaranth-Regular.ttf);
 }
 
-body, html {
-  height: 100%;
-}
+/* ---------------------------- CONTAINERS ----------------------------*/
 
 .background {
   background-image: url(../images/environmentalbackground.jpg);
@@ -55,17 +23,9 @@ body, html {
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-}
-
-.contentContainer {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
-}
-
-.contentContainer h2 {
-  border-bottom: 1px solid #000000;
 }
 
 .content {
@@ -78,7 +38,9 @@ body, html {
   text-align: center;
 }
 
-.inner-content {
+/* login and register page container
+    (centering items with title header)*/
+.inner-content-login {
   height: 90%;
   width: 100%;
   display: flex;
@@ -86,6 +48,8 @@ body, html {
   justify-content: center;
 }
 
+/* home page container
+    (centering items without title header)*/
 .inner-content-home {
   height: 100%;
   width: 100%;
@@ -94,6 +58,8 @@ body, html {
   justify-content: center;
 }
 
+/* ---------------------------- TEXT ----------------------------*/
+
 h1, h2, label, button, input, .content {
   font-family: siteFont, Helvetica, sans-serif;
   font-style: normal;
@@ -101,6 +67,7 @@ h1, h2, label, button, input, .content {
 }
 
 h2 {
+  border-bottom: 1px solid #000000;
   padding-bottom: 10px;
 }
 
@@ -134,12 +101,11 @@ header h1 {
   display: inline;
 }
 
-/* ---------------------------- LOGIN ----------------------------*/
-.loginContainer {
+.login-button-container {
   text-align: right;
 }
 
-.loginButton {
+.login-button {
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding-right: 20px;
   padding-top: 10px;
@@ -149,7 +115,7 @@ header h1 {
 
 /* ---------------------------- FORM ----------------------------*/
 
-label {
+form > p > label {
   display: inline-block;
   width: 120px;
   text-align: left;
@@ -161,11 +127,13 @@ label {
   text-align: center;
 }
 
-input[type=text], input[type=password], input[type=textarea], input[type="submit"], select {
+input, select {
   background: #FFFFFF;
   border: 3px solid #000000;
   box-sizing: border-box;
   border-radius: 39px;
+  padding: 10px;
+  margin: 10px 10px 10px 10px;
 }
 
 textarea {
@@ -178,11 +146,6 @@ textarea {
   padding: 10px;
 }
 
-input, select {
-  padding: 10px;
-  margin: 10px 10px 10px 10px;
-}
-
 input[type="submit"] {
   padding: 10px 50px 10px 50px;
   margin-bottom: 10px;
@@ -190,6 +153,13 @@ input[type="submit"] {
 }
 
 /* ---------------------------- HOME PAGE ----------------------------*/
+
+.btn-icon {
+  margin-left: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+}
 
 .startButton {
   background-color: #FFFFFF;
