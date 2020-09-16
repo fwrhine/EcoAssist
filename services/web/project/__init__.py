@@ -259,6 +259,47 @@ def manage_class(id):
 
     return render_template('student_list.html', student_list=student_list)
 
+@app.route("/student-task")
+def student_task():
+    teacher = Teacher.query.filter_by(email=session['username']).first()
+    class_list = teacher.classes.all()
+    return render_template('class_list.html', class_list=class_list)
+
+@app.route("/student-task/<id>")
+def student_task_list(id):
+    teacher = Teacher.query.filter_by(email=session['username']).first()
+    class_list = teacher.classes.all()
+    total_student = {}
+    for i in class_list:
+        class_no = i.class_no.all()
+        # print(i.class_id)
+        total = len(class_no)
+        # print(total)
+        total_student[i.class_id]=total
+
+    user = User.query.get(id)
+    student = user.student_email.first()
+    student_class = student.classes_student.first()
+    print(student_class)
+    task_list = Task.query.filter_by(class_id=student_class.class_id).all()
+    completed_task = student.student_task_done.all()
+    uncompleted = []
+    completeds = []
+    for task in task_list:
+        for completed in completed_task:
+            if task.task_id == completed.task_id:
+                completeds.append(task)
+            else:
+                uncompleted.append(task)
+
+    print(task_list)
+    print(uncompleted)
+    # for task in completed_task:
+    #     completeds.append(Task.query.get(task.task_id))
+    print(completeds)
+    return render_template('student_task_list.html', uncompleted=uncompleted,completed=completeds)
+
+
 
 @app.route('/create-class', methods=['GET', 'POST'])
 def create_class():

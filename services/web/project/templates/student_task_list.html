@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class='wrapper'>
+  <h1>Completed</h1>
+  <br>
+  <table>
+    <tr>
+      <th>Task Name</th>
+      <th>Task Point</th>
+    </tr>
+    {% for task in completed %}
+    <tr>
+      <td>{{task.task_name}}</td>
+      <td>{{task.points}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <h1>Uncompleted</h1>
+  <table>
+    <tr>
+      <th>Task Name</th>
+      <th>Task Point</th>
+    </tr>
+    {% for task in uncompleted %}
+    <tr>
+      <td>{{task.task_name}}</td>
+      <td>{{task.points}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <br>
+  <button class="btn-icon" onclick="location.href='{{ url_for('create_class') }}'">
+    New Class<i class="fa fa-plus" style="padding-left:10px;"></i></button>
+</div>
+{% endblock %}
