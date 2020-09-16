@@ -195,8 +195,9 @@ def task_completed():
         student_id=student_id, task_id=task_id).first()
 
     if existing is None:
-        task_complete = TaskComplete(student_id=student_id, task_id=task_id)
+        task_complete = TaskComplete(task_status = "pending", student_id=student_id, task_id=task_id)
         db.session.add(task_complete)
+        print("pending")
         status = "add"
     else:
         db.session.delete(existing)
@@ -267,16 +268,6 @@ def student_task():
 
 @app.route("/student-task/<id>")
 def student_task_list(id):
-    teacher = Teacher.query.filter_by(email=session['username']).first()
-    class_list = teacher.classes.all()
-    total_student = {}
-    for i in class_list:
-        class_no = i.class_no.all()
-        # print(i.class_id)
-        total = len(class_no)
-        # print(total)
-        total_student[i.class_id]=total
-
     user = User.query.get(id)
     student = user.student_email.first()
     student_class = student.classes_student.first()
@@ -285,21 +276,70 @@ def student_task_list(id):
     completed_task = student.student_task_done.all()
     uncompleted = []
     completeds = []
+    pending =[]
+    rejected=[]
+    print(len(completed_task))
     for task in task_list:
-        for completed in completed_task:
-            if task.task_id == completed.task_id:
-                completeds.append(task)
-            else:
-                uncompleted.append(task)
+        if len(completed_task)==0:
+            print("empty")
+            uncompleted.append(task)
+        else:
+            for completed in completed_task:
+                if task.task_id == completed.task_id and completed.task_status == "accepted":
+                    completeds.append(task)
+                    print("acp")
+                    break
+                elif task.task_id == completed.task_id and completed.task_status == "pending":
+                    pending.append(task)
+                    print("pen")
+                    break
+                elif task.task_id == completed.task_id and completed.task_status == "rejected":
+                    rejected.append(task)
+                    print("rej")
+                    break
+                else:
+                    if task not in uncompleted:
+                        uncompleted.append(task)
+                    # print("why")
+    print(completeds)
+    for task in uncompleted:
+        if task in completeds or task in rejected or task in pending:
+            uncompleted.remove(task)
 
     print(task_list)
     print(uncompleted)
     # for task in completed_task:
     #     completeds.append(Task.query.get(task.task_id))
     print(completeds)
-    return render_template('student_task_list.html', uncompleted=uncompleted,completed=completeds)
+    return render_template('student_task_list.html', uncompleted=uncompleted,completed=completeds, pending=pending, rejected=rejected)
 
+@app.route("/approve")
+def approve(id):
+    task = Task.query.get(id)
+    task.task_status = "accepted"
+    db.session.commit()
+    return redirect(url_for('.class_list'))
 
+@app.route("/approve/<id>")
+def approve_task(id):
+    task = TaskComplete.query.get(id)
+    task.task_status = "accepted"
+    db.session.commit()
+    return redirect(url_for('.class_list'))
+
+@app.route("/reject")
+def reject(id):
+    task = Task.query.get(id)
+    task.task_status = "accepted"
+    db.session.commit()
+    return redirect(url_for('.class_list'))
+
+@app.route("/reject/<id>")
+def reject_task(id):
+    task = TaskComplete.query.get(id)
+    task.task_status = "rejected"
+    db.session.commit()
+    return redirect(url_for('.class_list'))
 
 @app.route('/create-class', methods=['GET', 'POST'])
 def create_class():

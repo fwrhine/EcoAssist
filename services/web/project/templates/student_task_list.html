@@ -28,8 +28,37 @@
     </tr>
     {% endfor %}
   </table>
+  <h1>Pending</h1>
+  <table>
+    <tr>
+      <th>Task Name</th>
+      <th>Task Point</th>
+      <th>Approve</th>
+    </tr>
+    {% for task in pending %}
+    <tr>
+      <td>{{task.task_name}}</td>
+      <td>{{task.points}}</td>
+      <td>
+      <button class="btn-task" onclick="location.href='{{ url_for('approve') }}/{{task.task_id}}'" type="button">Yes</button>
+      <button class="btn-task" onclick="location.href='{{ url_for('reject') }}/{{task.task_id}}'" type="button">No</button>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  <h1>Rejected</h1>
+  <table>
+    <tr>
+      <th>Task Name</th>
+      <th>Task Point</th>
+    </tr>
+    {% for task in rejected %}
+    <tr>
+      <td>{{task.task_name}}</td>
+      <td>{{task.points}}</td>
+    </tr>
+    {% endfor %}
+  </table>
   <br>
-  <button class="btn-icon" onclick="location.href='{{ url_for('create_class') }}'">
-    New Class<i class="fa fa-plus" style="padding-left:10px;"></i></button>
 </div>
 {% endblock %}

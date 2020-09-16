@@ -97,6 +97,7 @@ class TaskComplete(db.Model):
     __tablename__ = 'task_complete'
 
     task_complete_id = db.Column(db.Integer, primary_key=True)
+    task_status = db.Column(db.String(50), nullable=False)
 
     student_id = db.Column(db.Integer, db.ForeignKey(
         'students.student_id'), nullable=False)
