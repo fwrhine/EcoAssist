@@ -11,7 +11,7 @@ body, html {
 
 .background {
   background-image: url(../images/environmentalbackground.jpg);
-  height: 90%;
+  min-height: 90%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -24,11 +24,13 @@ body, html {
 .content {
   background-color: #FFFFFF;
   width: 70%;
-  height: 90%;
+  min-height: 90%;
   margin-bottom: 1%;
   border-radius: 49px;
   display: inline-block;
   text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 /* Side menu */
