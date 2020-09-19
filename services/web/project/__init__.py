@@ -287,30 +287,37 @@ def student_task_list(id):
             for completed in completed_task:
                 if task.task_id == completed.task_id and completed.task_status == "accepted":
                     completeds.append(task)
-                    print("acp")
+                    print("acp " +task.task_name)
                     break
                 elif task.task_id == completed.task_id and completed.task_status == "pending":
                     pending.append(task)
-                    print("pen")
+                    print("pen "+task.task_name)
                     break
                 elif task.task_id == completed.task_id and completed.task_status == "rejected":
                     rejected.append(task)
-                    print("rej")
+                    print("rej " +task.task_name)
                     break
                 else:
                     if task not in uncompleted:
                         uncompleted.append(task)
-                    # print("why")
-    print(completeds)
-    for task in uncompleted:
+                        print("why "+task.task_name)
+    print("uncompleted")
+    print(uncompleted)
+    print("pending")
+    print(pending)
+    for task in uncompleted[:]:
+        print(task.task_name)
         if task in completeds or task in rejected or task in pending:
             uncompleted.remove(task)
+            print("remove "+task.task_name)
 
-    print(task_list)
+    print("uncompleted")
     print(uncompleted)
     # for task in completed_task:
     #     completeds.append(Task.query.get(task.task_id))
     print(completeds)
+    print("req")
+    print(request.url)
     return render_template('student_task_list.html', uncompleted=uncompleted,completed=completeds, pending=pending, rejected=rejected)
 
 @app.route("/approve")
