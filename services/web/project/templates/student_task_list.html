@@ -40,8 +40,8 @@
       <td>{{task.task_name}}</td>
       <td>{{task.points}}</td>
       <td>
-      <button class="btn-task" onclick="location.href='{{ url_for('approve') }}/{{task.task_id}}'" type="button">Yes</button>
-      <button class="btn-task" onclick="location.href='{{ url_for('reject') }}/{{task.task_id}}'" type="button">No</button>
+      <button class="btn-task" onclick="location.href='{{ url_for('approve') }}/{{pending[task]}}'" type="button">Yes</button>
+      <button class="btn-task" onclick="location.href='{{ url_for('reject') }}/{{pending[task]}}'" type="button">No</button>
       </td>
     </tr>
     {% endfor %}

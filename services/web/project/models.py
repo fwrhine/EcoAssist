@@ -89,6 +89,7 @@ class Task(db.Model):
         'teachers.teacher_id'), nullable=False)
     resource_id = db.Column(db.Integer, db.ForeignKey(
         'resource.resource_id'), nullable=False)
+    required_approval = db.Column(db.Boolean, nullable=False)
 
     task_done = db.relationship('TaskComplete', backref='task', lazy='dynamic')
 

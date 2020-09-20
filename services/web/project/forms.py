@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, IntegerField, SubmitField, SelectField, PasswordField
+from wtforms import StringField, TextAreaField, IntegerField, SubmitField, SelectField, PasswordField, BooleanField
 from wtforms.validators import DataRequired, InputRequired, Email, ValidationError
 from .models import User
 
@@ -12,6 +12,8 @@ class TaskForm(FlaskForm):
         'Theme', coerce=int, validators=[InputRequired()])
     class_id = SelectField('For Class', coerce=int,
                            validators=[InputRequired()])
+    required_approval = BooleanField('Required Approval')
+
     submit = SubmitField('Create')
 
 

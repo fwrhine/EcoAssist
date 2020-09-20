@@ -144,7 +144,8 @@ def create_task():
 
     if form.validate_on_submit():
         task = Task(task_name=form.title.data, task_detail=form.details.data, points=form.points.data,
-                    class_id=form.class_id.data, resource_id=form.resource_id.data, teacher=teacher)
+                    class_id=form.class_id.data, resource_id=form.resource_id.data, teacher=teacher, 
+                    required_approval=form.required_approval.data)
         db.session.add(task)
         db.session.commit()
         return redirect(url_for('.task_list'))
@@ -190,15 +191,22 @@ def task_completed():
     task_id = request.form.get("task_id")
     student = Student.query.filter_by(email=session['username']).first()
     student_id = student.student_id
+    task = Task.query.get(task_id)
 
     existing = TaskComplete.query.filter_by(
         student_id=student_id, task_id=task_id).first()
 
     if existing is None:
-        task_complete = TaskComplete(task_status = "pending", student_id=student_id, task_id=task_id)
-        db.session.add(task_complete)
-        print("pending")
-        status = "add"
+        if task.required_approval:
+            task_complete = TaskComplete(task_status = "pending", student_id=student_id, task_id=task_id)
+            db.session.add(task_complete)
+            print("pending")
+            status = "add"
+        else:
+            task_complete = TaskComplete(task_status = "accepted", student_id=student_id, task_id=task_id)
+            db.session.add(task_complete)
+            print("pending")
+            status = "add"
     else:
         db.session.delete(existing)
         status = "delete"
@@ -218,7 +226,6 @@ def learn():
 def resource_details(id):
     resource = Resource.query.get(id)
     return render_template('learn_details.html', learn=resource)
-
 
 @app.route("/class")
 def class_list():
@@ -249,14 +256,22 @@ def manage_class(id):
     print(teacher_classes)
     class_no = teacher_classes.class_no.all()
     print(class_no)
-    student_list=[]
+   
+    student_list = {}
     for i in class_no:
+        total = 0 
         print(i.student_id)
         student = Student.query.get(i.student_id)
+        all_task = student.student_task_done.all()
+        print(all_task)
+        for task in all_task:
+            print(task.task_status)
+            if task.task_status == "pending":
+                total +=1
         user = User.query.filter_by(email=student.email).first()
-        student_list.append(user)
-
-    print(student_list)
+        print(total)
+        new = {user:total}
+        student_list.update(new)
 
     return render_template('student_list.html', student_list=student_list)
 
@@ -276,7 +291,8 @@ def student_task_list(id):
     completed_task = student.student_task_done.all()
     uncompleted = []
     completeds = []
-    pending =[]
+    pending ={}
+    pending_list=[]
     rejected=[]
     print(len(completed_task))
     for task in task_list:
@@ -287,37 +303,39 @@ def student_task_list(id):
             for completed in completed_task:
                 if task.task_id == completed.task_id and completed.task_status == "accepted":
                     completeds.append(task)
-                    print("acp " +task.task_name)
+                    # print("acp " +task.task_name)
                     break
                 elif task.task_id == completed.task_id and completed.task_status == "pending":
-                    pending.append(task)
-                    print("pen "+task.task_name)
+                    pending_list.append(task)
+                    new = {task:completed.task_complete_id}
+                    pending.update(new)
+                    # print("pen "+task.task_name)
                     break
                 elif task.task_id == completed.task_id and completed.task_status == "rejected":
                     rejected.append(task)
-                    print("rej " +task.task_name)
+                    # print("rej " +task.task_name)
                     break
                 else:
                     if task not in uncompleted:
                         uncompleted.append(task)
-                        print("why "+task.task_name)
-    print("uncompleted")
-    print(uncompleted)
-    print("pending")
-    print(pending)
+                        # print("why "+task.task_name)
+    # print("uncompleted")
+    # print(uncompleted)
+    # print("pending")
+    # print(pending)
     for task in uncompleted[:]:
-        print(task.task_name)
+        # print(task.task_name)
         if task in completeds or task in rejected or task in pending:
             uncompleted.remove(task)
-            print("remove "+task.task_name)
+            # print("remove "+task.task_name)
 
-    print("uncompleted")
-    print(uncompleted)
+    # print("uncompleted")
+    # print(uncompleted)
     # for task in completed_task:
     #     completeds.append(Task.query.get(task.task_id))
-    print(completeds)
-    print("req")
-    print(request.url)
+    # print(completeds)
+    # print("req")
+    # print(request.url)
     return render_template('student_task_list.html', uncompleted=uncompleted,completed=completeds, pending=pending, rejected=rejected)
 
 @app.route("/approve")
@@ -388,8 +406,10 @@ def leaderboard():
             points = 0
             all_task_completed = TaskComplete.query.filter_by(student_id=i.student_id).all()
             for j in all_task_completed:
-                task = Task.query.filter_by(task_id=j.task_id).first()
-                points += task.points
+                print(j.task_status)
+                if j.task_status == "accepted":
+                    task = Task.query.filter_by(task_id=j.task_id).first()
+                    points += task.points
 
             current_student = Student.query.filter_by(student_id=i.student_id).first()
             current_user = User.query.filter_by(email=current_student.email).first()
@@ -413,8 +433,9 @@ def leaderboard():
             for j in all_members:
                 all_task_completed = TaskComplete.query.filter_by(student_id=j.student_id).all()
                 for k in all_task_completed:
-                    task = Task.query.filter_by(task_id=k.task_id).first()
-                    points += task.points
+                    if k.task_status == "accepted":
+                        task = Task.query.filter_by(task_id=k.task_id).first()
+                        points += task.points
             new = {i.class_id:(i.class_name, points)}
             # key being class_id instead of name is intentional
             leaderboard.update(new)
@@ -446,8 +467,9 @@ def profile():
                 points = 0
                 all_task_completed = TaskComplete.query.filter_by(student_id=i.student_id).all()
                 for j in all_task_completed:
-                    task = Task.query.filter_by(task_id=j.task_id).first()
-                    points += task.points
+                    if j.task_status == "accepted":
+                        task = Task.query.filter_by(task_id=j.task_id).first()
+                        points += task.points
                 print(points)
                 new = {i.student_id:points}
                 leaderboard.update(new)

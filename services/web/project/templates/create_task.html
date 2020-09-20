@@ -38,7 +38,15 @@
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}
     </p>
+    <p>
+      {{ form.required_approval.label }}<br>
+      {{ form.required_approval() }}
+      {% for error in form.class_id.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
     <br>
+    
     <p>{{ form.submit() }}</p>
   </form>
 </div>
