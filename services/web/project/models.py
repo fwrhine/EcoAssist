@@ -47,6 +47,8 @@ class Student(db.Model):
         'TaskComplete', backref='student', lazy='dynamic')
     student_points = db.relationship(
         'Points', backref='student', lazy='dynamic')
+    studentbadges = db.relationship(
+        'Badge', backref='student', lazy='dynamic')
 
 
 class TeacherClasses(db.Model):
@@ -123,5 +125,18 @@ class Points(db.Model):
 
     date = db.Column(db.DateTime, nullable=False)
     points = db.Column(db.Integer,  nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey(
+        'students.student_id'), nullable=False)
+
+
+class Badge(db.Model):
+    __tablename__ = 'badges'
+
+    badge_no = db.Column(db.Integer, primary_key=True)
+
+    #not sure what if this part necessary
+    # badge_image = db.Column(db.LargeBinary, nullable=False)
+    badge_id = db.Column(db.Integer, nullable=False)
+    badge_location = db.Column(db.String(128), nullable=False)
     student_id = db.Column(db.Integer, db.ForeignKey(
         'students.student_id'), nullable=False)

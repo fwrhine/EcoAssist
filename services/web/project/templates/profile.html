@@ -17,8 +17,20 @@
             </p>
             {% endfor %}
         </div>
-        <p>points: {{points}}</p>
-        <p>ranking: {{ranking}} / {{total}}</p>
+        <div>
+            <p>points: {{points}}</p>
+        </div>
+        
+        <div>
+            <p>ranking: {{ranking}} / {{total}}</p>
+        </div>
+        <div>
+            <p>badges:</p>
+            {%for y in badge:%}
+            <img src={{y.badge_location}}>
+            {% endfor %}
+            <!-- <img src={{badge[0].badge_location}}> -->
+        </div>
 
         
 

@@ -18,6 +18,7 @@ from flask import (
 from flask_sqlalchemy import SQLAlchemy
 from .models import *
 from .forms import *
+# from badges import *
 
 
 app = Flask(__name__)
@@ -273,8 +274,98 @@ def profile():
                     break
 
             # return render_template('student_leaderboard.html', leaderboard=sorted_leaderboard)
-
+            badges_owned = get_all_badges(student.student_id)
+            print("badges owned:")
+            for x in badges_owned:
+                print(x.badge_location)
             return render_template('profile.html', email=session['username'], first_name=session['first_name'], last_name=session['last_name'], 
-                                        role="Student", school=session['school'], leaderboard=sorted_leaderboard, ranking=rank, total=len(leaderboard), points=point)
+                                        role="Student", school=session['school'], leaderboard=sorted_leaderboard, ranking=rank, total=len(leaderboard), points=point,
+                                        badge=badges_owned)
 
 
+
+
+# @app.route('/create-task', methods=['GET', 'POST'])
+# def create_task():
+#     teacher = Teacher.query.filter_by(email=session['username']).first()
+#     available_classes = teacher.classes.all()
+#     class_list = [(i.class_id, i.class_name) for i in available_classes]
+
+#     available_resource = Resource.query.all()
+#     resource_list = [(i.resource_id, i.resource_title)
+#                      for i in available_resource]
+
+#     form = TaskForm()
+#     form.resource_id.choices = resource_list
+#     form.class_id.choices = class_list
+
+#     if form.validate_on_submit():
+#         task = Task(task_name=form.title.data, task_detail=form.details.data,
+#                     task_reason=form.reason.data, points=form.points.data,
+#                     class_id=form.class_id.data, resource_id=form.resource_id.data, teacher=teacher)
+#         db.session.add(task)
+#         db.session.commit()
+#         return redirect(url_for('.task_list'))
+#     return render_template('create_task.html', form=form)
+
+
+@app.route('/award0', methods=['GET', 'POST'])
+def give_class_award():
+    teacher = Teacher.query.filter_by(email=session['username']).first()
+    available_classes = teacher.classes.all()
+    class_list = [(i.class_id, i.class_name) for i in available_classes]
+
+    form = ChooseClassForm()
+    form.class_id.choices = class_list
+
+    if form.validate_on_submit():
+        session['award_class_id'] = form.class_id.data
+        # session['award_class_name'] = form.class_id.data
+        # print('confirmed form......')
+        # print(session['award_class_id'])
+        # print(session['award_class_name'])
+        return redirect(url_for('.give_award'))
+
+    return render_template('award0.html', form=form)
+
+
+@app.route('/award', methods=['GET', 'POST'])
+def give_award():
+
+    form = AwardForm()
+    # form.class_id.choices = class_list
+
+    available_students = ClassMembers.query.filter_by(class_id=session['award_class_id']).all()
+
+    # print(available_students.first().student_id)
+    # student_id_0 = available_students.first().student_id
+    # student = Student.query.filter_by(student_id=student_id_0)
+    # email_0 = student.first().email
+    # print(student.first().email)    
+    # user = User.query.filter_by(email=email_0).first()
+    # print(user.first_name + user.last_name)
+
+    student_list = []
+
+    for x in available_students:
+        student_id_x = x.student_id
+        student_x = Student.query.filter_by(student_id=student_id_x)
+        email_x = student_x.first().email
+        user = User.query.filter_by(email=email_x).first()
+        name = user.first_name + user.last_name
+        student_list.append((student_id_x, name))
+
+
+    form.student_names.choices = student_list
+
+
+    # 2 conditions: 
+    # first : for individual students. Student field must be filled out
+    # second: for entire class. Leave student field blank
+
+    return render_template('award.html', form=form, class_name=session['award_class_id'])
+
+
+def get_all_badges(id):
+    badge_owned = Badge.query.filter_by(student_id=id).all()
+    return badge_owned
