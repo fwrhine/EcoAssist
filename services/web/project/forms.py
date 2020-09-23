@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, IntegerField, SubmitField, SelectField, PasswordField, BooleanField
 from wtforms.validators import DataRequired, InputRequired, Email, ValidationError
-from .models import User
+from .models import User, TeacherClasses
 
 
 class TaskForm(FlaskForm):
@@ -41,3 +41,14 @@ class LoginForm(FlaskForm):
 class ClassForm(FlaskForm):
     class_name = StringField('Class Name', validators=[DataRequired()])
     submit = SubmitField('Create')
+
+class StudentClassForm(FlaskForm):
+    class_code = StringField('Class Code', validators=[DataRequired()])
+    submit = SubmitField('Create')
+    def validate_class_code(self, class_code):
+        print("check")
+        teacher_classes = TeacherClasses.query.filter_by(class_code=class_code.data).first()
+        print(teacher_classes)
+        if teacher_classes is None:
+            print("doesnt")
+            raise ValidationError("Class doesn't exist")

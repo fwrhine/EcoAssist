@@ -29,8 +29,9 @@
     }
 
     var role = "{{ session['role'] }}";
+    var status  = "{{session['status']}}"
 
-    if (logged_in === "True" && role === "student") {
+    if (logged_in === "True" && role === "student" && status === "accepted") {
       console.log(role);
       console.log(logged_in);
       $("#navbar-content").html(

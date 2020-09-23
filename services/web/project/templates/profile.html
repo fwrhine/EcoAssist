@@ -16,15 +16,33 @@
       {%for x in classes%}
       <li style="padding-left:20px;">{{x.class_name}}</li>
       {% endfor %}
-      {% elif session['role'] == 'student' %}
+      {% elif session['role'] == 'student' and student_status == 'accepted' %}
       <p>Class: {{ class_name }}</p>
       {% endif %}
     </div>
-    {% if session['role'] == 'student' %}
+    {% if session['role'] == 'student' and student_status == 'accepted' %}
     <p>Points: {{points}}</p>
     <p>Ranking: {{ranking}} / {{total}}</p>
-    {% endif %}
+    {% elif session['role'] == 'student' and student_status == 'pending' %}
+    <p>Wait for Approval</p>
+    {% elif session['role'] == 'student' and student_status == 'empty' %}
+    <form class="p-4 bg-light" action='' method="post" novalidate>
+      {{ form.hidden_tag() }}
+      <p>
+        {{ form.class_code.label }}<br>
+        {{ form.class_code(size=32) }}
+        {% for error in form.class_code.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+      </p>
+      <p>{{ form.submit() }}</p>
+    </form>
   </div>
+  {%elif session['role'] == 'teacher'%}
+  <p></p> 
+  {% else %}
+  <p>rejected</p>
+  {% endif %}
   <br>
   <form class="p-4 bg-light" action='/logout ' method="post">
     <button type="submit" class="btn btn-primary" style='background-color: #d42008'>Logout</button>

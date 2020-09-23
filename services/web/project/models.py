@@ -40,7 +40,6 @@ class Student(db.Model):
     student_id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(128), db.ForeignKey(
         'users.email'), nullable=False)
-
     classes_student = db.relationship(
         'ClassMembers', backref='student', lazy='dynamic')
     student_task_done = db.relationship(
@@ -68,7 +67,7 @@ class ClassMembers(db.Model):
     __tablename__ = 'class_members'
 
     class_member_id = db.Column(db.Integer, primary_key=True)
-
+    student_status = db.Column(db.String(50), nullable=False)
     class_id = db.Column(db.Integer, db.ForeignKey(
         'teacher_classes.class_id'), nullable=False)
     student_id = db.Column(db.Integer, db.ForeignKey(

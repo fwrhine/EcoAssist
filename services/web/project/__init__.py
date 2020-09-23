@@ -29,6 +29,7 @@ app.secret_key = "development-key"
 
 @app.route("/")
 def home():
+    # session['logged_in'] = False
     return render_template("home.html")
 
 
@@ -57,7 +58,22 @@ def loginPage():
                 session['last_name'] = last_name
                 session['role'] = role
                 session['school'] = school
+                if role == 'student':
+                    student = Student.query.filter_by(email=username).first()
+                    class_members = student.classes_student.first()
+                    session['status'] = class_members.student_status
+                    if class_members.student_status == "accepted":
+                        return redirect(url_for('home'))
+                    else:
+                        return redirect(url_for('.profile'))  
+
+                    # if student.student_status == 'accepted':
+                    #     return redirect(url_for('home'))
+                    # else:
+                    #     return redirect(url_for('.profile'))           
                 return redirect(url_for('home'))
+        print("Fail1")
+    print("Fail2")      
     return render_template("login.html", form=form)
 
 
@@ -81,19 +97,28 @@ def register():
             session['school'] = form.school.data
         else:
             print("add student to database")
-            student = Student(email=form.email.data)
-            teacher_classes = TeacherClasses.query.filter_by(
-                class_code=form.class_code.data).first()
-            class_member = ClassMembers(
-                class_=teacher_classes, student=student)
-            db.session.add(student)
-            db.session.add(class_member)
-            db.session.commit()
             session['logged_in'] = True
             session['username'] = form.email.data
             session['first_name'] = form.first_name.data
             session['last_name'] = form.last_name.data
             session['school'] = form.school.data
+            student = Student(email=form.email.data)
+
+            if form.class_code.data:
+                print("exist")
+                teacher_classes = TeacherClasses.query.filter_by(
+                    class_code=form.class_code.data).first()
+                class_member = ClassMembers(class_=teacher_classes, student=student, student_status="pending")
+                session['status']="pending"
+                db.session.add(class_member)
+                db.session.add(student)
+                db.session.commit()
+                return redirect(url_for('.profile'))
+            else:
+                db.session.add(student)
+                db.session.commit()
+                return redirect(url_for('.profile'))
+           
         return redirect(url_for('home'))
     else:
         print("this")
@@ -221,7 +246,6 @@ def learn():
     print(resource_list)
     return render_template('learn.html', resource_list=resource_list)
 
-
 @app.route("/learn/<id>")
 def resource_details(id):
     resource = Resource.query.get(id)
@@ -241,13 +265,6 @@ def class_list():
         # print(new_list)
     return render_template('class_list.html', class_list=class_list, total_student=total_student)
 
-@app.route("/manage")
-def manage():
-    teacher = Teacher.query.filter_by(email=session['username']).first()
-    class_list = teacher.classes.all()
-    return render_template('class_list.html', class_list=class_list)
-
-
 @app.route("/manage/<id>")
 def manage_class(id):
     print(id)
@@ -260,29 +277,29 @@ def manage_class(id):
     student_list = {}
     for i in class_no:
         total = 0 
+        status = []
         print(i.student_id)
         student = Student.query.get(i.student_id)
+        class_members = student.classes_student.first() 
         all_task = student.student_task_done.all()
-        print(all_task)
+        # print(all_task)
         for task in all_task:
-            print(task.task_status)
+            # print(task.task_status)
             if task.task_status == "pending":
                 total +=1
+        status.append(class_members.student_status)
+        status.append(total)
+        print(status[0])
         user = User.query.filter_by(email=student.email).first()
-        print(total)
-        new = {user:total}
+        # print(total)
+        new = {user:status}
         student_list.update(new)
 
     return render_template('student_list.html', student_list=student_list)
 
-@app.route("/student-task")
-def student_task():
-    teacher = Teacher.query.filter_by(email=session['username']).first()
-    class_list = teacher.classes.all()
-    return render_template('class_list.html', class_list=class_list)
-
 @app.route("/student-task/<id>")
-def student_task_list(id):
+def student_task(id):
+    print(id)
     user = User.query.get(id)
     student = user.student_email.first()
     student_class = student.classes_student.first()
@@ -290,7 +307,7 @@ def student_task_list(id):
     task_list = Task.query.filter_by(class_id=student_class.class_id).all()
     completed_task = student.student_task_done.all()
     uncompleted = []
-    completeds = []
+    completeds = [] 
     pending ={}
     pending_list=[]
     rejected=[]
@@ -318,53 +335,47 @@ def student_task_list(id):
                 else:
                     if task not in uncompleted:
                         uncompleted.append(task)
-                        # print("why "+task.task_name)
-    # print("uncompleted")
-    # print(uncompleted)
-    # print("pending")
-    # print(pending)
-    for task in uncompleted[:]:
-        # print(task.task_name)
-        if task in completeds or task in rejected or task in pending:
-            uncompleted.remove(task)
-            # print("remove "+task.task_name)
 
-    # print("uncompleted")
-    # print(uncompleted)
-    # for task in completed_task:
-    #     completeds.append(Task.query.get(task.task_id))
-    # print(completeds)
-    # print("req")
-    # print(request.url)
+    for task in uncompleted[:]:
+        if task in completeds or task in rejected or task in pending_list:
+            uncompleted.remove(task)
+            
+
     return render_template('student_task_list.html', uncompleted=uncompleted,completed=completeds, pending=pending, rejected=rejected)
 
-@app.route("/approve")
-def approve(id):
-    task = Task.query.get(id)
-    task.task_status = "accepted"
-    db.session.commit()
-    return redirect(url_for('.class_list'))
-
-@app.route("/approve/<id>")
+@app.route("/approve-task/<id>")
 def approve_task(id):
     task = TaskComplete.query.get(id)
     task.task_status = "accepted"
     db.session.commit()
-    return redirect(url_for('.class_list'))
+    return jsonify(status='ok')
 
-@app.route("/reject")
-def reject(id):
-    task = Task.query.get(id)
-    task.task_status = "accepted"
-    db.session.commit()
-    return redirect(url_for('.class_list'))
-
-@app.route("/reject/<id>")
+@app.route("/reject-task/<id>")
 def reject_task(id):
     task = TaskComplete.query.get(id)
     task.task_status = "rejected"
     db.session.commit()
-    return redirect(url_for('.class_list'))
+    return jsonify(status='ok')
+
+@app.route("/approve-student/<id>")
+def approve_student(id):
+    user = User.query.get(id)
+    student = user.student_email.first()
+    class_members = student.classes_student.first()
+    class_members.student_status = "accepted"
+    db.session.commit()
+    return jsonify(status='ok')
+
+
+@app.route("/reject-student/<id>")
+def reject_student(id):
+    user = User.query.get(id)
+    student = user.student_email.first()
+    class_members = student.classes_student.first()
+    class_members.student_status = "rejected"
+    db.session.commit()
+    return jsonify(status='ok')
+
 
 @app.route('/create-class', methods=['GET', 'POST'])
 def create_class():
@@ -443,18 +454,32 @@ def leaderboard():
         sorted_leaderboard = sorted(leaderboard.items(), key=lambda x: x[1][1], reverse=True)
         return render_template('teacher_leaderboard.html',leaderboard=sorted_leaderboard)
 
-@app.route("/profile")
+@app.route("/profile", methods=['POST', 'GET'])
 def profile():
+    form = StudentClassForm()
+    if form.validate_on_submit():
+        print(form.data['class_code'])
+
+        class_code = form.data['class_code']
+        teacher_classes = TeacherClasses.query.filter_by(class_code=class_code).first()
+        student = Student.query.filter_by(email=session['username']).first()
+        class_member = ClassMembers(class_=teacher_classes, student=student, student_status="pending")
+        session['status']="pending"
+        db.session.add(class_member) 
+        db.session.commit()
+        print("done")
+
     if (session['role'] == "teacher"):
         teacher = Teacher.query.filter_by(email=session['username']).first()
         class_list = teacher.classes.all()
         return render_template('profile.html', email=session['username'], first_name=session['first_name'], last_name=session['last_name'],
                                     role="Teacher", school=session['school'], classes=class_list)
     else:
-        if session['role']=="student":
-            student = Student.query.filter_by(email=session['username']).first()
-            print('student id : ' + str(student.student_id))
-            class_members = student.classes_student.first()
+        student = Student.query.filter_by(email=session['username']).first()
+        class_members = student.classes_student.first() 
+                    
+        print('student id : ' + str(student.student_id))
+        if class_members and class_members.student_status == "accepted":
             print(class_members.class_id)
             all_members = ClassMembers.query.filter_by(class_id=class_members.class_id).all()
             print(all_members)
@@ -490,4 +515,14 @@ def profile():
             return render_template('profile.html', email=session['username'],
                 first_name=session['first_name'], last_name=session['last_name'],
                 role="Student", school=session['school'], leaderboard=sorted_leaderboard,
-                ranking=rank, total=len(leaderboard), points=point, class_name=class_name)
+                ranking=rank, total=len(leaderboard), points=point, class_name=class_name, student_status=class_members.student_status)
+        else:
+            if class_members:
+                status = class_members.student_status
+            else:
+                status = "empty"
+            print(status)
+            return render_template('profile.html', email=session['username'],
+                first_name=session['first_name'], last_name=session['last_name'],
+                role="Student", school=session['school'], student_status=status, form=form)
+            

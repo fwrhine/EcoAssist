@@ -18,7 +18,7 @@
       <td>{{class.class_code}}</td>
       <td>{{total_student[class.class_id]}}</td>
       <td>
-      <button class="btn-task" onclick="location.href='{{ url_for('manage') }}/{{class.class_code}}'" name="manage" type="button">Manage Class</button>
+      <button class="btn-task" onclick="location.href='{{ url_for('manage_class', id=class.class_code) }}'" name="manage" type="button">Manage Class</button>
       </td>
     </tr>
     {% endfor %}
