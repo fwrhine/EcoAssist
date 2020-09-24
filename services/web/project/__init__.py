@@ -283,7 +283,9 @@ def profile():
                                         badge=badges_owned)
 
 
-
+def get_all_badges(id):
+    badge_owned = Badge.query.filter_by(student_id=id).all()
+    return badge_owned
 
 # @app.route('/create-task', methods=['GET', 'POST'])
 # def create_task():
@@ -356,16 +358,70 @@ def give_award():
         student_list.append((student_id_x, name))
 
 
+    student_list.append((session['award_class_id'], 'all'))
     form.student_names.choices = student_list
+    # print(form.student_names.choices[0][0])
 
 
     # 2 conditions: 
     # first : for individual students. Student field must be filled out
-    # second: for entire class. Leave student field blank
+    # second: for entire class. Pick all
+
+    if form.validate_on_submit():
+        print('test')
+        if form.student_names == 'all':
+            print('test')
+            # class_chosen = ClassMembers.query.filter_by(class_id=session['award_class_id']).all()
+            # # student_ids = []
+            # for x in class_chosen:
+            #     # student_ids.append(x.student_id)
+
+            #     # need to change badge model
+            #     badge_x = Badge(badge_id=1, badge_location="/static/badge_images/badge1.PNG", student=x.student_id)
+            #     db.session.add(badge_x)
+            
+            # for i in student_ids:
+            #     badge_1 = Badge(badge_id=1, badge_location="/static/badge_images/badge1.PNG", student=i)
+            #     db.session.add(badge_1)
+
+        # else:
+        #     print('test')
+            # badge_x = Badge(badge_id=1, badge_location="/static/badge_images/badge1.PNG", student=form.)
+            # db.session.add(badge_x)
+
+        # task = Task(task_name=form.title.data, task_detail=form.details.data,
+        #             task_reason=form.reason.data, points=form.points.data,
+        #             class_id=form.class_id.data, resource_id=form.resource_id.data, teacher=teacher)
+        # db.session.add(task)
+        # db.session.commit()
+        # return redirect(url_for('.task_list'))
 
     return render_template('award.html', form=form, class_name=session['award_class_id'])
 
 
-def get_all_badges(id):
-    badge_owned = Badge.query.filter_by(student_id=id).all()
-    return badge_owned
+# @app.route("/manage/<id>")
+# def manage_class(id):
+#     print(id)
+
+#     teacher_classes = TeacherClasses.query.filter_by(class_code=id).first()
+#     print(teacher_classes)
+#     class_no = teacher_classes.class_no.all()
+#     print(class_no)
+   
+#     student_list = {}
+#     for i in class_no:
+#         total = 0 
+#         print(i.student_id)
+#         student = Student.query.get(i.student_id)
+#         all_task = student.student_task_done.all()
+#         print(all_task)
+#         for task in all_task:
+#             print(task.task_status)
+#             if task.task_status == "pending":
+#                 total +=1
+#         user = User.query.filter_by(email=student.email).first()
+#         print(total)
+#         new = {user:total}
+#         student_list.update(new)
+
+#     return render_template('student_list.html', student_list=student_list)

@@ -47,7 +47,7 @@ class Student(db.Model):
         'TaskComplete', backref='student', lazy='dynamic')
     student_points = db.relationship(
         'Points', backref='student', lazy='dynamic')
-    studentbadges = db.relationship(
+    student_badges = db.relationship(
         'Badge', backref='student', lazy='dynamic')
 
 
