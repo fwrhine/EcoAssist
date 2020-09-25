@@ -358,36 +358,56 @@ def give_award():
         student_list.append((student_id_x, name))
 
 
-    student_list.append((session['award_class_id'], 'all'))
+    student_list.append((-1, 'all'))
     form.student_names.choices = student_list
-    # print(form.student_names.choices[0][0])
+    # print(student_list[0][0])
+    print(form.student_names)
+    print("BEFORE VAL")
 
 
     # 2 conditions: 
     # first : for individual students. Student field must be filled out
     # second: for entire class. Pick all
 
+    print(form.errors)
+
     if form.validate_on_submit():
-        print('test')
-        if form.student_names == 'all':
-            print('test')
-            # class_chosen = ClassMembers.query.filter_by(class_id=session['award_class_id']).all()
-            # # student_ids = []
-            # for x in class_chosen:
-            #     # student_ids.append(x.student_id)
+        print('mmmmmmmmmmmmm')
+        data = request.form['student_names']
+        print(data)
+        if data == '-1':
+            print('gggggggggggggggg')
+            # return redirect(url_for('.give_class_award'))
+            class_chosen = ClassMembers.query.filter_by(class_id=session['award_class_id']).all()
+            student_ids = []
+            for x in class_chosen:
+                student_ids.append(x.student_id)
+                print("looping student id")
+                print(x)
 
-            #     # need to change badge model
-            #     badge_x = Badge(badge_id=1, badge_location="/static/badge_images/badge1.PNG", student=x.student_id)
-            #     db.session.add(badge_x)
+                # need to change badge model
+                # badge_x = Badge(badge_id=1, badge_location="/static/badge_images/badge1.PNG", student=x.student_id)
+                # db.session.add(badge_x)
             
-            # for i in student_ids:
-            #     badge_1 = Badge(badge_id=1, badge_location="/static/badge_images/badge1.PNG", student=i)
-            #     db.session.add(badge_1)
+            for i in student_ids:
+                student = Student.query.filter_by(student_id=i).first()
+                print(student)
+                badge_1 = Badge(badge_id=1, badge_location="/static/badge_images/badge1.PNG", student=student)
+                print("inserting badge to id's")
+                print(i)
+                db.session.add(badge_1)
 
-        # else:
-        #     print('test')
-            # badge_x = Badge(badge_id=1, badge_location="/static/badge_images/badge1.PNG", student=form.)
-            # db.session.add(badge_x)
+            db.session.commit()    
+            return redirect(url_for('.give_class_award'))
+
+        else:
+            print('test')
+            student = Student.query.filter_by(student_id=request.form['student_names']).first()
+            print(student)
+            badge_x = Badge(badge_id=1, badge_location="/static/badge_images/badge1.PNG", student=student)
+            db.session.add(badge_x)
+            db.session.commit()
+            return redirect(url_for('.give_class_award'))
 
         # task = Task(task_name=form.title.data, task_detail=form.details.data,
         #             task_reason=form.reason.data, points=form.points.data,

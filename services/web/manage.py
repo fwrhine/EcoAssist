@@ -84,6 +84,8 @@ def seed_tasks():
 
     badge_1 = Badge(badge_id=1, badge_location="/static/badge_images/badge1.PNG", student=student)
     db.session.add(badge_1)
+    badge_99 = Badge(badge_id=99, badge_location="/static/badge_images/badge1.PNG", student=student)
+    db.session.add(badge_99)
 
     db.session.commit()
 

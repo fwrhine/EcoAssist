@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, IntegerField, SubmitField, SelectField, PasswordField, DateField
+from wtforms import StringField, TextAreaField, IntegerField, SubmitField, SelectField, PasswordField
 from wtforms.validators import DataRequired, InputRequired, Email, ValidationError
+from wtforms.fields.html5 import DateField
 from .models import User
 
 
@@ -42,11 +43,11 @@ class ClassForm(FlaskForm):
     submit = SubmitField('Create')
 
 class AwardForm(FlaskForm):
-    start_date = DateField('Start Date', format='%d/%m/%Y', validators=[DataRequired()])
-    end_date = DateField('End Date', format='%d/%m/%Y', validators=[DataRequired()])
-    class_id = StringField('Class Name', validators=[DataRequired()])
+    # class_id = StringField('Class Name', validators=[DataRequired()])  
     student_names = SelectField('For Student', coerce=int,
                            validators=[InputRequired()])
+    start_date = DateField('Start Date', format='%Y-%m-%d')
+    end_date = DateField('End Date', format='%Y-%m-%d') 
     reward = StringField('Reward', validators=[DataRequired()])
     submit = SubmitField('Create')
 
