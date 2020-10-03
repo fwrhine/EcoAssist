@@ -238,16 +238,17 @@ def profile():
     if (session['role'] == "teacher"):
         teacher = Teacher.query.filter_by(email=session['username']).first()
         class_list = teacher.classes.all()
-        return render_template('profile.html', email=session['username'], first_name=session['first_name'], last_name=session['last_name'], 
+        return render_template('profile_teacher.html', email=session['username'], first_name=session['first_name'], last_name=session['last_name'],
                                     role=session['role'], school=session['school'], classes=class_list)
     else:
         if session['role']=="student":
             student = Student.query.filter_by(email=session['username']).first()
-            print('student id : ' + str(student.student_id)) 
             class_members = student.classes_student.first()
-            print(class_members.class_id)
+
+            class_id = class_members.class_id
+            student_class = str(TeacherClasses.query.filter_by(class_id=class_id).first().class_name)
+
             all_members = ClassMembers.query.filter_by(class_id=class_members.class_id).all()
-            print(all_members)
             leaderboard = {}
 
             for i in all_members:
@@ -256,12 +257,10 @@ def profile():
                 for j in all_task_completed:
                     task = Task.query.filter_by(task_id=j.task_id).first()
                     points += task.points
-                print(points)
                 new = {i.student_id:points}
                 leaderboard.update(new)
                 
             sorted_leaderboard = sorted(leaderboard.items(), key=lambda x: x[1], reverse=True)
-            print('leaderboard : ' + str(leaderboard))
 
             rank = 1
             point = 0
@@ -275,40 +274,15 @@ def profile():
 
             # return render_template('student_leaderboard.html', leaderboard=sorted_leaderboard)
             badges_owned = get_all_badges(student.student_id)
-            print("badges owned:")
-            for x in badges_owned:
-                print(x.badge_location)
             return render_template('profile.html', email=session['username'], first_name=session['first_name'], last_name=session['last_name'], 
                                         role="Student", school=session['school'], leaderboard=sorted_leaderboard, ranking=rank, total=len(leaderboard), points=point,
-                                        badge=badges_owned)
+                                        badge=badges_owned, classes=student_class)
 
 
 def get_all_badges(id):
     badge_owned = Badge.query.filter_by(student_id=id).all()
     return badge_owned
 
-# @app.route('/create-task', methods=['GET', 'POST'])
-# def create_task():
-#     teacher = Teacher.query.filter_by(email=session['username']).first()
-#     available_classes = teacher.classes.all()
-#     class_list = [(i.class_id, i.class_name) for i in available_classes]
-
-#     available_resource = Resource.query.all()
-#     resource_list = [(i.resource_id, i.resource_title)
-#                      for i in available_resource]
-
-#     form = TaskForm()
-#     form.resource_id.choices = resource_list
-#     form.class_id.choices = class_list
-
-#     if form.validate_on_submit():
-#         task = Task(task_name=form.title.data, task_detail=form.details.data,
-#                     task_reason=form.reason.data, points=form.points.data,
-#                     class_id=form.class_id.data, resource_id=form.resource_id.data, teacher=teacher)
-#         db.session.add(task)
-#         db.session.commit()
-#         return redirect(url_for('.task_list'))
-#     return render_template('create_task.html', form=form)
 
 
 @app.route('/award0', methods=['GET', 'POST'])
@@ -322,10 +296,6 @@ def give_class_award():
 
     if form.validate_on_submit():
         session['award_class_id'] = form.class_id.data
-        # session['award_class_name'] = form.class_id.data
-        # print('confirmed form......')
-        # print(session['award_class_id'])
-        # print(session['award_class_name'])
         return redirect(url_for('.give_award'))
 
     return render_template('award0.html', form=form)
@@ -335,18 +305,7 @@ def give_class_award():
 def give_award():
 
     form = AwardForm()
-    # form.class_id.choices = class_list
-
     available_students = ClassMembers.query.filter_by(class_id=session['award_class_id']).all()
-
-    # print(available_students.first().student_id)
-    # student_id_0 = available_students.first().student_id
-    # student = Student.query.filter_by(student_id=student_id_0)
-    # email_0 = student.first().email
-    # print(student.first().email)    
-    # user = User.query.filter_by(email=email_0).first()
-    # print(user.first_name + user.last_name)
-
     student_list = []
 
     for x in available_students:
@@ -360,10 +319,6 @@ def give_award():
 
     student_list.append((-1, 'all'))
     form.student_names.choices = student_list
-    # print(student_list[0][0])
-    print(form.student_names)
-    print("BEFORE VAL")
-
 
     # 2 conditions: 
     # first : for individual students. Student field must be filled out
@@ -372,76 +327,37 @@ def give_award():
     print(form.errors)
 
     if form.validate_on_submit():
-        print('mmmmmmmmmmmmm')
         data = request.form['student_names']
-        print(data)
+
+        badge = request.form['images']
+        badge_location = '/static/badge_images/' + badge
+        badge_name = request.form['reward']
+        badge_comment = request.form['comment']
+
         if data == '-1':
-            print('gggggggggggggggg')
-            # return redirect(url_for('.give_class_award'))
+
             class_chosen = ClassMembers.query.filter_by(class_id=session['award_class_id']).all()
             student_ids = []
             for x in class_chosen:
                 student_ids.append(x.student_id)
-                print("looping student id")
-                print(x)
-
-                # need to change badge model
-                # badge_x = Badge(badge_id=1, badge_location="/static/badge_images/badge1.PNG", student=x.student_id)
-                # db.session.add(badge_x)
             
             for i in student_ids:
                 student = Student.query.filter_by(student_id=i).first()
-                print(student)
-                badge_1 = Badge(badge_id=1, badge_location="/static/badge_images/badge1.PNG", student=student)
-                print("inserting badge to id's")
-                print(i)
+                badge_1 = Badge(badge_name=badge_name, badge_comment=badge_comment,
+                                badge_location=badge_location, student=student)
                 db.session.add(badge_1)
 
-            db.session.commit()    
+            db.session.commit()
             return redirect(url_for('.give_class_award'))
 
         else:
-            print('test')
             student = Student.query.filter_by(student_id=request.form['student_names']).first()
-            print(student)
-            badge_x = Badge(badge_id=1, badge_location="/static/badge_images/badge1.PNG", student=student)
+            badge_x = Badge(badge_name=badge_name, badge_comment=badge_comment,
+                            badge_location=badge_location, student=student)
             db.session.add(badge_x)
             db.session.commit()
             return redirect(url_for('.give_class_award'))
 
-        # task = Task(task_name=form.title.data, task_detail=form.details.data,
-        #             task_reason=form.reason.data, points=form.points.data,
-        #             class_id=form.class_id.data, resource_id=form.resource_id.data, teacher=teacher)
-        # db.session.add(task)
-        # db.session.commit()
-        # return redirect(url_for('.task_list'))
-
     return render_template('award.html', form=form, class_name=session['award_class_id'])
 
 
-# @app.route("/manage/<id>")
-# def manage_class(id):
-#     print(id)
-
-#     teacher_classes = TeacherClasses.query.filter_by(class_code=id).first()
-#     print(teacher_classes)
-#     class_no = teacher_classes.class_no.all()
-#     print(class_no)
-   
-#     student_list = {}
-#     for i in class_no:
-#         total = 0 
-#         print(i.student_id)
-#         student = Student.query.get(i.student_id)
-#         all_task = student.student_task_done.all()
-#         print(all_task)
-#         for task in all_task:
-#             print(task.task_status)
-#             if task.task_status == "pending":
-#                 total +=1
-#         user = User.query.filter_by(email=student.email).first()
-#         print(total)
-#         new = {user:total}
-#         student_list.update(new)
-
-#     return render_template('student_list.html', student_list=student_list)

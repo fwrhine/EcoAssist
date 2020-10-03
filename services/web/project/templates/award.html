@@ -35,8 +35,24 @@
       {{ form.reward()}}
     </p>
 
+    <p>
+      {{ form.comment.label }}<br>
+      {{ form.comment()}}
+    </p>
+
     <br>
     <p>{{ form.submit() }}</p>
+
+    <p>badges:</p>
+
+    {% for image in form.images %}
+      <td>{{image}}</td>
+      <p hidden="true">{{image.label}}</p>
+      <img src="{{url_for('static', filename='badge_images/' + image.data)}}"/>
+      <br>
+    {% endfor %}
+
+
   </form>
 </div>
 {% endblock %}

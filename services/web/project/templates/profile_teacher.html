@@ -3,7 +3,7 @@
 {% block content %}
 <div class='wrapper'>
     <div>
-
+        
         <p>My Profile</p>
 
         <div class= my-profile>
@@ -11,26 +11,12 @@
             <p>Email  | {{email}}</p>
             <p>Role   | {{role}}</p>
             <p>School | {{school}}</p>
-            <p>Class: | {{classes}}</p>
-
-        </div>
-        <div>
-            <p>points: {{points}}</p>
-        </div>
-        
-        <div>
-            <p>ranking: {{ranking}} / {{total}}</p>
-        </div>
-        <div>
-            <p>badges:</p>
-            {%for y in badge:%}
-            <img src={{y.badge_location}}>
-            <br>
+            <p>Classes:</p>
+            {%for x in classes%}
+                            <p>{{x.class_name}}</p>
+            </p>
             {% endfor %}
-
         </div>
-
-        
 
     </div>
 </div>

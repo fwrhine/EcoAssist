@@ -135,8 +135,8 @@ class Badge(db.Model):
     badge_no = db.Column(db.Integer, primary_key=True)
 
     #not sure what if this part necessary
-    # badge_image = db.Column(db.LargeBinary, nullable=False)
-    badge_id = db.Column(db.Integer, nullable=False)
+    badge_name = db.Column(db.String(128), nullable=False)
+    badge_comment = db.Column(db.String(128), nullable=False)
     badge_location = db.Column(db.String(128), nullable=False)
     student_id = db.Column(db.Integer, db.ForeignKey(
         'students.student_id'), nullable=False)

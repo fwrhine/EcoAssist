@@ -1,8 +1,15 @@
+import os
+
+from flask import Flask
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, IntegerField, SubmitField, SelectField, PasswordField
+from wtforms import StringField, TextAreaField, IntegerField, SubmitField, SelectField, PasswordField, RadioField
 from wtforms.validators import DataRequired, InputRequired, Email, ValidationError
 from wtforms.fields.html5 import DateField
+
 from .models import User
+
+app = Flask(__name__)
+app.config.from_object("project.config.Config")
 
 
 class TaskForm(FlaskForm):
@@ -49,6 +56,16 @@ class AwardForm(FlaskForm):
     start_date = DateField('Start Date', format='%Y-%m-%d')
     end_date = DateField('End Date', format='%Y-%m-%d') 
     reward = StringField('Reward', validators=[DataRequired()])
+    comment = StringField('Comments', validators=[DataRequired()])
+
+    images_dir = os.listdir(os.path.join(app.static_folder, "badge_images"))
+    choices = []
+    for x in images_dir:
+        value = x
+        label = x
+        choices.append((value, label))
+
+    images = RadioField('image', choices=choices)
     submit = SubmitField('Create')
 
 class ChooseClassForm(FlaskForm):
