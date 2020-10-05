@@ -18,12 +18,18 @@
         <th>ID</th>
         <th>Class</th>
         <th>Class Code</th>
+        <th>Student Count</th>
+        <th>Manage Class</th>
       </tr>
       {% for class in class_list %}
       <tr>
         <td></td>
         <td>{{class.class_name}}</td>
         <td>{{class.class_code}}</td>
+        <td>{{total_student[class.class_id]}}</td>
+        <td>
+        <button class="btn-task" onclick="location.href='{{ url_for('manage_class', id=class.class_code) }}'" name="manage" type="button">Manage Class</button>
+        </td>
       </tr>
       {% endfor %}
     </table>

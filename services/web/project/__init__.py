@@ -64,15 +64,15 @@ def loginPage():
                     if class_members.student_status == "accepted":
                         return redirect(url_for('home'))
                     else:
-                        return redirect(url_for('.profile'))  
+                        return redirect(url_for('.profile'))
 
                     # if student.student_status == 'accepted':
                     #     return redirect(url_for('home'))
                     # else:
-                    #     return redirect(url_for('.profile'))           
+                    #     return redirect(url_for('.profile'))
                 return redirect(url_for('home'))
         print("Fail1")
-    print("Fail2")      
+    print("Fail2")
     return render_template("login.html", form=form)
 
 
@@ -117,7 +117,7 @@ def register():
                 db.session.add(student)
                 db.session.commit()
                 return redirect(url_for('.profile'))
-           
+
         return redirect(url_for('home'))
     else:
         print("this")
@@ -176,7 +176,7 @@ def create_task():
 
     if form.validate_on_submit():
         task = Task(task_name=form.title.data, task_detail=form.details.data, points=form.points.data,
-                    class_id=form.class_id.data, resource_id=form.resource_id.data, teacher=teacher, 
+                    class_id=form.class_id.data, resource_id=form.resource_id.data, teacher=teacher,
                     required_approval=form.required_approval.data)
         db.session.add(task)
         db.session.commit()
@@ -281,14 +281,14 @@ def manage_class(id):
     print(teacher_classes)
     class_no = teacher_classes.class_no.all()
     print(class_no)
-   
+
     student_list = {}
     for i in class_no:
-        total = 0 
+        total = 0
         status = []
         print(i.student_id)
         student = Student.query.get(i.student_id)
-        class_members = student.classes_student.first() 
+        class_members = student.classes_student.first()
         all_task = student.student_task_done.all()
         # print(all_task)
         for task in all_task:
@@ -303,7 +303,7 @@ def manage_class(id):
         new = {user:status}
         student_list.update(new)
 
-    return render_template('student_list.html', student_list=student_list)
+    return render_template('manage_students.html', student_list=student_list)
 
 @app.route("/student-task/<id>")
 def student_task(id):
@@ -315,7 +315,7 @@ def student_task(id):
     task_list = Task.query.filter_by(class_id=student_class.class_id).all()
     completed_task = student.student_task_done.all()
     uncompleted = []
-    completeds = [] 
+    completeds = []
     pending ={}
     pending_list=[]
     rejected=[]
@@ -347,7 +347,7 @@ def student_task(id):
     for task in uncompleted[:]:
         if task in completeds or task in rejected or task in pending_list:
             uncompleted.remove(task)
-            
+
 
     return render_template('student_task_list.html', uncompleted=uncompleted,completed=completeds, pending=pending, rejected=rejected)
 
@@ -473,7 +473,7 @@ def profile():
         student = Student.query.filter_by(email=session['username']).first()
         class_member = ClassMembers(class_=teacher_classes, student=student, student_status="pending")
         session['status']="pending"
-        db.session.add(class_member) 
+        db.session.add(class_member)
         db.session.commit()
         print("done")
 
@@ -484,8 +484,8 @@ def profile():
                                     role="Teacher", school=session['school'], classes=class_list)
     else:
         student = Student.query.filter_by(email=session['username']).first()
-        class_members = student.classes_student.first() 
-                    
+        class_members = student.classes_student.first()
+
         print('student id : ' + str(student.student_id))
         if class_members and class_members.student_status == "accepted":
             print(class_members.class_id)
@@ -533,4 +533,3 @@ def profile():
             return render_template('profile.html', email=session['username'],
                 first_name=session['first_name'], last_name=session['last_name'],
                 role="Student", school=session['school'], student_status=status, form=form)
-            
