@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class='content'>
+  <div class="side-bar-menu">
+    <a href="{{ url_for('home') }}">
+      <h2>Home</h2>
+    </a>
+    <a href="{{ url_for('leaderboard') }}">
+      <h2>Manage Students</h2>
+    </a>
+    <a href="{{ url_for('class_list') }}">
+      <h2>My Classes</h2>
+    </a>
+  </div>
+  <div class="inner-content">
+    <h1>Completed</h1>
+    <br>
+    <table>
+      <tr>
+        <th>Task Name</th>
+        <th>Task Point</th>
+      </tr>
+      {% for task in completed %}
+      <tr>
+        <td>{{task.task_name}}</td>
+        <td>{{task.points}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <h1>Uncompleted</h1>
+    <table>
+      <tr>
+        <th>Task Name</th>
+        <th>Task Point</th>
+      </tr>
+      {% for task in uncompleted %}
+      <tr>
+        <td>{{task.task_name}}</td>
+        <td>{{task.points}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <h1>Pending</h1>
+    <table>
+      <tr>
+        <th>Task Name</th>
+        <th>Task Point</th>
+        <th>Approve</th>
+      </tr>
+      {% for task in pending %}
+      <tr>
+        <td>{{task.task_name}}</td>
+        <td>{{task.points}}</td>
+        <td>
+          <button onclick="" class="approve_task" id={{pending[task]}}>Yes</button>
+          <!-- <button class="btn-task" onclick="location.href='{{ url_for('approve_task', id=pending[task]) }}'" type="button">Yes</button> -->
+          <!-- <button class="btn-task" onclick="location.href='{{ url_for('reject_task', id=pending[task]) }}'" type="button">No</button> -->
+          <button onclick="" class="reject_task" id={{pending[task]}}>No</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    <h1>Rejected</h1>
+    <table>
+      <tr>
+        <th>Task Name</th>
+        <th>Task Point</th>
+      </tr>
+      {% for task in rejected %}
+      <tr>
+        <td>{{task.task_name}}</td>
+        <td>{{task.points}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <br>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function(){
+    $('.approve_task').click(function(){
+        var id = $(this).attr("id");
+        var url = `${window.location.origin}/approve-task/${id}`;
+
+        console.log(id);
+        console.log(url);
+        $.ajax({
+          url: url,
+          // type: 'DELETE',
+        }).done(function(data) {
+          location.reload();
+        });
+           });
+      });
+$(document).ready(function(){
+    $('.reject_task').click(function(){
+        var id = $(this).attr("id");
+        var url = `${window.location.origin}/reject-task/${id}`;
+
+        console.log(id);
+        console.log(url);
+        $.ajax({
+          url: url,
+          // type: 'DELETE',
+        }).done(function(data) {
+          location.reload();
+        });
+           });
+      });
+</script>
+{% endblock %}
