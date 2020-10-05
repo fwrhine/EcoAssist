@@ -19,7 +19,16 @@
   </div>
   <div class="inner-content">
     <h2>Tasks</h2>
-    {% for task in tasks %}
+    <label for="class">Class:</label>
+    <select name="class" id="class">
+      <option value="2K">2K</option>
+      <option value="2J">2J</option>
+      <option value="3A">3A</option>
+    </select>
+    <br>
+    <div class="task-list">
+    </div>
+    <!-- {% for task in tasks %}
     <div class="task">
       <h2>{{task.0.task_name}}</h2>
       <br>
@@ -41,13 +50,14 @@
         <button class="task-button" onclick="location.href='learn/{{task.0.resource_id}}'" name="learn-more" type="button">Learn More</button>
       </form>
     </div>
-    {% endfor %}
+    {% endfor %} -->
   </div>
 </div>
 
 {% block javascript %}
 <script>
   $(function() {
+    // toggle complete
     $('button[name ="task-complete"]').click(function() {
       var id = this.id;
       var self = this;
@@ -65,6 +75,64 @@
           console.log(error);
         }
       });
+    });
+
+    // filter by class
+    $('select[name="class"]').on('change', function() {
+      var class_name = $(this).val();
+      var task = `{% for task in tasks %}
+      {% if task.1 != '` + class_name + `' %}`
+      + `<div class="task">
+        <h2>{{task.0.task_name}}</h2>
+        <br>
+        <h3>{{task.0.points}} points</h3>
+        <p>{{task.0.task_detail}}</p>
+        {% if session['role'] == 'teacher' %}
+        <p>Assigned to: Class {{task.1}}</p>
+        {% endif %}
+        <br>
+        <br>
+        <form method="post">
+          {% if session['role'] == 'student' %}
+          {% if task.2 %}
+          <button class="task-button completed" name="task-complete" id="{{task.0.task_id}}" type="button">Task Complete</button>
+          {% else %}
+          <button class="task-button" name="task-complete" id="{{task.0.task_id}}" type="button">Task Complete</button>
+          {% endif %}
+          {% endif %}
+          <button class="task-button" onclick="location.href='learn/{{task.0.resource_id}}'" name="learn-more" type="button">Learn More</button>
+        </form>
+      </div>
+      {% endif %}
+      {% endfor %}`;
+      alert(task);
+      // $('.task-list').html(
+      //   `{% for task in tasks %}
+      //   {% if task.1 == '` + class_name + `' %}`
+      //   + `<div class="task">
+      //     <h2>{{task.0.task_name}}</h2>
+      //     <br>
+      //     <h3>{{task.0.points}} points</h3>
+      //     <p>{{task.0.task_detail}}</p>
+      //     {% if session['role'] == 'teacher' %}
+      //     <p>Assigned to: Class {{task.1}}</p>
+      //     {% endif %}
+      //     <br>
+      //     <br>
+      //     <form method="post">
+      //       {% if session['role'] == 'student' %}
+      //       {% if task.2 %}
+      //       <button class="task-button completed" name="task-complete" id="{{task.0.task_id}}" type="button">Task Complete</button>
+      //       {% else %}
+      //       <button class="task-button" name="task-complete" id="{{task.0.task_id}}" type="button">Task Complete</button>
+      //       {% endif %}
+      //       {% endif %}
+      //       <button class="task-button" onclick="location.href='learn/{{task.0.resource_id}}'" name="learn-more" type="button">Learn More</button>
+      //     </form>
+      //   </div>
+      //   {% endif %}
+      //   {% endfor %}`
+      // );
     });
   });
 </script>
