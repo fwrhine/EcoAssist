@@ -100,10 +100,29 @@ a {
 
 /* Button with icon */
 .btn-icon {
+  background: #FFFFFF;
+  border: 2px solid #000000;
+  box-sizing: border-box;
+  border-radius: 39px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 1.1em;
   margin-left: 20px;
   display: inline-block;
   vertical-align: middle;
   cursor: pointer;
+}
+
+/* Button with black border */
+.btn-border {
+  background: #FFFFFF;
+  border: 2px solid #000000;
+  box-sizing: border-box;
+  border-radius: 39px;
+  padding: 10px;
+  margin: 10px 10px 10px 10px;
+  margin-bottom: 10px;
+  font-size: 1.1em;
 }
 
 /* Teachers, students start here button */
@@ -313,17 +332,19 @@ input[type="submit"] {
 /* ---------------------------- TABLE ----------------------------*/
 table {
   border-collapse: collapse;
-  width: 100%;
+  width: 90%;
+  margin: 0 auto;
 }
 
 td, th {
-  border: 1px solid #dddddd;
+  border: 1px solid black;
   text-align: left;
   padding: 8px;
 }
 
 tr:nth-child(even) {
-  background-color: #dddddd;
+  /* background-color: #dddddd; */
+  background: transparent;
 }
 
 /*adding row numbers through css*/

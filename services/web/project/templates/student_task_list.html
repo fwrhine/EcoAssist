@@ -6,14 +6,14 @@
     <a href="{{ url_for('home') }}">
       <h2>Home</h2>
     </a>
-    <a href="{{ url_for('leaderboard') }}">
-      <h2>Manage Students</h2>
-    </a>
     <a href="{{ url_for('class_list') }}">
       <h2>My Classes</h2>
     </a>
   </div>
   <div class="inner-content">
+    <h2>Verify Tasks</h2>
+    <br>
+    <p>Student: </p>
     <h1>Completed</h1>
     <br>
     <table>
@@ -77,9 +77,8 @@
     <br>
   </div>
 </div>
-{% endblock %}
 
-{% block scripts %}
+{% block javascript %}
 <script>
 $(document).ready(function(){
     $('.approve_task').click(function(){
@@ -96,6 +95,7 @@ $(document).ready(function(){
         });
            });
       });
+
 $(document).ready(function(){
     $('.reject_task').click(function(){
         var id = $(this).attr("id");
@@ -112,4 +112,5 @@ $(document).ready(function(){
            });
       });
 </script>
+{% endblock %}
 {% endblock %}

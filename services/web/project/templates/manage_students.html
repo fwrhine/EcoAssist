@@ -11,14 +11,14 @@
     </a>
   </div>
   <div class="inner-content">
-    <h1>My Classes</h1>
+    <h2>Manage Students</h2>
     <br>
-    <table>
+    <table class="css-serial">
       <tr>
-        <th>ID</th>
-        <th>name</th>
+        <th></th>
+        <th>Name</th>
         <th>Status</th>
-        <th>Pending Task</th>
+        <th>Pending Tasks</th>
         <th>Manage</th>
       </tr>
       {% for student in student_list %}
@@ -28,12 +28,12 @@
 
         {% if student_list[student][0] == 'pending' %}
         <td>
-          <p>{{student_list[student][0]}}</p>
+          <p>Pending</p>
           <button onclick="" class="approve_student" id={{student.id}}>Accept</button>
           <button onclick="" class="reject_student" id={{student.id}}>Reject</button>
         </td>
         {% else %}
-        <td>{{student_list[student][0]}}</td>
+        <td>Accepted</td>
         {% endif %}
         <td>{{student_list[student][1]}}</td>
         <td>
@@ -47,40 +47,43 @@
     <br>
   </div>
 </div>
-{% endblock %}
 
-{% block scripts %}
+{% block javascript %}
 <script>
-$(document).ready(function(){
-    $('.approve_student').click(function(){
-        var id = $(this).attr("id");
-        var url = `${window.location.origin}/approve-student/${id}`;
+  $(document).ready(function() {
+    $('.approve_student').click(function() {
+      console.log("here");
+      var id = $(this).attr("id");
+      var url = `${window.location.origin}/approve-student/${id}`;
 
-        console.log(id);
-        console.log(url);
-        $.ajax({
-          url: url,
-          // type: 'DELETE',
-        }).done(function(data) {
-          location.reload();
-        });
-           });
+      console.log(id);
+      console.log(url);
+      $.ajax({
+        url: url,
+        // type: 'DELETE',
+      }).done(function(data) {
+        location.reload();
       });
+    });
 
-$(document).ready(function(){
-    $('.reject_student').click(function(){
-        var id = $(this).attr("id");
-        var url = `${window.location.origin}/reject-student/${id}`;
+    $('.reject_student').click(function() {
+      var id = $(this).attr("id");
+      var url = `${window.location.origin}/reject-student/${id}`;
 
-        console.log(id);
-        console.log(url);
-        $.ajax({
-          url: url,
-          // type: 'DELETE',
-        }).done(function(data) {
-          location.reload();
-        });
-           });
+      console.log(id);
+      console.log(url);
+      $.ajax({
+        url: url,
+        // type: 'DELETE',
+      }).done(function(data) {
+        location.reload();
       });
+    });
+  });
+
+  // $(document).ready(function() {
+  //
+  // });
 </script>
+{% endblock %}
 {% endblock %}

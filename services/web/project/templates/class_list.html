@@ -13,13 +13,13 @@
   <div class="inner-content">
     <h2>My Classes</h2>
     <br>
-    <table>
+    <table class="css-serial">
       <tr>
-        <th>ID</th>
+        <th></th>
         <th>Class</th>
         <th>Class Code</th>
         <th>Student Count</th>
-        <th>Manage Class</th>
+        <th></th>
       </tr>
       {% for class in class_list %}
       <tr>
@@ -28,7 +28,7 @@
         <td>{{class.class_code}}</td>
         <td>{{total_student[class.class_id]}}</td>
         <td>
-        <button class="btn-task" onclick="location.href='{{ url_for('manage_class', id=class.class_code) }}'" name="manage" type="button">Manage Class</button>
+        <button class="btn-border" onclick="location.href='{{ url_for('manage_class', id=class.class_code) }}'" name="manage" type="button">Manage Class</button>
         </td>
       </tr>
       {% endfor %}
