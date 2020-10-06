@@ -12,7 +12,7 @@ class TaskForm(FlaskForm):
         'Theme', coerce=int, validators=[InputRequired()])
     class_id = SelectField('For Class', coerce=int,
                            validators=[InputRequired()])
-    required_approval = BooleanField('Required Approval')
+    required_approval = BooleanField('Requires Approval')
 
     submit = SubmitField('Create')
 

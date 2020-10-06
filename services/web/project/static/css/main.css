@@ -8,7 +8,6 @@ body, html {
 }
 
 /* ---------------------------- BASE CONTAINERS ----------------------------*/
-
 .background {
   background-image: url(../images/environmentalbackground.jpg);
   height: 90%;
@@ -47,6 +46,7 @@ body, html {
 
 /* Right of sidebar */
 .inner-content {
+  height: 100%;
   width: 85%;
   float: right;
   overflow: auto;
@@ -73,7 +73,6 @@ body, html {
 }
 
 /* ---------------------------- TEXT ----------------------------*/
-
 h1, h2, label, button, input, .content {
   font-family: siteFont, Helvetica, sans-serif;
   font-style: normal;
@@ -98,7 +97,6 @@ a {
 }
 
 /* ---------------------------- BUTTONS ----------------------------*/
-
 /* Button with icon */
 .btn-icon {
   background: #FFFFFF;
@@ -180,17 +178,25 @@ header h1 {
 }
 
 /* ---------------------------- FORM ----------------------------*/
-
-form > p > label {
+form>p>label {
   display: inline-block;
   width: 120px;
   text-align: left;
 }
 
+#create-task-form {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  width: 100%;
+}
+
 #create-task-form label {
   display: inline-block;
-  width: 120px;
-  text-align: center;
+  width: 90px;
+  text-align: left;
+  margin-left: 30px;
 }
 
 input, select {
@@ -199,7 +205,7 @@ input, select {
   box-sizing: border-box;
   border-radius: 39px;
   padding: 10px;
-  margin: 10px 10px 10px 10px;
+  margin: 5px 10px 5px 10px;
 }
 
 textarea {
@@ -219,7 +225,6 @@ input[type="submit"] {
 }
 
 /* ---------------------------- HOME PAGE ----------------------------*/
-
 /* Welcome text section to the left */
 .welcome {
   width: 30%;
@@ -230,6 +235,7 @@ input[type="submit"] {
   padding-top: 20px;
   border-right: 1px solid #000000;
   float: left;
+  overflow: auto;
 }
 
 .welcome h2 {
@@ -266,7 +272,6 @@ input[type="submit"] {
 }
 
 /* ---------------------------- TASK LIST ----------------------------*/
-
 .task {
   width: 300px;
   /* background: linear-gradient(180deg, #75C286 0%, rgba(255, 255, 255, 0) 100%), #A5FFB9; */
@@ -290,7 +295,6 @@ input[type="submit"] {
 }
 
 /* ---------------------------- LEARN ----------------------------*/
-
 .learn {
   width: 35%;
   height: 400px;
@@ -316,7 +320,6 @@ input[type="submit"] {
 }
 
 /* ---------------------------- PROFILE ----------------------------*/
-
 .my-profile {
   text-align: left;
   padding-left: 50px;

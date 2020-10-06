@@ -37,24 +37,26 @@
       <br>
       <p>
         {{ form.details.label }}<br>
-        {{ form.details() }}
+        {{ form.details(style="margin-left: 30px;") }}
       </p>
       <p>
-        {{ form.points.label }}<br>
-        {{ form.points() }}
+        {{ form.points.label }}
+        {{ form.points(style="width: 70px;") }}
         {% for error in form.points.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
       </p>
       <p>
-        {{ form.required_approval.label }}<br>
+        {{ form.required_approval.label(style="width: 180px;") }}
         {{ form.required_approval() }}
         {% for error in form.class_id.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
       </p>
       <br>
-      <p>{{ form.submit() }}</p>
+      <div style="text-align: center">
+        <p>{{ form.submit() }}</p>
+      </div>
     </form>
   </div>
 </div>
