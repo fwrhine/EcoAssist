@@ -22,7 +22,7 @@
         <th>Name</th>
         <th>Status</th>
         <th>Pending Tasks</th>
-        <th>Manage</th>
+        <th></th>
       </tr>
       {% for student in student_list %}
       <tr>
@@ -32,8 +32,8 @@
         {% if student_list[student][0] == 'pending' %}
         <td>
           <p>Pending</p>
-          <button onclick="" class="approve_student" id={{student.id}}>Accept</button>
-          <button onclick="" class="reject_student" id={{student.id}}>Reject</button>
+          <button onclick="" style="border-color: #78c288;" class="btn-border approve_student" id={{student.id}}>Accept</button>
+          <button onclick="" style="border-color: #ed7b6f;" class="btn-border reject_student" id={{student.id}}>Reject</button>
         </td>
         {% else %}
         <td>Accepted</td>
@@ -41,7 +41,7 @@
         <td>{{student_list[student][1]}}</td>
         <td>
           {% if student_list[student][0] == 'accepted' %}
-          <button class="btn-task" onclick="location.href='{{ url_for('student_task', id=student.id) }}'" type="button">Manage Student</button>
+          <button class="btn-border" onclick="location.href='{{ url_for('student_task', id=student.id) }}'" type="button">View Tasks</button>
           {% endif %}
         </td>
       </tr>

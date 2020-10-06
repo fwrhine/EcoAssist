@@ -3,7 +3,7 @@
 {% block content %}
 <div class='content'>
   <div class="side-bar-menu">
-    {% if student_status == 'accepted' %}
+    {% if session['role'] == 'teacher' or student_status == 'accepted' %}
     <a href="{{ url_for('home') }}">
       <h2>Home</h2>
     </a>

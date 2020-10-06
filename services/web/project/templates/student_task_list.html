@@ -3,6 +3,9 @@
 {% block content %}
 <div class='content'>
   <div class="side-bar-menu">
+    <a onclick="goBack()">
+      <h2>Back</h2>
+    </a>
     <a href="{{ url_for('home') }}">
       <h2>Home</h2>
     </a>
@@ -11,11 +14,8 @@
     </a>
   </div>
   <div class="inner-content">
-    <h2>Verify Tasks</h2>
-    <br>
-    <p>Student: </p>
-    <h1>Completed</h1>
-    <br>
+    <h2>Tasks - {{ student.first_name }} {{ student.last_name }}</h2>
+    <h3>Completed</h3>
     <table>
       <tr>
         <th>Task Name</th>
@@ -28,7 +28,7 @@
       </tr>
       {% endfor %}
     </table>
-    <h1>Uncompleted</h1>
+    <h3>Uncompleted</h3>
     <table>
       <tr>
         <th>Task Name</th>
@@ -41,27 +41,25 @@
       </tr>
       {% endfor %}
     </table>
-    <h1>Pending</h1>
+    <h3>Pending</h3>
     <table>
       <tr>
         <th>Task Name</th>
         <th>Task Point</th>
-        <th>Approve</th>
+        <th></th>
       </tr>
       {% for task in pending %}
       <tr>
         <td>{{task.task_name}}</td>
         <td>{{task.points}}</td>
         <td>
-          <button onclick="" class="approve_task" id={{pending[task]}}>Yes</button>
-          <!-- <button class="btn-task" onclick="location.href='{{ url_for('approve_task', id=pending[task]) }}'" type="button">Yes</button> -->
-          <!-- <button class="btn-task" onclick="location.href='{{ url_for('reject_task', id=pending[task]) }}'" type="button">No</button> -->
-          <button onclick="" class="reject_task" id={{pending[task]}}>No</button>
+          <button onclick="" style="border-color: #78c288" class="btn-border approve_task" id={{pending[task]}}>Approve</button>
+          <button onclick="" style="border-color: #ed7b6f;" class="btn-border reject_task" id={{pending[task]}}>Deny</button>
         </td>
       </tr>
       {% endfor %}
     </table>
-    <h1>Rejected</h1>
+    <h3>Rejected</h3>
     <table>
       <tr>
         <th>Task Name</th>

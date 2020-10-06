@@ -346,6 +346,10 @@ td, th {
   padding: 8px;
 }
 
+th {
+  background: #b7e8cb;
+}
+
 tr:nth-child(even) {
   /* background-color: #dddddd; */
   background: transparent;

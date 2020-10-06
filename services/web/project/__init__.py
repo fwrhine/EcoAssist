@@ -349,7 +349,7 @@ def student_task(id):
             uncompleted.remove(task)
 
 
-    return render_template('student_task_list.html', uncompleted=uncompleted,completed=completeds, pending=pending, rejected=rejected)
+    return render_template('student_task_list.html', uncompleted=uncompleted,completed=completeds, pending=pending, rejected=rejected, student=user)
 
 @app.route("/approve-task/<id>")
 def approve_task(id):

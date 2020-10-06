@@ -3,11 +3,11 @@
 {% block content %}
 <div class='content'>
   <div class="side-bar-menu">
+    <a onclick=goBack()>
+      <h2>Back</h2>
+    </a>
     <a href="{{ url_for('home') }}">
       <h2>Home</h2>
-    </a>
-    <a href="{{ url_for('task_list') }}">
-      <h2>Tasks</h2>
     </a>
     <a href="{{ url_for('learn') }}">
       <h2>Learn</h2>
