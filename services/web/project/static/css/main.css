@@ -49,6 +49,7 @@ body, html {
 .inner-content {
   width: 85%;
   float: right;
+  overflow: auto;
 }
 
 /* Login and register page container

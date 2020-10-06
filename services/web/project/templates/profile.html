@@ -3,9 +3,11 @@
 {% block content %}
 <div class='content'>
   <div class="side-bar-menu">
+    {% if student_status == 'accepted' %}
     <a href="{{ url_for('home') }}">
       <h2>Home</h2>
     </a>
+    {% endif %}
   </div>
   <div class="inner-content">
     <h2>My Profile</h2>
@@ -31,7 +33,7 @@
       <p>Points: {{points}}</p>
       <p>Ranking: {{ranking}} / {{total}}</p>
       {% elif session['role'] == 'student' and student_status == 'pending' %}
-      <p>Wait for Approval</p>
+      <p style="color:red;">Waiting for Approval</p>
       {% elif session['role'] == 'student' and student_status == 'empty' %}
       <form class="p-4 bg-light" action='' method="post" novalidate>
         {{ form.hidden_tag() }}
