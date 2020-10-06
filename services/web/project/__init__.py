@@ -400,14 +400,19 @@ def create_class():
         return redirect(url_for('.class_list'))
     return render_template('create_class.html', form=form)
 
-@app.route('/leaderboard', methods=['GET'])
-def leaderboard():
+@app.route('/leaderboard', defaults={'id': None})
+@app.route('/leaderboard/<id>')
+def leaderboard(id):
     if session['role']=="student":
         student = Student.query.filter_by(email=session['username']).first()
         class_members = student.classes_student.first()
-
-        # get teacher's name
         teacher_classes = TeacherClasses.query.filter_by(class_id=class_members.class_id).first()
+    elif id != None:
+        # class_members = ClassMembers.query.filter_by(class_id=id).first()
+        teacher_classes = TeacherClasses.query.filter_by(class_id=id).first()
+
+    if session['role']=="student" or id != None:
+        # get teacher's name
         teacher = Teacher.query.filter_by(teacher_id=teacher_classes.teacher_id).first()
         teacher_user = User.query.filter_by(email=teacher.email).first()
         teacher_name = teacher_user.first_name + " " + teacher_user.last_name
@@ -417,7 +422,7 @@ def leaderboard():
             teacher_name = teacher_name + "'s"
 
         # get all members of class
-        all_members = ClassMembers.query.filter_by(class_id=class_members.class_id).all()
+        all_members = ClassMembers.query.filter_by(class_id=teacher_classes.class_id).all()
         leaderboard = {}
 
         # calculate points

@@ -18,12 +18,16 @@
         <th>Rank</th>
         <th>Class</th>
         <th>Total Points</th>
+        <th></th>
       </tr>
       {% for id in leaderboard %}
       <tr>
         <td></td>
         <td>{{id[1][0]}}</td>
         <td>{{id[1][1]}}</td>
+        <td>
+          <button class="btn-border" onclick="location.href='{{ url_for('leaderboard', id=id[0]) }}'" name="manage" type="button">Class Leaderboard</button>
+        </td>
       </tr>
       {% endfor %}
     </table>

@@ -3,12 +3,19 @@
 {% block content %}
 <div class='content'>
   <div class="side-bar-menu">
+    {% if session['role'] == "teacher" %}
+    <a onclick="goBack()">
+      <h2>Back</h2>
+    </a>
+    {% endif %}
     <a href="{{ url_for('home') }}">
       <h2>Home</h2>
     </a>
+    {% if session['role'] == "student" %}
     <a href="{{ url_for('task_list') }}">
       <h2>Tasks</h2>
     </a>
+    {% endif %}
   </div>
   <div class="inner-content">
     <h2>Leaderboard</h2>
