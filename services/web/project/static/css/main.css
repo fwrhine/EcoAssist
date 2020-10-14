@@ -96,6 +96,11 @@ a {
   color: black;
 }
 
+a:hover {
+  color: black;
+}
+
+
 /* ---------------------------- BUTTONS ----------------------------*/
 /* Button with icon */
 .btn-icon {
