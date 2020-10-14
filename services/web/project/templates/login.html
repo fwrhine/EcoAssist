@@ -12,6 +12,11 @@
         {% for error in form.email.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
+
+        {% for error in form.validate.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+      
       </p>
       <p>
         {{ form.password.label }}

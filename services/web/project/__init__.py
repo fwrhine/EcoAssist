@@ -200,18 +200,20 @@ def task_list():
     for i in task_list:
         teacher_classes = TeacherClasses.query.get(i.class_id)
         class_name = teacher_classes.class_name
-
+        
         if session['role'] == "student":
             task_complete = TaskComplete.query.filter_by(
                 student_id=student.student_id, task_id=i.task_id).first()
+            status = ""
             if task_complete is not None:
                 done = True
+                status = task_complete.task_status
             else:
                 done = False
         else:
             done = False
 
-        tasks.append([i, class_name, done])
+        tasks.append([i, class_name, done, status])
 
     print(tasks)
 
@@ -234,17 +236,21 @@ def task_completed():
             db.session.add(task_complete)
             print("pending")
             status = "add"
+            task_status = task_complete.task_status
         else:
             task_complete = TaskComplete(task_status = "accepted", student_id=student_id, task_id=task_id)
             db.session.add(task_complete)
-            print("pending")
+            print("accepted")
             status = "add"
+            task_status = task_complete.task_status
     else:
         db.session.delete(existing)
         status = "delete"
+        task_status = "delete"
+        print("delete")
 
     db.session.commit()
-    return json.dumps({'status': status, 'task_id': task_id, 'student_id': student_id})
+    return json.dumps({'status': status, 'task_id': task_id, 'student_id': student_id, 'task_status' : task_status})
 
 
 @app.route("/learn")

@@ -284,7 +284,6 @@ input[type="submit"] {
 
 .task-button {
   width: 200px;
-  background-color: #FFFFFF;
   border: none;
   padding: 15px;
   margin-bottom: 10px;
@@ -293,6 +292,19 @@ input[type="submit"] {
 .completed {
   background-color: #26c983;
 }
+
+.pending {
+  background-color: #ebae34;
+}
+
+.rejected {
+  background-color: #ed7b6f;
+}
+
+.incomplete {
+  background-color: #FFFFFF;
+}
+
 
 /* ---------------------------- LEARN ----------------------------*/
 .learn {

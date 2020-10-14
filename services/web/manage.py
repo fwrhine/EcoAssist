@@ -49,7 +49,7 @@ def seed_tasks():
     db.session.add(class_2)
     db.session.add(class_3)
 
-    class_members_1 = ClassMembers(class_=class_1, student=student_1, student_status="pending")
+    class_members_1 = ClassMembers(class_=class_1, student=student_1, student_status="accepted")
     class_members_2 = ClassMembers(class_=class_1, student=student_2, student_status="pending")
 
     db.session.add(class_members_1)
