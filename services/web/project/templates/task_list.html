@@ -33,14 +33,14 @@
       <form method="post">
         {% if session['role'] == 'student' and task.2 %}
         {% if task.3 == 'pending' %}
-        <button class="task-button completed" name="task-complete" id="{{task.0.task_id}}" type="button">Pending</button>
+        <button class="task-button pending" name="task-complete" id="{{task.0.task_id}}" type="button">Pending</button>
         {% elif task.3 == 'accepted' %}
         <button class="task-button completed" name="task-complete" id="{{task.0.task_id}}" type="button">Accepted</button>
         {% elif task.3 == 'rejected' %}
-        <button class="task-button completed" name="task-complete" id="{{task.0.task_id}}" type="button">Rejected</button>
+        <button class="task-button rejected" name="task-complete" id="{{task.0.task_id}}" type="button">Rejected</button>
         {% endif %}
         {% else %}
-        <button class="task-button" name="task-complete" id="{{task.0.task_id}}" type="button">Task Complete</button>
+        <button class="task-button incomplete" name="task-complete" id="{{task.0.task_id}}" type="button">Task Complete</button>
         {% endif %}
         <button class="task-button" onclick="location.href='learn/{{task.0.resource_id}}'" name="learn-more" type="button">Learn More</button>
       </form>
@@ -51,7 +51,7 @@
 
 {% block javascript %}
 <script>
-  $(function() {
+  $(document).ready(function() {
     $('button[name ="task-complete"]').click(function() {
       var id = this.id;
       var self = this;
@@ -65,19 +65,21 @@
         type: 'POST',
         success: function(response) {
           var data = $.parseJSON(response);
-          
+
           console.log(data.task_status)
-          if(data.task_status == "pending"){
-           button.innerHTML="Pending"
-        }else if(data.task_status == "accepted"){
-          button.innerHTML="Accepted"
-        }else if(data.task_status == "rejected"){
-          button.innerHTML == "Rejected"
-        }else if(data.task_status == "delete"){
-          button.innerHTML == "Task Complete"
-          console.log("here")
-        }
-        $(self).toggleClass("completed");
+          if (data.task_status == "pending") {
+            $('#'+id).text('Pending');
+            $('#'+id).css('background-color','#ebae34');
+          } else if (data.task_status == "accepted") {
+            $('#'+id).text('Accepted');
+            $('#'+id).css('background-color','#26c983');
+          } else if (data.task_status == "rejected") {
+            $('#'+id).text('Rejected');
+          } else if (data.task_status == "delete") {
+            $('#'+id).text('Task Complete');
+            $('#'+id).css('background-color','#FFFFFF');
+            console.log("here")
+          }
 
         },
         error: function(error) {
