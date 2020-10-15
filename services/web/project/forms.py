@@ -3,17 +3,6 @@ from wtforms import StringField, TextAreaField, IntegerField, SubmitField, Selec
 from wtforms.validators import DataRequired, InputRequired, Email, ValidationError
 from .models import User, TeacherClasses
 
-# def invalid_credentials(form, field):
-#     email = form.email.data
-#     password = field.data
-#     user = User.query.filter_by(email=form.email.data).first()
-#     if user is None:
-#         ValidationError("Email is not registered")
-#     else:
-#         check_password = User.query.filter_by(email=form.email.data, password=form.password.data).first()
-#         if check_password is None:
-#            ValidationError("Wrong password")
-
 class TaskForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     details = TextAreaField('Details')
