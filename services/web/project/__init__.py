@@ -200,7 +200,7 @@ def task_list():
     for i in task_list:
         teacher_classes = TeacherClasses.query.get(i.class_id)
         class_name = teacher_classes.class_name
-        
+
         if session['role'] == "student":
             task_complete = TaskComplete.query.filter_by(
                 student_id=student.student_id, task_id=i.task_id).first()
@@ -211,6 +211,7 @@ def task_list():
             else:
                 done = False
         else:
+            status = ""
             done = False
 
         tasks.append([i, class_name, done, status])
