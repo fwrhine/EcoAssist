@@ -94,7 +94,7 @@ class AwardForm(FlaskForm):
                            validators=[InputRequired()])
     start_date = DateField('Start Date', format='%Y-%m-%d')
     end_date = DateField('End Date', format='%Y-%m-%d')
-    reward = StringField('Reward', validators=[DataRequired()])
+    reward = StringField('Badge Name', validators=[DataRequired()])
     comment = StringField('Comments', validators=[DataRequired()])
 
     images_dir = os.listdir(os.path.join(app.static_folder, "badge_images"))
