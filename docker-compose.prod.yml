@@ -2,11 +2,9 @@ version: '3.7'
 
 services:
   web:
-    image: aghniaprawira/team-clueless:latest
-    # build:
-    #   context: ./web
-      # dockerfile: ./Dockerfile.prod
-    # command: gunicorn --bind 0.0.0.0:5000 manage:app
+    build:
+      context: ./services/web
+      dockerfile: ./Dockerfile.prod
     volumes:
       - static_volume:/home/app/web/project/static
       - media_volume:/home/app/web/project/media
@@ -22,6 +20,9 @@ services:
       - APP_FOLDER=/home/app/web
     depends_on:
       - db
+    networks:
+      - my-net
+
   db:
     image: postgres:12-alpine
     volumes:
@@ -30,20 +31,27 @@ services:
       - POSTGRES_USER=team_clueless
       - POSTGRES_PASSWORD=team_clueless
       - POSTGRES_DB=team_clueless_prod
-    # env_file:
-    #   - ./.env.prod.db
+    networks:
+      - my-net
+
   nginx:
-    image: aghniaprawira/team-clueless:nginx
-    # build: ./services/nginx
+    image: nginx:latest
     volumes:
+      - $HOME/project/services/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       - static_volume:/home/app/web/project/static
       - media_volume:/home/app/web/project/media
     ports:
-      - 1337:80
+      - 8080:80
     depends_on:
       - web
+    networks:
+      - my-net
 
 volumes:
   postgres_data:
   static_volume:
   media_volume:
+
+networks:
+  my-net:
+    driver: bridge
