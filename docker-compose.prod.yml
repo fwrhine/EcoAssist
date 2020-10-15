@@ -18,6 +18,8 @@ services:
       - SQL_PORT=5432
       - DATABASE=postgres
       - APP_FOLDER=/home/app/web
+      - SESSION_TYPE=redis
+      - SESSION_REDIS=redis://myredis:6379
     depends_on:
       - db
       - myredis
