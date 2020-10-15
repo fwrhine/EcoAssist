@@ -544,3 +544,88 @@ def profile():
             return render_template('profile.html', email=session['username'],
                 first_name=session['first_name'], last_name=session['last_name'],
                 role="Student", school=session['school'], student_status=status, form=form)
+
+
+def get_all_badges(id):
+    badge_owned = Badge.query.filter_by(student_id=id).all()
+    return badge_owned
+
+
+@app.route('/award0', methods=['GET', 'POST'])
+def give_class_award():
+    teacher = Teacher.query.filter_by(email=session['username']).first()
+    available_classes = teacher.classes.all()
+    class_list = [(i.class_id, i.class_name) for i in available_classes]
+
+    form = ChooseClassForm()
+    form.class_id.choices = class_list
+
+    if form.validate_on_submit():
+        session['award_class_id'] = form.class_id.data
+        return redirect(url_for('.give_award'))
+
+    return render_template('award0.html', form=form)
+
+
+@app.route('/award', methods=['GET', 'POST'])
+def give_award():
+    form = AwardForm()
+    available_students = ClassMembers.query.filter_by(class_id=session['award_class_id']).all()
+    student_list = []
+
+    for x in available_students:
+        student_id_x = x.student_id
+        student_x = Student.query.filter_by(student_id=student_id_x)
+        email_x = student_x.first().email
+        user = User.query.filter_by(email=email_x).first()
+        name = user.first_name + user.last_name
+        student_list.append((student_id_x, name))
+
+    student_list.append((-1, 'All'))
+    form.student_names.choices = student_list
+
+    # 2 conditions:
+    # first : for individual students. Student field must be filled out
+    # second: for entire class. Pick all
+
+    print(form.errors)
+
+    if form.validate_on_submit():
+        data = request.form['student_names']
+
+        badge = request.form['images']
+        badge_location = '/static/badge_images/' + badge
+        badge_name = request.form['reward']
+        badge_comment = request.form['comment']
+
+        if data == '-1':
+
+            class_chosen = ClassMembers.query.filter_by(class_id=session['award_class_id']).all()
+            student_ids = []
+            for x in class_chosen:
+                student_ids.append(x.student_id)
+
+            for i in student_ids:
+                student = Student.query.filter_by(student_id=i).first()
+                badge_1 = Badge(badge_name=badge_name, badge_comment=badge_comment,
+                                badge_location=badge_location, student_id=student.student_id)
+                db.session.add(badge_1)
+
+            db.session.commit()
+            return redirect(url_for('.give_class_award'))
+
+        else:
+            print("forms : " + request.form['student_names'])
+            student = Student.query.filter_by(student_id=request.form['student_names']).first()
+            print("student : " + str(student))
+            print("student id: " + str(student.student_id))
+            print("student email: " + str(student.email))
+            print("student class: " + str(student.classes_student))
+            badge_x = Badge(badge_name=badge_name, badge_comment=badge_comment,
+                            badge_location=badge_location, student_id=student.student_id)
+            db.session.add(badge_x)
+            db.session.commit()
+            return redirect(url_for('.give_class_award'))
+
+    return render_template('award.html', form=form, class_name=session['award_class_id'])
+
