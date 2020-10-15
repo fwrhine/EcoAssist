@@ -18,6 +18,7 @@ services:
       - APP_FOLDER=/home/app/web
     depends_on:
       - db
+      - myredis
     networks:
       - my-net
 
@@ -41,6 +42,13 @@ services:
       - 8080:80
     depends_on:
       - web
+    networks:
+      - my-net
+
+  myredis:
+    image: redis:latest
+    ports:
+      - 6379:6379
     networks:
       - my-net
 

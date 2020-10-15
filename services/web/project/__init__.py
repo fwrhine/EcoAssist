@@ -16,15 +16,20 @@ from flask import (
     session
 )
 from flask_sqlalchemy import SQLAlchemy
+from flask_session import Session
 from .models import *
 from .forms import *
 
 
 app = Flask(__name__)
 app.config.from_object("project.config.Config")
+sess = Session()
+
 db.init_app(app)
+sess.init_app(app)
 
 app.secret_key = "development-key"
+
 
 
 @app.route("/")
