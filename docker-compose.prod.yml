@@ -61,7 +61,7 @@ services:
       - DATABASE=postgres
       - APP_FOLDER=/home/app/web
       - SESSION_TYPE=redis
-      - SESSION_REDIS=redis://myredis:6379
+      - SESSION_REDIS=redis://:my_master_password@redis-master:6379
     depends_on:
       - db
       - redis-master
