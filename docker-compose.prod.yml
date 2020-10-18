@@ -35,9 +35,10 @@ services:
       - my-net
 
   nginx:
-    image: nginx:latest
+    build:
+      context: ./services/web
+      dockerfile: ./Dockerfile.prod
     volumes:
-      - $HOME/project/services/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       - static_volume:/home/app/web/project/static
       - media_volume:/home/app/web/project/media
     ports:
