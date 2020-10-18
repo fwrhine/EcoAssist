@@ -36,8 +36,8 @@ services:
 
   nginx:
     build:
-      context: ./services/web
-      dockerfile: ./Dockerfile.prod
+      context: ./services/nginx
+      dockerfile: ./Dockerfile
     volumes:
       - static_volume:/home/app/web/project/static
       - media_volume:/home/app/web/project/media
