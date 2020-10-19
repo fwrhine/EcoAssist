@@ -3,16 +3,6 @@ from wtforms import StringField, TextAreaField, IntegerField, SubmitField, Selec
 from wtforms.validators import DataRequired, InputRequired, Email, ValidationError
 from .models import User, TeacherClasses
 
-# def invalid_credentials(form, field):
-#     email = form.email.data
-#     password = field.data
-#     user = User.query.filter_by(email=form.email.data).first()
-#     if user is None:
-#         ValidationError("Email is not registered")
-#     else:
-#         check_password = User.query.filter_by(email=form.email.data, password=form.password.data).first()
-#         if check_password is None:
-#            ValidationError("Wrong password")
 
 class TaskForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
@@ -46,6 +36,7 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
+
     def validate(self):
         if self.email.data and self.password.data:
             user = User.query.filter_by(email=self.email.data).first()
@@ -53,7 +44,8 @@ class LoginForm(FlaskForm):
                 self.email.errors += (ValidationError("Email is not registered"),)
                 return False
             else:
-                check_password = User.query.filter_by(email=self.email.data, password=self.password.data).first()
+                check_password = User.query.filter_by(
+                    email=self.email.data, password=self.password.data).first()
                 if check_password is None:
                     self.password.errors += (ValidationError("Wrong password"),)
                     return False
@@ -65,16 +57,20 @@ class LoginForm(FlaskForm):
             return False
         return True
 
+
 class ClassForm(FlaskForm):
     class_name = StringField('Class Name', validators=[DataRequired()])
     submit = SubmitField('Create')
 
+
 class StudentClassForm(FlaskForm):
     class_code = StringField('Class Code', validators=[DataRequired()])
     submit = SubmitField('Create')
+
     def validate_class_code(self, class_code):
         print("check")
-        teacher_classes = TeacherClasses.query.filter_by(class_code=class_code.data).first()
+        teacher_classes = TeacherClasses.query.filter_by(
+            class_code=class_code.data).first()
         print(teacher_classes)
         if teacher_classes is None:
             print("doesnt")
