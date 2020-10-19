@@ -11,7 +11,7 @@ then
     echo "PostgreSQL started"
 fi
 
-python manage.py create_db_prod
-# python manage.py seed_tasks
+python manage.py create_db
+python manage.py seed_tasks
 
 exec "$@"
