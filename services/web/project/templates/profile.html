@@ -12,16 +12,16 @@
   <div class="inner-content">
     <h2>My Profile</h2>
     <br>
-    <div class=my-profile>
-      <img src="{{ url_for('static', filename='images/profilelogo.jpg') }}" alt="Profile">
+    <div class="my-profile">
+      <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile">
       <div>
         <h3>{{first_name}} {{last_name}}</h3>
         <br>
-        <p>Email: {{email}}</p>
-        <p>Role: {{role}}</p>
-        <p>School: {{school}}</p>
+        <p><b>Email:</b> {{email}}</p>
+        <p><b>Role:</b> {{role}}</p>
+        <p><b>School:</b> {{school}}</p>
         {% if session['role'] == 'teacher' %}
-        <p>Classes:</p>
+        <p><b>Classes:</b></p>
         {%for x in classes%}
         <li style="padding-left:20px;">{{x.class_name}}</li>
         {% endfor %}
