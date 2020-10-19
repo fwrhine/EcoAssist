@@ -13,6 +13,10 @@ def create_db():
     db.create_all()
     db.session.commit()
 
+@cli.command("create_db_prod")
+def create_db():
+    db.create_all()
+    db.session.commit()
 
 @cli.command("seed_db")
 def seed_db():
