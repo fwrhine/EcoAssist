@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class='wrapper'>
+    <button class="btn-border" onclick="location.href='{{ url_for('student_task', id=user.id) }}'" type="button">View Tasks</button>
+    <button class="btn-border" onclick="location.href='{{ url_for('view_awards', id=user.id) }}'" type="button">View Awards</button>
+</div>
+
+{% endblock %}

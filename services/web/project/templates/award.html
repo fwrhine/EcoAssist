@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content">
+  <h1>Give Award</h1>
+  <br>
+  <form id="awardForm" action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+
+    <p>
+      Class Name: {{ class_name }}
+      <br>
+    </p>
+
+    <p>
+      {{ form.student_names.label }}<br>
+      {{ form.student_names() }}
+      {% for error in form.student_names.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+
+    <p>
+      {{ form.start_date.label }}<br>
+      {{ form.start_date()}}
+    </p>
+
+    <p>
+      {{ form.end_date.label }}<br>
+      {{ form.end_date()}}
+    </p>
+
+    <p>
+      {{ form.reward.label }}<br>
+      {{ form.reward()}}
+    </p>
+
+    <p>
+      {{ form.comment.label }}<br>
+      {{ form.comment()}}
+    </p>
+
+    <br>
+    <p>{{ form.submit() }}</p>
+
+    <p>Badges:</p>
+
+    {% for image in form.images %}
+      <td>{{image}}</td>
+      <p hidden="true">{{image.label}}</p>
+      <img src="{{url_for('static', filename='badge_images/' + image.data)}}"/>
+      <br>
+    {% endfor %}
+
+
+  </form>
+</div>
+{% endblock %}

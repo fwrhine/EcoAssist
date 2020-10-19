@@ -10,7 +10,6 @@ body, html {
 /* ---------------------------- BASE CONTAINERS ----------------------------*/
 .background {
   background-image: url(../images/environmentalbackground.jpg);
-  height: 90%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -18,16 +17,18 @@ body, html {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100%;
 }
 
 .content {
   background-color: #FFFFFF;
   width: 70%;
-  height: 90%;
   margin-bottom: 1%;
   border-radius: 49px;
   display: inline-block;
   text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 /* Side menu */
@@ -46,7 +47,6 @@ body, html {
 
 /* Right of sidebar */
 .inner-content {
-  height: 100%;
   width: 85%;
   float: right;
   overflow: auto;
@@ -55,7 +55,6 @@ body, html {
 /* Login and register page container
     (centering items with title header)*/
 .inner-content-login {
-  height: 90%;
   width: 100%;
   display: flex;
   align-items: center;
@@ -63,9 +62,8 @@ body, html {
 }
 
 /* Home page container
-    (centering items without title header)*/
+(centering items without title header)*/
 .inner-content-home {
-  height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
@@ -160,7 +158,8 @@ header {
 
 header img {
   vertical-align: middle;
-  height: 60px;
+  height: 80px;
+  margin-bottom: 10px;
 }
 
 header h1 {
@@ -208,8 +207,8 @@ input, select {
   background: #FFFFFF;
   border: 3px solid #000000;
   box-sizing: border-box;
-  border-radius: 39px;
-  padding: 10px;
+  border-radius: 20px;
+  padding: 5px;
   margin: 5px 10px 5px 10px;
 }
 
@@ -217,13 +216,14 @@ textarea {
   background: #FFFFFF;
   border: 3px solid #000000;
   box-sizing: border-box;
-  border-radius: 39px;
+  border-radius: 20px;
   width: 300px;
   height: 100px;
-  padding: 10px;
+  padding: 5px;
 }
 
 input[type="submit"] {
+  background-color: #7AC581;
   padding: 10px 50px 10px 50px;
   margin-bottom: 10px;
   font-size: 1.1em;
@@ -231,7 +231,7 @@ input[type="submit"] {
 
 /* ---------------------------- HOME PAGE ----------------------------*/
 /* Welcome text section to the left */
-.welcome {
+/*.welcome {
   width: 30%;
   height: 100%;
   text-align: left;
@@ -241,19 +241,20 @@ input[type="submit"] {
   border-right: 1px solid #000000;
   float: left;
   overflow: auto;
-}
+}*/
 
-.welcome h2 {
+.welcomeHeader {
   border: none;
 }
 
 /* Home page menu links */
 .home-links {
-  width: 70%;
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 16px;
   grid-row-gap: 16px;
+  margin-left: 20px;
 }
 
 .homeImageContainer {
@@ -262,11 +263,14 @@ input[type="submit"] {
   display: inline-block;
   /* To horizontally center images and caption */
   text-align: center;
+  border-radius: 20px;
+  width: 90%;
+  margin-bottom: 20px;
 }
 
 .homeImageContainer img {
-  width: 65%;
-  height: auto;
+  height: 160px;
+  width: auto;
 }
 
 .homeImageContainer h2 {
@@ -274,6 +278,22 @@ input[type="submit"] {
   display: block;
   margin: 0px;
   font-size: 27px;
+}
+
+#homeImage1 {
+  background-color: #61BF92;
+}
+
+#homeImage2 {
+  background-color: #FFE4AD;
+}
+
+#homeImage3 {
+  background-color: #FFB29A;
+}
+
+#homeImage4 {
+  background-color: #A7D7FF;
 }
 
 /* ---------------------------- TASK LIST ----------------------------*/
@@ -321,6 +341,8 @@ input[type="submit"] {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   margin-left: 15px;
   margin-right: 15px;
+  margin-bottom: 20px;
+  border-radius: 20px;
 }
 
 .learn img {
@@ -334,12 +356,20 @@ input[type="submit"] {
   padding: 15px;
   margin-top: 30px;
   margin-bottom: 10px;
+  border-radius: 20px;
 }
 
 /* ---------------------------- PROFILE ----------------------------*/
 .my-profile {
   text-align: left;
   padding-left: 50px;
+  background-color: #A7D7FF;
+  border-radius: 20px;
+  width: 95%;
+  margin-left: 20px;
+  padding-top: 20px;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
 }
 
 .my-profile img {
@@ -383,4 +413,10 @@ tr:nth-child(even) {
   /* Increment the serial number counter */
   content: counter(serial-number);
   /* Display the counter */
+}
+
+/* ---------------------------- AWARDS ----------------------------*/
+#awardForm img {
+  height: 50px;
+  width: auto;
 }
