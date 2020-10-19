@@ -16,7 +16,7 @@
   window.onload = function() {
     var logged_in = "{{ session['logged_in'] }}"
 
-    if (logged_in === "False") {
+    if (logged_in !== "True") {
       console.log("not logged in");
       $("#buttonText").text('Login');
       $("#loginButton").attr('href', '/login');
