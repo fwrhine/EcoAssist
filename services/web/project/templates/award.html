@@ -2,9 +2,18 @@
 
 {% block content %}
 <div class="content">
-  <h1>Give Award</h1>
+  <div class="side-bar-menu">
+    <a onclick="goBack()">
+      <h2>Back</h2>
+    </a>
+    <a href="{{ url_for('home') }}">
+      <h2>Home</h2>
+    </a>
+  </div>
+  <h2>Give Award</h2>
+  <div class="inner-content">
   <br>
-  <form id="awardForm" action="" method="post" novalidate>
+  <form id="create-award-form" action="" method="post" novalidate>
     {{ form.hidden_tag() }}
 
     <p>
@@ -38,21 +47,17 @@
     <p>
       {{ form.comment.label }}<br>
       {{ form.comment()}}
+      Badges:
+      {% for image in form.images %}
+        <td>{{image}}</td>
+        <p hidden="true">{{image.label}}</p>
+        <img src="{{url_for('static', filename='badge_images/' + image.data)}}"/>
+        <br>
+      {% endfor %}
     </p>
-
-    <br>
+   
     <p>{{ form.submit() }}</p>
-
-    <p>Badges:</p>
-
-    {% for image in form.images %}
-      <td>{{image}}</td>
-      <p hidden="true">{{image.label}}</p>
-      <img src="{{url_for('static', filename='badge_images/' + image.data)}}"/>
-      <br>
-    {% endfor %}
-
-
   </form>
+  </div>
 </div>
 {% endblock %}

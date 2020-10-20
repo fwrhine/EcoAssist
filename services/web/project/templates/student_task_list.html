@@ -14,7 +14,7 @@
     </a>
   </div>
   <div class="inner-content">
-    <h2>Tasks - {{ student.first_name }} {{ student.last_name }}</h2>
+    <h2>Tasks - {{ user.first_name }} {{ user.last_name }}</h2>
     <h3>Completed</h3>
     <table>
       <tr>
@@ -73,6 +73,11 @@
       {% endfor %}
     </table>
     <br>
+    <div class='wrapper'>
+      <button class="btn-border" onclick="location.href='{{ url_for('give_award_directly', id=student.student_id) }}'" type="button">Award Directly</button>
+      <button class="btn-border" onclick="location.href='{{ url_for('student_profile', id=user.id) }}'" type="button">View Profile</button>
+ 
+  </div>
   </div>
 </div>
 

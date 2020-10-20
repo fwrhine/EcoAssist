@@ -88,8 +88,6 @@ class AwardForm(FlaskForm):
     # class_id = StringField('Class Name', validators=[DataRequired()])
     student_names = SelectField('For Student', coerce=int,
                            validators=[InputRequired()])
-    start_date = DateField('Start Date', format='%Y-%m-%d')
-    end_date = DateField('End Date', format='%Y-%m-%d')
     reward = StringField('Badge Name', validators=[DataRequired()])
     comment = StringField('Comments', validators=[DataRequired()])
 

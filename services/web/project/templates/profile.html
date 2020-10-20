@@ -3,10 +3,13 @@
 {% block content %}
 <div class='content'>
   <div class="side-bar-menu">
-    {% if session['role'] == 'teacher' or student_status == 'accepted' %}
+    {% if role == 'Teacher' or student_status == 'accepted' %}
     <a href="{{ url_for('home') }}">
       <h2>Home</h2>
     </a>
+      <a onclick="goBack()">
+        <h2>Back</h2>
+      </a>
     {% endif %}
   </div>
   <div class="inner-content">
@@ -20,21 +23,21 @@
         <p><b>Email:</b> {{email}}</p>
         <p><b>Role:</b> {{role}}</p>
         <p><b>School:</b> {{school}}</p>
-        {% if session['role'] == 'teacher' %}
+        {% if role == 'Teacher' %}
         <p><b>Classes:</b></p>
         {%for x in classes%}
         <li style="padding-left:20px;">{{x.class_name}}</li>
         {% endfor %}
-        {% elif session['role'] == 'student' and student_status == 'accepted' %}
+        {% elif role == 'Student' and student_status == 'accepted' %}
         <p>Class: {{ class_name }}</p>
         {% endif %}
       </div>
-      {% if session['role'] == 'student' and student_status == 'accepted' %}
+      {% if role == 'Student' and student_status == 'accepted' %}
       <p>Points: {{points}}</p>
       <p>Ranking: {{ranking}} / {{total}}</p>
-      {% elif session['role'] == 'student' and student_status == 'pending' %}
+      {% elif role == 'Student' and student_status == 'pending' %}
       <p style="color:red;">Waiting for Approval</p>
-      {% elif session['role'] == 'student' and student_status == 'empty' %}
+      {% elif role == 'Student' and student_status == 'empty' %}
       <form class="p-4 bg-light" action='' method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
@@ -46,10 +49,22 @@
         </p>
         <p>{{ form.submit() }}</p>
       </form>
-    {%elif session['role'] == 'teacher'%}
+    {%elif role == 'Teacher'%}
     <p></p>
     {% else %}
     <p>rejected</p>
+    {% endif %}
+    {% if role == 'Student' and student_status == 'accepted' %}
+      
+    <button class="btn-border" onclick="location.href='{{ url_for('view_awards', id=user.id) }}'" type="button">View Awards</button>
+    {% if session['role'] == 'teacher' %}
+    <button class="btn-border" onclick="location.href='{{ url_for('leaderboard', id=teacher_classes.class_id) }}'" type="button">Leaderboard</button>
+    <button class="btn-border" onclick="location.href='{{ url_for('student_task', id=user.id)}}'" type="button">Task List</button>
+    {% else %}
+    <button class="btn-border" onclick="location.href='{{ url_for('leaderboard') }}'" type="button">Leaderboard</button>
+    <button class="btn-border" onclick="location.href='{{ url_for('task_list')}}'" type="button">Task List</button>
+    
+    {% endif %}
     {% endif %}
   </div>
 </div>

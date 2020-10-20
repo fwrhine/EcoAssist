@@ -200,7 +200,7 @@ def task_list():
     for i in task_list:
         teacher_classes = TeacherClasses.query.get(i.class_id)
         class_name = teacher_classes.class_name
-
+        
         if session['role'] == "student":
             task_complete = TaskComplete.query.filter_by(
                 student_id=student.student_id, task_id=i.task_id).first()
@@ -285,7 +285,7 @@ def manage_class(id):
     print(id)
     teacher_classes = TeacherClasses.query.filter_by(class_code=id).first()
     session['award_class_id'] = id
-    session['award_class_name'] = teacher_classes.class_name
+    session['award_class_name'] = teacher_classes.class_name 
     print(teacher_classes)
     class_no = teacher_classes.class_no.all()
     print(class_no)
@@ -311,7 +311,7 @@ def manage_class(id):
         new = {user:status}
         student_list.update(new)
 
-    return render_template('manage_students.html', student_list=student_list)
+    return render_template('manage_students.html', student_list=student_list,teacher_classes=teacher_classes)
 
 @app.route("/student-task/<id>")
 def student_task(id):
@@ -357,7 +357,8 @@ def student_task(id):
             uncompleted.remove(task)
 
 
-    return render_template('student_task_list.html', uncompleted=uncompleted,completed=completeds, pending=pending, rejected=rejected, student=user)
+    return render_template('student_task_list.html', uncompleted=uncompleted,
+        completed=completeds, pending=pending, rejected=rejected, user=user, student=student)
 
 @app.route("/approve-task/<id>")
 def approve_task(id):
@@ -497,6 +498,7 @@ def profile():
                                     role="Teacher", school=session['school'], classes=class_list)
     else:
         student = Student.query.filter_by(email=session['username']).first()
+        user = User.query.filter_by(email=session['username']).first()
         class_members = student.classes_student.first()
 
         print('student id : ' + str(student.student_id))
@@ -536,7 +538,8 @@ def profile():
             return render_template('profile.html', email=session['username'],
                 first_name=session['first_name'], last_name=session['last_name'],
                 role="Student", school=session['school'], leaderboard=sorted_leaderboard,
-                ranking=rank, total=len(leaderboard), points=point, class_name=class_name, student_status=class_members.student_status)
+                ranking=rank, total=len(leaderboard), points=point, class_name=class_name,
+                 student_status=class_members.student_status, user=user)
         else:
             if class_members:
                 status = class_members.student_status
@@ -547,6 +550,64 @@ def profile():
                 first_name=session['first_name'], last_name=session['last_name'],
                 role="Student", school=session['school'], student_status=status, form=form)
 
+@app.route("/student-profile/<id>")
+def student_profile(id):
+    user = User.query.get(id)
+    print(user)
+    student = user.student_email.first()
+    print(student)
+    class_members = student.classes_student.first()
+    teacher_classes = TeacherClasses.query.filter_by(class_id=class_members.class_id).first()
+    print("class" +str(teacher_classes))
+    print('student id : ' + str(student.student_id))
+    if class_members and class_members.student_status == "accepted":
+        print(class_members.class_id)
+        all_members = ClassMembers.query.filter_by(class_id=class_members.class_id).all()
+        print(all_members)
+        leaderboard = {}
+
+        # get class name
+        class_name = TeacherClasses.query.filter_by(class_id=class_members.class_id).first().class_name
+
+        for i in all_members:
+            points = 0
+            all_task_completed = TaskComplete.query.filter_by(student_id=i.student_id).all()
+            for j in all_task_completed:
+                if j.task_status == "accepted":
+                    task = Task.query.filter_by(task_id=j.task_id).first()
+                    points += task.points
+            print(points)
+            new = {i.student_id:points}
+            leaderboard.update(new)
+
+        sorted_leaderboard = sorted(leaderboard.items(), key=lambda x: x[1], reverse=True)
+        print('leaderboard : ' + str(leaderboard))
+
+        rank = 1
+        point = 0
+        for j in sorted_leaderboard:
+            id = int(j[0])
+            if not (id == student.student_id):
+                rank += 1
+            else:
+                point = j[1]
+                break
+
+        return render_template('profile.html', email=user.email,
+            first_name=user.first_name, last_name=user.last_name,
+            role="Student", school=user.school, leaderboard=sorted_leaderboard,
+            ranking=rank, total=len(leaderboard), points=point, class_name=class_name,
+            student_status=class_members.student_status, user=user, teacher_classes=teacher_classes)
+    else:
+        if class_members:
+            status = class_members.student_status
+        else:
+            status = "empty"
+        print(status)
+        return render_template('profile.html', email=session['username'],
+            first_name=session['first_name'], last_name=session['last_name'],
+            role="Student", school=session['school'], student_status=status)
+        
 
 def get_all_badges(id):
     badge_owned = Badge.query.filter_by(student_id=id).all()
@@ -630,9 +691,10 @@ def give_award():
                             badge_location=badge_location, student_id=student.student_id)
             db.session.add(badge_x)
             db.session.commit()
-            return redirect(url_for('.give_class_award'))
+            user = User.query.filter_by(email=student.email).first()
+            return redirect(url_for('view_awards', id=user.id))
 
-    return render_template('award.html', form=form, class_name=session['award_class_name'])
+    return render_template('award_new.html', form=form, class_name=session['award_class_name'])
 
 
 @app.route('/award-direct/<id>', methods=['GET', 'POST'])
@@ -652,8 +714,7 @@ def give_award_directly(id):
         student_list.append((student_id_x, name))
 
     form.student_names.choices = student_list
-
-    print(form.errors)
+    
 
     if form.validate_on_submit():
         data = request.form['student_names']
@@ -676,8 +737,8 @@ def give_award_directly(id):
         user = User.query.filter_by(email=student.email).first()
         print("user_id : " + str(user.id))
         return redirect(url_for('view_awards', id=user.id))
-
-    return render_template('award.html', form=form, student_id=id, class_name=session['award_class_name'])
+    print("fail" +str(form.errors))
+    return render_template('award_new.html', form=form, student_id=id, class_name=session['award_class_name'])
 
 
 @app.route("/view-student/<id>")
@@ -699,10 +760,11 @@ def view_awards(id):
 
     badge_list = get_all_badges(student.student_id)
     print(badge_list)
-    return render_template('view_awards.html', student=student, badge_list=badge_list)
+    return render_template('new_view_awards.html', student=student, badge_list=badge_list)
 
-
+    
 def get_class_name(id):
     teacher_class = TeacherClasses.query.filter_by(class_id=id).first()
     return teacher_class.class_name
+
 

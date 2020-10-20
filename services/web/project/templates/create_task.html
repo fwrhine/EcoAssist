@@ -45,6 +45,7 @@
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
       </p>
+      
       <p>
         {{ form.required_approval.label(style="width: 180px;") }}
         {{ form.required_approval() }}
@@ -52,6 +53,7 @@
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
       </p>
+      
       <br>
       <div style="text-align: center">
         <p>{{ form.submit() }}</p>

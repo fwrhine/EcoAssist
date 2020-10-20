@@ -17,18 +17,19 @@ body, html {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: 90%;
 }
 
 .content {
   background-color: #FFFFFF;
   width: 70%;
+  height: 90%;
   margin-bottom: 1%;
   border-radius: 49px;
   display: inline-block;
   text-align: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  /* margin-top: 20px;
+  margin-bottom: 20px; */
 }
 
 /* Side menu */
@@ -47,6 +48,7 @@ body, html {
 
 /* Right of sidebar */
 .inner-content {
+  height: 100%;
   width: 85%;
   float: right;
   overflow: auto;
@@ -55,6 +57,7 @@ body, html {
 /* Login and register page container
     (centering items with title header)*/
 .inner-content-login {
+  height: 90%;
   width: 100%;
   display: flex;
   align-items: center;
@@ -64,6 +67,7 @@ body, html {
 /* Home page container
 (centering items without title header)*/
 .inner-content-home {
+  height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
@@ -203,6 +207,14 @@ form>p>label {
   margin-left: 30px;
 }
 
+#create-award-form {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  width: 100%;
+}
+
 input, select {
   background: #FFFFFF;
   border: 3px solid #000000;
@@ -249,12 +261,14 @@ input[type="submit"] {
 
 /* Home page menu links */
 .home-links {
+  /* margin: 0; */
+  margin-left: 2.5%;
+  margin-top: 5%;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 16px;
   grid-row-gap: 16px;
-  margin-left: 20px;
 }
 
 .homeImageContainer {
@@ -416,7 +430,7 @@ tr:nth-child(even) {
 }
 
 /* ---------------------------- AWARDS ----------------------------*/
-#awardForm img {
+#create-award-form img {
   height: 50px;
   width: auto;
 }

@@ -3,7 +3,7 @@
 {% block content %}
 {% if session['logged_in'] %}
 {% if session['role'] == "teacher" %}
-<div class="content">
+<div class="content" a>
 	<h2 class="welcomeHeader">Welcome {{ session['first_name'] }} {{ session['last_name'] }}!</h2>
 	<div class="home-links">
 		<div class="homeImageContainer" id="homeImage1">
