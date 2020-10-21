@@ -211,11 +211,6 @@ form>p>label {
   margin-left: 30px;
 }
 
-#create-task-form img {
-  height: 150px;
-  width: auto;
-}
-
 input, select {
   background: #FFFFFF;
   border: 3px solid #000000;
@@ -419,10 +414,6 @@ th {
   background: #FFE4AD;
 }
 
-/* td {
-  background: #fcfcfc;
-} */
-
 tr:nth-child(even) {
   background: transparent;
 }
@@ -494,5 +485,25 @@ tr:last-of-type td:last-of-type {
   width: 90%;
   height: 50%;
   margin: 0 auto;
-  /* background-color: #185744; */
+}
+
+/* ---------------------------- AWARDS ----------------------------*/
+.badges {
+  float: right;
+  margin-right: 10%;
+  width: 250px;
+}
+
+.badges-container {
+  border: 3px solid #000000;
+  box-sizing: border-box;
+  border-radius: 20px;
+  padding: 10px 30px 10px 30px;
+  height: 240px;
+  overflow: auto;
+}
+
+.badge-image {
+  height: 120px;
+  width: auto;
 }

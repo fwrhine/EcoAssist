@@ -15,38 +15,50 @@
     <br>
     <form id="create-task-form" action="" method="post" novalidate>
       {{ form.hidden_tag() }}
-      <p>
-        Class Name: {{ class_name }}
-        <br>
-      </p>
-
-      <p>
-        {{ form.student_names.label }}<br>
-        {{ form.student_names() }}
-        {% for error in form.student_names.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-      </p>
-
-      <p>
-        {{ form.reward.label }}<br>
-        {{ form.reward()}}
-      </p>
-
-      <br>
-      <p>
-        {{ form.comment.label }}<br>
-        {{ form.comment()}}
-        Badges:
-        {% for image in form.images %}
-        <td>{{image}}</td>
-      <p hidden="true">{{image.label}}</p>
-      <img src="{{url_for('static', filename='images/badge_images/' + image.data)}}" />
-      <br>
-      {% endfor %}
-      <div style="text-align: center">
-        <p>{{ form.submit() }}</p>
-      </div>
+      <div>
+        <div style="float: left;">
+          <p style="font-size: 1.2em; margin-left: 30px;">Class &emsp; &emsp; &emsp; {{ class_name }}</p>
+          <p>
+            {{ form.student_names.label }}
+            {{ form.student_names() }}
+            {% for error in form.student_names.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          </p>
+          <p>
+            {{ form.reward.label }}
+            {{ form.reward()}}
+            {% for error in form.reward.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          </p>
+          <p>
+            {{ form.comment.label }}<br>
+            {{ form.comment(style="margin-left: 30px;")}}
+            {% for error in form.reward.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          </p>
+        </div>
+        <div class="badges">
+          <p>
+            {{ form.images.label }}
+          </p>
+          <div class="badges-container">
+            {% for image in form.images %}
+            <td>{{image}}</td>
+            <!-- <p hidden="true">{{image.label}}</p> -->
+            <img class="badge-image" src="{{url_for('static', filename='images/badge_images/' + image.data)}}" />
+            <br>
+            {% endfor %}
+          </div>
+          {% for error in form.images.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+        </div>
+        <div style="position: absolute; bottom: 60px; margin-left: 30px;">
+          {{ form.submit() }}
+        </div>
     </form>
   </div>
 </div>

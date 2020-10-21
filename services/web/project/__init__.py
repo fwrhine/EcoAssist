@@ -675,7 +675,7 @@ def give_award():
         student_x = Student.query.filter_by(student_id=student_id_x)
         email_x = student_x.first().email
         user = User.query.filter_by(email=email_x).first()
-        name = user.first_name + user.last_name
+        name = user.first_name + " " + user.last_name
         student_list.append((student_id_x, name))
 
     student_list.append((-1, 'All'))
@@ -743,7 +743,7 @@ def give_award_directly(id):
         student_x = Student.query.filter_by(student_id=student_id_x)
         email_x = student_x.first().email
         user = User.query.filter_by(email=email_x).first()
-        name = user.first_name + user.last_name
+        name = user.first_name + " " + user.last_name
         student_list.append((student_id_x, name))
 
     form.student_names.choices = student_list

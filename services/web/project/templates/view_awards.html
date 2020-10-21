@@ -16,8 +16,8 @@
     <table class="css-serial">
       <tr>
         <th></th>
-        <th>Award Name</th>
-        <th>Comments</th>
+        <th>Award</th>
+        <th>Comment</th>
         <th></th>
       </tr>
       {% for badge in badge_list %}
@@ -26,7 +26,7 @@
         <td>{{badge.badge_name}}</td>
         <td>{{badge.badge_comment}}</td>
         <td>
-          <img src={{badge.badge_location}}>
+          <img class="badge-image" src={{badge.badge_location}}>
         </td>
       </tr>
       {% endfor %}

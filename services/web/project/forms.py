@@ -88,8 +88,8 @@ class AwardForm(FlaskForm):
     # class_id = StringField('Class Name', validators=[DataRequired()])
     student_names = SelectField('Student', coerce=int,
                            validators=[InputRequired()])
-    reward = StringField('Badge Name', validators=[DataRequired()])
-    comment = StringField('Comments', validators=[DataRequired()])
+    reward = StringField('Title', validators=[DataRequired()])
+    comment = TextAreaField('Comment', validators=[DataRequired()])
 
     images_dir = os.listdir(os.path.join(app.static_folder, "images/badge_images"))
     choices = []
@@ -98,7 +98,7 @@ class AwardForm(FlaskForm):
         label = x
         choices.append((value, label))
 
-    images = RadioField('image', choices=choices)
+    images = RadioField('Badges', choices=choices)
     submit = SubmitField('Create')
 
 class ChooseClassForm(FlaskForm):
