@@ -13,7 +13,13 @@
     {% endif %}
   </div>
   <div class="inner-content">
+    {% if role == 'Student' and student_status == 'accepted' %}
+    {% if session['role'] == 'teacher' %}
+    <h2>Student's Profile</h2>
+    {% else %}
     <h2>My Profile</h2>
+    {% endif %}
+    {% endif %}
     <br>
     <div class="my-profile">
       <div id="profile-image">
@@ -51,7 +57,7 @@
         </p>
         <p>{{ form.submit() }}</p>
       </form>
-    {%elif role == 'Teacher'%}
+    {% elif role == 'Teacher' %}
     <p></p>
     {% else %}
     <p>rejected</p>
@@ -59,8 +65,12 @@
     <br>
     {% if role == 'Student' and student_status == 'accepted' %}
     <button class="btn-border" onclick="location.href='{{ url_for('view_awards', id=user.id) }}'" type="button">Awards</button>
+    {% if session['role'] == 'teacher' %}
+    <button class="btn-border" onclick="location.href='{{ url_for('leaderboard', id=teacher_classes.class_id) }}'" type="button">Leaderboard</button>
+    {% else %}
     <button class="btn-border" onclick="location.href='{{ url_for('leaderboard') }}'" type="button">Leaderboard</button>
     <button class="btn-border" onclick="location.href='{{ url_for('task_list')}}'" type="button">Tasks</button>
+    {% endif %}
     {% endif %}
   </div>
 </div>
