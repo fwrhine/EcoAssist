@@ -4,6 +4,10 @@
 ```
 $ docker-compose up -d --build
 ```
+or
+```
+$ docker-compose down --rmi all && docker-compose up -d --build
+```
 
 Try it on: http://localhost:5000
 
