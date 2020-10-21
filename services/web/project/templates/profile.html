@@ -4,19 +4,21 @@
 <div class='content'>
   <div class="side-bar-menu">
     {% if role == 'Teacher' or student_status == 'accepted' %}
+    <a onclick=goBack()>
+      <h2>Back</h2>
+    </a>
     <a href="{{ url_for('home') }}">
       <h2>Home</h2>
     </a>
-      <a onclick="goBack()">
-        <h2>Back</h2>
-      </a>
     {% endif %}
   </div>
   <div class="inner-content">
     <h2>My Profile</h2>
     <br>
     <div class="my-profile">
-      <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile">
+      <div id="profile-image">
+      <img src="{{ url_for('static', filename='images/home_icons/profile.png') }}" alt="Profile">
+      </div>
       <div>
         <h3>{{first_name}} {{last_name}}</h3>
         <br>
@@ -29,12 +31,12 @@
         <li style="padding-left:20px;">{{x.class_name}}</li>
         {% endfor %}
         {% elif role == 'Student' and student_status == 'accepted' %}
-        <p>Class: {{ class_name }}</p>
+        <p><b>Class:</b> {{ class_name }}</p>
         {% endif %}
       </div>
       {% if role == 'Student' and student_status == 'accepted' %}
-      <p>Points: {{points}}</p>
-      <p>Ranking: {{ranking}} / {{total}}</p>
+      <p><b>Points:</b> {{points}}</p>
+      <p><b>Ranking:</b> {{ranking}} / {{total}}</p>
       {% elif role == 'Student' and student_status == 'pending' %}
       <p style="color:red;">Waiting for Approval</p>
       {% elif role == 'Student' and student_status == 'empty' %}
@@ -54,17 +56,11 @@
     {% else %}
     <p>rejected</p>
     {% endif %}
+    <br>
     {% if role == 'Student' and student_status == 'accepted' %}
-      
-    <button class="btn-border" onclick="location.href='{{ url_for('view_awards', id=user.id) }}'" type="button">View Awards</button>
-    {% if session['role'] == 'teacher' %}
-    <button class="btn-border" onclick="location.href='{{ url_for('leaderboard', id=teacher_classes.class_id) }}'" type="button">Leaderboard</button>
-    <button class="btn-border" onclick="location.href='{{ url_for('student_task', id=user.id)}}'" type="button">Task List</button>
-    {% else %}
+    <button class="btn-border" onclick="location.href='{{ url_for('view_awards', id=user.id) }}'" type="button">Awards</button>
     <button class="btn-border" onclick="location.href='{{ url_for('leaderboard') }}'" type="button">Leaderboard</button>
-    <button class="btn-border" onclick="location.href='{{ url_for('task_list')}}'" type="button">Task List</button>
-    
-    {% endif %}
+    <button class="btn-border" onclick="location.href='{{ url_for('task_list')}}'" type="button">Tasks</button>
     {% endif %}
   </div>
 </div>

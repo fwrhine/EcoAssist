@@ -45,8 +45,6 @@ class Student(db.Model):
         'ClassMembers', backref='student', lazy='dynamic')
     student_task_done = db.relationship(
         'TaskComplete', backref='student', lazy='dynamic')
-    student_points = db.relationship(
-        'Points', backref='student', lazy='dynamic')
 
 
 class TeacherClasses(db.Model):
@@ -116,16 +114,6 @@ class Resource(db.Model):
 
     tasks = db.relationship('Task', backref='resource', lazy='dynamic')
 
-
-class Points(db.Model):
-    __tablename__ = 'points'
-
-    point_id = db.Column(db.Integer, primary_key=True)
-
-    date = db.Column(db.DateTime, nullable=False)
-    points = db.Column(db.Integer,  nullable=False)
-    student_id = db.Column(db.Integer, db.ForeignKey(
-        'students.student_id'), nullable=False)
 
 class Badge(db.Model):
     __tablename__ = 'badges'

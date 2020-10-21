@@ -9,9 +9,6 @@
     <a href="{{ url_for('home') }}">
       <h2>Home</h2>
     </a>
-    <a href="{{ url_for('learn') }}">
-      <h2>Learn</h2>
-    </a>
   </div>
   <div class="inner-content">
     <h2>Learn - {{resource.resource_title}}</h2>
@@ -19,9 +16,9 @@
     <div class="learn">
       <h3>{{resource.resource_title}}</h3>
       {% if resource.resource_title == "Pollution" %}
-      <img src="{{ url_for('static', filename='images/pollution.jpg') }}"" alt=" pollution">
+      <img src="{{ url_for('static', filename='images/learn_images/pollution.jpg') }}"" alt=" pollution">
       {% elif resource.resource_title == "Deforestation" %}
-      <img src="{{ url_for('static', filename='images/deforestation.png') }}" alt="deforestation">
+      <img src="{{ url_for('static', filename='images/learn_images/deforestation.png') }}" alt="deforestation">
       {% endif %}
       <br>
       <br>

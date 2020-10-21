@@ -3,11 +3,11 @@
 {% block content %}
 <div class='content'>
   <div class="side-bar-menu">
+    <a onclick=goBack()>
+      <h2>Back</h2>
+    </a>
     <a href="{{ url_for('home') }}">
       <h2>Home</h2>
-    </a>
-    <a href="{{ url_for('leaderboard') }}">
-      <h2>Class Rankings</h2>
     </a>
   </div>
   <div class="inner-content">
@@ -17,27 +17,23 @@
       <tr>
         <th></th>
         <th>Class</th>
-        <th>Class Code</th>
         <th>Student Count</th>
-        <th></th>
+        <th>Class Code</th>
       </tr>
       {% for class in class_list %}
       <tr>
         <td></td>
-        <td>{{class.class_name}}</td>
-        <td>{{class.class_code}}</td>
+        <td><button class="btn-green" onclick="location.href='{{ url_for('manage_class', id=class.class_code) }}'" name="manage" type="button">{{class.class_name}}</button></td>
         <td>{{total_student[class.class_id]}}</td>
-        <td>
-        <button class="btn-border" onclick="location.href='{{ url_for('manage_class', id=class.class_code) }}'" name="manage" type="button">Manage Class</button>
-        </td>
+        <td>{{class.class_code}}</td>
       </tr>
       {% endfor %}
     </table>
     <br>
     <button class="btn-icon" onclick="location.href='{{ url_for('create_class') }}'">
       New Class<i class="fa fa-plus" style="padding-left:10px;"></i></button>
-    <button class="btn-icon" onclick="location.href='{{ url_for('give_class_award') }}'">
-      Give Award<i class="fa fa-plus" style="padding-left:10px;"></i></button>
+    <!-- <button class="btn-icon" onclick="location.href='{{ url_for('give_class_award') }}'">
+      Give Award<i class="fa fa-plus" style="padding-left:10px;"></i></button> -->
   </div>
 </div>
 {% endblock %}

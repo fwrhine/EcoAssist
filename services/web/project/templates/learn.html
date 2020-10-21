@@ -3,6 +3,9 @@
 {% block content %}
 <div class='content'>
   <div class="side-bar-menu">
+    <a onclick=goBack()>
+      <h2>Back</h2>
+    </a>
     <a href="{{ url_for('home') }}">
       <h2>Home</h2>
     </a>
@@ -14,9 +17,9 @@
     <div class="learn">
       <h3>{{resource.resource_title}}</h3>
       {% if resource.resource_title == "Pollution" %}
-      <img src="static/images/pollution.jpg" alt="pollution">
+      <img src="static/images/learn_images/pollution.jpg" alt="pollution">
       {% elif resource.resource_title == "Deforestation" %}
-      <img src="static/images/deforestation.png" alt="deforestation">
+      <img src="static/images/learn_images/deforestation.png" alt="deforestation">
       {% endif %}
       <br>
       <br>

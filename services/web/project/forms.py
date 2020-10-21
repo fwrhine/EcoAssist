@@ -86,12 +86,12 @@ class StudentClassForm(FlaskForm):
 
 class AwardForm(FlaskForm):
     # class_id = StringField('Class Name', validators=[DataRequired()])
-    student_names = SelectField('For Student', coerce=int,
+    student_names = SelectField('Student', coerce=int,
                            validators=[InputRequired()])
     reward = StringField('Badge Name', validators=[DataRequired()])
     comment = StringField('Comments', validators=[DataRequired()])
 
-    images_dir = os.listdir(os.path.join(app.static_folder, "badge_images"))
+    images_dir = os.listdir(os.path.join(app.static_folder, "images/badge_images"))
     choices = []
     for x in images_dir:
         value = x

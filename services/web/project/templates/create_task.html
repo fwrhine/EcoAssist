@@ -3,11 +3,11 @@
 {% block content %}
 <div class='content'>
   <div class="side-bar-menu">
+    <a onclick=goBack()>
+      <h2>Back</h2>
+    </a>
     <a href="{{ url_for('home') }}">
       <h2>Home</h2>
-    </a>
-    <a href="{{ url_for('task_list') }}">
-      <h2>Tasks</h2>
     </a>
   </div>
   <div class="inner-content">
@@ -45,7 +45,7 @@
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
       </p>
-      
+
       <p>
         {{ form.required_approval.label(style="width: 180px;") }}
         {{ form.required_approval() }}
@@ -53,7 +53,7 @@
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
       </p>
-      
+
       <br>
       <div style="text-align: center">
         <p>{{ form.submit() }}</p>

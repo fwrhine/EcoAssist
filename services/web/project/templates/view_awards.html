@@ -1,18 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-
 <div class='content'>
   <div class="side-bar-menu">
-    <a onclick="goBack()">
+    <a onclick=goBack()>
       <h2>Back</h2>
     </a>
     <a href="{{ url_for('home') }}">
       <h2>Home</h2>
-    </a>
-    <a href="{{ url_for('class_list') }}">
-      <h2>My Classes</h2>
     </a>
   </div>
   <div class="inner-content">
@@ -29,23 +24,13 @@
       <tr>
         <td></td>
         <td>{{badge.badge_name}}</td>
-
         <td>{{badge.badge_comment}}</td>
         <td>
-        <img src={{badge.badge_location}}>
+          <img src={{badge.badge_location}}>
         </td>
       </tr>
       {% endfor %}
     </table>
-    <br>
   </div>
-    <div>
-        <button class="btn-border" onclick="location.href='{{ url_for('give_award_directly', id=student.student_id) }}'" type="button">Award Directly</button>
-    </div>
 </div>
-
-
-
-
-
 {% endblock %}

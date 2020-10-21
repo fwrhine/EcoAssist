@@ -1,13 +1,13 @@
-<div class="login-button-container">
-  <a id=loginButton href="{{ url_for('logout') }}" style="color: black">
-    <button class="login-button">
-      <text id="buttonText">Logout</text>
-    </button>
-  </a>
-</div>
 <header>
-  <a id=loginButton href="{{ url_for('home') }}" style="color: black">
-    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="EcoAssist logo">
+  <div class="login-button-container">
+    <a id=loginButton href="{{ url_for('logout') }}" style="color: black">
+      <button class="login-button">
+        <text id="buttonText">Logout</text>
+      </button>
+    </a>
+  </div>
+  <a href="{{ url_for('home') }}">
+    <img id="logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="EcoAssist logo">
   </a>
 </header>
 

@@ -3,31 +3,34 @@
 {% block content %}
 <div class='content'>
   <div class="side-bar-menu">
-    <a onclick="goBack()">
+    <a onclick=goBack()>
       <h2>Back</h2>
     </a>
     <a href="{{ url_for('home') }}">
       <h2>Home</h2>
     </a>
-    <a href="{{ url_for('class_list') }}">
-      <h2>My Classes</h2>
-    </a>
   </div>
   <div class="inner-content">
-    <h2>Manage Students</h2>
+    <h2>Manage Class</h2>
     <br>
+    <p>Class | {{ teacher_classes.class_name }} &emsp; Code | {{ teacher_classes.class_code }}</p>
     <table class="css-serial">
       <tr>
         <th></th>
         <th>Name</th>
         <th>Status</th>
         <th>Pending Tasks</th>
-        <th></th>
       </tr>
       {% for student in student_list %}
       <tr>
         <td></td>
-        <td>{{student.first_name}}</td>
+        <td>
+          {% if student_list[student][0] == 'accepted' %}
+          <button class="btn-green" onclick="location.href='{{ url_for('student_task', id=student.id) }}'" type="button">{{student.first_name}} {{student.last_name}}</button>
+          {% else %}
+          {{student.first_name}} {{student.last_name}}
+          {% endif %}
+        </td>
 
         {% if student_list[student][0] == 'pending' %}
         <td>
@@ -39,20 +42,19 @@
         <td>Accepted</td>
         {% endif %}
         <td>{{student_list[student][1]}}</td>
-        <td>
+        <!-- <td>
           {% if student_list[student][0] == 'accepted' %}
-          <!-- <button class="btn-border" onclick="location.href='{{ url_for('view_student', id=student.id) }}'" type="button">View Student</button> -->
-          <button class="btn-border" onclick="location.href='{{ url_for('student_task', id=student.id) }}'" type="button">View Student</button>
+          <button class="btn-border" onclick="location.href='{{ url_for('student_task', id=student.id) }}'" type="button">Manage Student</button>
           {% endif %}
-        </td>
+        </td> -->
       </tr>
       {% endfor %}
     </table>
     <br>
-    
+
     <button class="btn-border" onclick="location.href='{{ url_for('leaderboard', id=teacher_classes.class_id) }}'" type="button">Leaderboard</button>
     <button class="btn-border" onclick="location.href='{{ url_for('create_task') }}'" type="button">New Task</button>
- 
+
   </div>
 </div>
 

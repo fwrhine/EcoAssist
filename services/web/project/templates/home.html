@@ -6,61 +6,60 @@
 <div class="content" a>
 	<h2 class="welcomeHeader">Welcome {{ session['first_name'] }} {{ session['last_name'] }}!</h2>
 	<div class="home-links">
-		<div class="homeImageContainer" id="homeImage1">
-			<a href="{{ url_for('class_list') }}">
-				<img src="{{ url_for('static', filename='images/list.png') }}" alt="My classes">
+		<a href="{{ url_for('class_list') }}">
+			<div class="homeImageContainer" id="homeImage1">
+				<img src="{{ url_for('static', filename='images/home_icons/list.png') }}" alt="My classes">
 				<h2>My Classes</h2>
-			</a>
-		</div>
-		<div class="homeImageContainer" id="homeImage2">
-			<a href="{{ url_for('create_task') }}">
-				<img src="{{ url_for('static', filename='images/task.png') }}" alt="New task">
+			</div>
+		</a>
+		<a href="{{ url_for('create_task') }}">
+			<div class="homeImageContainer" id="homeImage2">
+				<img src="{{ url_for('static', filename='images/home_icons/task.png') }}" alt="New task">
 				<h2>New Task</h2>
-			</a>
-		</div>
-		<div class="homeImageContainer" id="homeImage3">
-			<a href="{{ url_for('learn') }}">
-				<img src="{{ url_for('static', filename='images/learning.png') }}" alt="Learning resources">
+			</div>
+		</a>
+		<a href="{{ url_for('learn') }}">
+			<div class="homeImageContainer" id="homeImage3">
+				<img src="{{ url_for('static', filename='images/home_icons/learning.png') }}" alt="Learning resources">
 				<h2>Learning Resources</h2>
-			</a>
-		</div>
-		<div class="homeImageContainer" id="homeImage4">
-			<a href="{{ url_for('profile') }}">
-				<img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile">
+			</div>
+		</a>
+		<a href="{{ url_for('profile') }}">
+			<div class="homeImageContainer" id="homeImage4">
+				<img src="{{ url_for('static', filename='images/home_icons/profile.png') }}" alt="Profile">
 				<h2>Profile</h2>
-			</a>
-		</div>
+			</div>
+		</a>
 	</div>
 </div>
 {% else %}
 <div class="content">
 	<h2 class="welcomeHeader">Welcome {{ session['first_name'] }} {{ session['last_name'] }}!</h2>
 	<div class="home-links">
-		<div class="homeImageContainer" id="homeImage1">
-			<a href="{{ url_for('task_list') }}">
-				<img src="static/images/task.png" alt="Tasks">
+		<a href="{{ url_for('task_list') }}">
+			<div class="homeImageContainer" id="homeImage1">
+				<img src="{{ url_for('static', filename='images/home_icons/task.png') }}" alt="Tasks">
 				<h2>Tasks</h2>
-			</a>
-		</div>
-		<div class="homeImageContainer" id="homeImage2">
-			<a href="{{ url_for('leaderboard') }}">
-				<img src="static/images/list.png" alt="Leaderboard">
+			</div>
+		</a>
+		<a href="{{ url_for('leaderboard') }}">
+			<div class="homeImageContainer" id="homeImage2">
+				<img src="{{ url_for('static', filename='images/home_icons/list.png') }}" alt="Leaderboard">
 				<h2>Leaderboard</h2>
-			</a>
-		</div>
-		<div class="homeImageContainer" id="homeImage3">
-			<a href="{{ url_for('learn') }}">
-				<img src="static/images/learning.png" alt="Learning">
-				<h2>Learning</h2>
-			</a>
-		</div>
-
-		<div class="homeImageContainer" id="homeImage4">
-			<a href="{{ url_for('profile') }}">
-				<img src="static/images/profile.png" alt="Profile">
+			</div>
+		</a>
+		<a href="{{ url_for('learn') }}">
+			<div class="homeImageContainer" id="homeImage3">
+				<img src="{{ url_for('static', filename='images/home_icons/learning.png') }}" alt="Learning">
+				<h2>Learning Resources</h2>
+			</div>
+		</a>
+		<a href="{{ url_for('profile') }}">
+			<div class="homeImageContainer" id="homeImage4">
+				<img src="{{ url_for('static', filename='images/home_icons/profile.png') }}" alt="Profile">
 				<h2>Profile</h2>
-			</a>
-		</div>
+			</div>
+		</a>
 	</div>
 </div>
 {% endif %}
