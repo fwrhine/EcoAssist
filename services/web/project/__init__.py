@@ -431,7 +431,7 @@ def leaderboard(id):
             teacher_name = teacher_name + "'s"
 
         # get all members of class
-        all_members = ClassMembers.query.filter_by(class_id=teacher_classes.class_id).all()
+        all_members = ClassMembers.query.filter_by(class_id=teacher_classes.class_id, student_status="accepted").all()
         leaderboard = {}
 
         # calculate points
@@ -462,7 +462,7 @@ def leaderboard(id):
         # calculate points
         for i in class_list:
             points = 0
-            all_members = ClassMembers.query.filter_by(class_id=i.class_id).all()
+            all_members = ClassMembers.query.filter_by(class_id=i.class_id, student_status="accepted").all()
             for j in all_members:
                 all_task_completed = TaskComplete.query.filter_by(student_id=j.student_id).all()
                 for k in all_task_completed:
@@ -504,7 +504,7 @@ def profile():
         print('student id : ' + str(student.student_id))
         if class_members and class_members.student_status == "accepted":
             print(class_members.class_id)
-            all_members = ClassMembers.query.filter_by(class_id=class_members.class_id).all()
+            all_members = ClassMembers.query.filter_by(class_id=class_members.class_id, student_status="accepted").all()
             print(all_members)
             leaderboard = {}
 
@@ -562,7 +562,7 @@ def student_profile(id):
     print('student id : ' + str(student.student_id))
     if class_members and class_members.student_status == "accepted":
         print(class_members.class_id)
-        all_members = ClassMembers.query.filter_by(class_id=class_members.class_id).all()
+        all_members = ClassMembers.query.filter_by(class_id=class_members.class_id,student_status="accepted").all()
         print(all_members)
         leaderboard = {}
 
