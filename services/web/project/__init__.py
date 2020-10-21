@@ -329,7 +329,7 @@ def student_task(id):
     print(student_class)
     task_list = Task.query.filter_by(class_id=student_class.class_id).all()
     completed_task = student.student_task_done.all()
-    uncompleted = []
+    incomplete = []
     completeds = []
     pending = {}
     pending_list = []
@@ -338,7 +338,7 @@ def student_task(id):
     for task in task_list:
         if len(completed_task) == 0:
             print("empty")
-            uncompleted.append(task)
+            incomplete.append(task)
         else:
             for completed in completed_task:
                 if task.task_id == completed.task_id and completed.task_status == "accepted":
@@ -353,14 +353,14 @@ def student_task(id):
                     rejected.append(task)
                     break
                 else:
-                    if task not in uncompleted:
-                        uncompleted.append(task)
+                    if task not in incomplete:
+                        incomplete.append(task)
 
-    for task in uncompleted[:]:
+    for task in incomplete[:]:
         if task in completeds or task in rejected or task in pending_list:
-            uncompleted.remove(task)
+            incomplete.remove(task)
 
-    return render_template('manage_student.html', uncompleted=uncompleted,
+    return render_template('manage_student.html', incomplete=incomplete,
                            completed=completeds, pending=pending, rejected=rejected, user=user, student=student)
 
 

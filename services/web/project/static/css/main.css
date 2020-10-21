@@ -416,13 +416,30 @@ td, th {
 }
 
 th {
-  background: #b7e8cb;
+  background: #FFE4AD;
 }
 
+/* td {
+  background: #fcfcfc;
+} */
+
 tr:nth-child(even) {
-  /* background-color: #dddddd; */
   background: transparent;
 }
+
+/* Round corners of table */
+/* th:first-of-type {
+  border-top-left-radius: 10px;
+}
+th:last-of-type {
+  border-top-right-radius: 10px;
+}
+tr:last-of-type td:first-of-type {
+  border-bottom-left-radius: 10px;
+}
+tr:last-of-type td:last-of-type {
+  border-bottom-right-radius: 10px;
+} */
 
 /*adding row numbers through css*/
 .css-serial {
@@ -435,4 +452,47 @@ tr:nth-child(even) {
   /* Increment the serial number counter */
   content: counter(serial-number);
   /* Display the counter */
+}
+
+/* ---------------------------- TABS ----------------------------*/
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  background-color: #7AC581;
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #81d489;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #65a36b;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+  width: 90%;
+  height: 50%;
+  margin: 0 auto;
+  /* background-color: #185744; */
 }

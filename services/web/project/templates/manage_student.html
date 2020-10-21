@@ -16,83 +16,78 @@
       <button class="btn-border" onclick="location.href='{{ url_for('give_award_directly', id=student.student_id) }}'" type="button">Award</button>
       <button class="btn-border" onclick="location.href='{{ url_for('student_profile', id=user.id) }}'" type="button">Profile</button>
     </div>
-    <!-- <div class="tab">
+    <br>
+    <div class="tab">
       <button class="tablinks" onclick="openList(event, 'Pending')" id="defaultOpen">Pending</button>
       <button class="tablinks" onclick="openList(event, 'Completed')">Completed</button>
       <button class="tablinks" onclick="openList(event, 'Incomplete')">Incomplete</button>
+      <button class="tablinks" onclick="openList(event, 'Rejected')">Rejected</button>
     </div>
 
-    <div id="London" class="tabcontent">
-      <h3>London</h3>
-      <p>London is the capital city of England.</p>
+    <div id="Pending" class="tabcontent">
+      <table>
+        <tr>
+          <th>Task Name</th>
+          <th>Task Point</th>
+          <th></th>
+        </tr>
+        {% for task in pending %}
+        <tr>
+          <td>{{task.task_name}}</td>
+          <td>{{task.points}}</td>
+          <td>
+            <button onclick="" style="border-color: #78c288" class="btn-border approve_task" id={{pending[task]}}>Approve</button>
+            <button onclick="" style="border-color: #ed7b6f;" class="btn-border reject_task" id={{pending[task]}}>Deny</button>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
     </div>
 
-    <div id="Paris" class="tabcontent">
-      <h3>Paris</h3>
-      <p>Paris is the capital of France.</p>
+    <div id="Completed" class="tabcontent">
+      <table>
+        <tr>
+          <th>Task Name</th>
+          <th>Task Point</th>
+        </tr>
+        {% for task in completed %}
+        <tr>
+          <td>{{task.task_name}}</td>
+          <td>{{task.points}}</td>
+        </tr>
+        {% endfor %}
+      </table>
     </div>
 
-    <div id="Tokyo" class="tabcontent">
-      <h3>Tokyo</h3>
-      <p>Tokyo is the capital of Japan.</p>
-    </div> -->
-    <h3>Completed</h3>
-    <table>
-      <tr>
-        <th>Task Name</th>
-        <th>Task Point</th>
-      </tr>
-      {% for task in completed %}
-      <tr>
-        <td>{{task.task_name}}</td>
-        <td>{{task.points}}</td>
-      </tr>
-      {% endfor %}
-    </table>
-    <h3>Incomplete</h3>
-    <table>
-      <tr>
-        <th>Task Name</th>
-        <th>Task Point</th>
-      </tr>
-      {% for task in uncompleted %}
-      <tr>
-        <td>{{task.task_name}}</td>
-        <td>{{task.points}}</td>
-      </tr>
-      {% endfor %}
-    </table>
-    <h3>Pending</h3>
-    <table>
-      <tr>
-        <th>Task Name</th>
-        <th>Task Point</th>
-        <th></th>
-      </tr>
-      {% for task in pending %}
-      <tr>
-        <td>{{task.task_name}}</td>
-        <td>{{task.points}}</td>
-        <td>
-          <button onclick="" style="border-color: #78c288" class="btn-border approve_task" id={{pending[task]}}>Approve</button>
-          <button onclick="" style="border-color: #ed7b6f;" class="btn-border reject_task" id={{pending[task]}}>Deny</button>
-        </td>
-      </tr>
-      {% endfor %}
-    </table>
-    <h3>Rejected</h3>
-    <table>
-      <tr>
-        <th>Task Name</th>
-        <th>Task Point</th>
-      </tr>
-      {% for task in rejected %}
-      <tr>
-        <td>{{task.task_name}}</td>
-        <td>{{task.points}}</td>
-      </tr>
-      {% endfor %}
-    </table>
+    <div id="Incomplete" class="tabcontent">
+      <table>
+        <tr>
+          <th>Task Name</th>
+          <th>Task Point</th>
+        </tr>
+        {% for task in incomplete %}
+        <tr>
+          <td>{{task.task_name}}</td>
+          <td>{{task.points}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <div id="Rejected" class="tabcontent">
+      <table>
+        <tr>
+          <th>Task Name</th>
+          <th>Task Point</th>
+        </tr>
+        {% for task in rejected %}
+        <tr>
+          <td>{{task.task_name}}</td>
+          <td>{{task.points}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
     <br>
   </div>
 </div>
@@ -130,6 +125,23 @@
       });
     });
   });
+
+  function openList(evt, status) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(status).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  // Get the element with id="defaultOpen" and click on it
+  document.getElementById("defaultOpen").click();
 </script>
 {% endblock %}
 {% endblock %}
