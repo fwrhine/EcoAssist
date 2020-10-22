@@ -35,7 +35,7 @@ body, html {
   width: 15%;
   height: 100%;
   text-align: center;
-  border-right: 1px solid #000000;
+  border-right: 1px solid black;
   float: left;
 }
 
@@ -80,7 +80,7 @@ h1, h2, label, button, input, .content {
 }
 
 h2 {
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid black;
   padding-bottom: 10px;
 }
 
@@ -105,7 +105,7 @@ a:hover {
 /* Button with icon */
 .btn-icon {
   background: #FFFFFF;
-  border: 2px solid #000000;
+  border: 2px solid black;
   box-sizing: border-box;
   border-radius: 39px;
   padding: 10px;
@@ -120,7 +120,7 @@ a:hover {
 /* Button with black border */
 .btn-border {
   background: #FFFFFF;
-  border: 2px solid #000000;
+  border: 2px solid black;
   box-sizing: border-box;
   border-radius: 39px;
   padding: 10px;
@@ -213,7 +213,7 @@ form>p>label {
 
 input, select {
   background: #FFFFFF;
-  border: 3px solid #000000;
+  border: 3px solid black;
   box-sizing: border-box;
   border-radius: 20px;
   padding: 5px;
@@ -222,7 +222,7 @@ input, select {
 
 textarea {
   background: #FFFFFF;
-  border: 3px solid #000000;
+  border: 3px solid black;
   box-sizing: border-box;
   border-radius: 20px;
   width: 300px;
@@ -246,7 +246,7 @@ input[type="submit"] {
   padding-left: 50px;
   padding-right: 50px;
   padding-top: 20px;
-  border-right: 1px solid #000000;
+  border-right: 1px solid black;
   float: left;
   overflow: auto;
 }*/
@@ -322,6 +322,10 @@ input[type="submit"] {
   padding: 15px;
   margin-bottom: 10px;
   border-radius: 20px;
+}
+
+.delete {
+  color: #ed594a;
 }
 
 .completed {
@@ -495,7 +499,7 @@ tr:last-of-type td:last-of-type {
 }
 
 .badges-container {
-  border: 3px solid #000000;
+  border: 3px solid black;
   box-sizing: border-box;
   border-radius: 20px;
   padding: 10px 30px 10px 30px;

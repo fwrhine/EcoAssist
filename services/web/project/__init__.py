@@ -269,6 +269,17 @@ def task_completed():
     return json.dumps({'status': status, 'task_id': task_id, 'student_id': student_id, 'task_status': task_status})
 
 
+@app.route('/task-delete', methods=['POST'])
+def task_delete():
+    task_id = request.form.get("task_id")
+    task_complete = TaskComplete.query.filter_by(task_id=task_id).delete()
+    task = Task.query.get(task_id)
+
+    db.session.delete(task)
+    db.session.commit()
+    return json.dumps({'status': task_id + " deleted"})
+
+
 @app.route('/learn', defaults={'id': None})
 @app.route('/learn/<id>')
 def learn(id):

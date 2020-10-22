@@ -40,6 +40,10 @@
         <button class="task-button incomplete" name="task-complete" id="{{task.0.task_id}}" type="button">Task Complete</button>
         {% endif %}
         <button class="task-button" onclick="location.href='{{ url_for('learn', id=task.0.resource_id) }}'" name="learn-more" type="button">Learn More</button>
+        {% if session['role'] == 'teacher' %}
+        <br>
+        <button class="task-button delete" onclick='deleteTask({{task.0.task_id}},"{{task.0.task_name}}")' type="button">Delete Task</button>
+        {% endif %}
       </form>
     </div>
     {% endfor %}
@@ -48,6 +52,26 @@
 
 {% block javascript %}
 <script>
+  function deleteTask(id, task_name) {
+    if (confirm("Delete task \"" + task_name + "\"?")) {
+      $.ajax({
+        url: '/task-delete',
+        data: {
+          task_id: id,
+        },
+        type: 'POST',
+        success: function(response) {
+          var data = $.parseJSON(response);
+          console.log(data.status)
+          location.reload()
+        },
+        error: function(error) {
+          console.log(error);
+        }
+      });
+    }
+  }
+
   $(document).ready(function() {
     $('button[name ="task-complete"]').click(function() {
       var id = this.id;
@@ -75,9 +99,7 @@
           } else if (data.task_status == "delete") {
             $('#' + id).text('Task Complete');
             $('#' + id).css('background-color', '#FFFFFF');
-            console.log("here")
           }
-
         },
         error: function(error) {
           console.log(error);
