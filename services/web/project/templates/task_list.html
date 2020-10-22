@@ -11,7 +11,11 @@
     </a>
   </div>
   <div class="inner-content">
+    {% if class_title != "" %}
+    <h2>Tasks - Class {{class_title}}</h2>
+    {% else %}
     <h2>Tasks</h2>
+    {% endif %}
     {% for task in tasks %}
     <div class="task">
       <h2>{{task.0.task_name}}</h2>

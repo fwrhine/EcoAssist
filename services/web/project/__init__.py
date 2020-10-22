@@ -199,12 +199,15 @@ def task_list(id):
         class_members = student.classes_student.first()
         teacher_classes = TeacherClasses.query.get(class_members.class_id)
         task_list = teacher_classes.class_task.all()
+        class_title = ""
     else:
         teacher = Teacher.query.filter_by(email=session['username']).first()
         if id is None:
             task_list = teacher.tasks.all()
+            class_title = ""
         else:
             task_list = teacher.tasks.filter_by(class_id=id)
+            class_title = TeacherClasses.query.filter_by(class_id=id).first().class_name
 
     tasks = []
 
@@ -228,7 +231,7 @@ def task_list(id):
         tasks.append([i, class_name, done, status])
 
     tasks.reverse()
-    return render_template('task_list.html', tasks=tasks)
+    return render_template('task_list.html', tasks=tasks, class_title=class_title)
 
 
 @app.route('/task-completed', methods=['POST'])
