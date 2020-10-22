@@ -53,7 +53,7 @@
     <br>
 
     <button class="btn-border" onclick="location.href='{{ url_for('leaderboard', id=teacher_classes.class_id) }}'" type="button">Leaderboard</button>
-    <button class="btn-border" onclick="location.href='{{ url_for('create_task') }}'" type="button">New Task</button>
+    <button class="btn-border" onclick="location.href='{{ url_for('create_task', id=teacher_classes.class_code) }}'" type="button">New Task</button>
 
   </div>
 </div>

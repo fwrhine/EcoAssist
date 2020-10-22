@@ -162,12 +162,17 @@ def upload_file():
         file.save(os.path.join(app.config["MEDIA_FOLDER"], filename))
     return render_template("upload.html")
 
-
-@app.route('/create-task', methods=['GET', 'POST'])
-def create_task():
+@app.route('/create-task', defaults={'id': None}, methods=['GET', 'POST'])
+@app.route('/create-task/<id>', methods=['GET', 'POST'])
+def create_task(id):
     teacher = Teacher.query.filter_by(email=session['username']).first()
-    available_classes = teacher.classes.all()
-    class_list = [(i.class_id, i.class_name) for i in available_classes]
+    
+    if id is None:
+        available_classes = teacher.classes.all()
+        class_list = [(i.class_id, i.class_name) for i in available_classes]
+    else:
+        available_classes = TeacherClasses.query.filter_by(class_code=id).first()
+        class_list = [(available_classes.class_id, available_classes.class_name)]
 
     available_resource = Resource.query.all()
     resource_list = [(i.resource_id, i.resource_title)
