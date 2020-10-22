@@ -39,6 +39,15 @@ class RegisterForm(FlaskForm):
         if user is not None:
             raise ValidationError('Please use a different email address.')
 
+    def validate_class_code(self, class_code):
+        if not self.class_code.data:
+            return True
+        teacher_classes = TeacherClasses.query.filter_by(
+            class_code=class_code.data).first()
+        print(teacher_classes)
+        if teacher_classes is None:
+            raise ValidationError("Class doesn't exist")
+
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])

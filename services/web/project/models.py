@@ -119,8 +119,6 @@ class Badge(db.Model):
     __tablename__ = 'badges'
 
     badge_no = db.Column(db.Integer, primary_key=True)
-
-    #not sure what if this part necessary
     badge_name = db.Column(db.String(128), nullable=False)
     badge_comment = db.Column(db.String(128), nullable=False)
     badge_location = db.Column(db.String(128), nullable=False)
