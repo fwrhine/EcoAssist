@@ -11,7 +11,11 @@
     </a>
   </div>
   <div class="inner-content">
+    {% if session['role'] == 'teacher' %}
+    <h2>Awards - {{ user.first_name }} {{ user.last_name }}</h2>
+    {% else %}
     <h2>Awards</h2>
+    {% endif %}
     <br>
     <table class="css-serial">
       <tr>

@@ -23,7 +23,7 @@
       {% for class in class_list %}
       <tr>
         <td></td>
-        <td><button class="btn-green" onclick="location.href='{{ url_for('manage_class', id=class.class_code) }}'" name="manage" type="button">{{class.class_name}}</button></td>
+        <td><button class="btn-green" onclick="location.href='{{ url_for('manage_class', id=class.class_id) }}'" name="manage" type="button">{{class.class_name}}</button></td>
         <td>{{total_student[class.class_id]}}</td>
         <td>{{class.class_code}}</td>
       </tr>

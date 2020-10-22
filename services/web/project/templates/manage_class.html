@@ -26,7 +26,7 @@
         <td></td>
         <td>
           {% if student_list[student][0] == 'accepted' %}
-          <button class="btn-green" onclick="location.href='{{ url_for('student_task', id=student.id) }}'" type="button">{{student.first_name}} {{student.last_name}}</button>
+          <button class="btn-green" onclick="location.href='{{ url_for('manage_student', id=student.id) }}'" type="button">{{student.first_name}} {{student.last_name}}</button>
           {% else %}
           {{student.first_name}} {{student.last_name}}
           {% endif %}
@@ -44,7 +44,7 @@
         <td>{{student_list[student][1]}}</td>
         <!-- <td>
           {% if student_list[student][0] == 'accepted' %}
-          <button class="btn-border" onclick="location.href='{{ url_for('student_task', id=student.id) }}'" type="button">Manage Student</button>
+          <button class="btn-border" onclick="location.href='{{ url_for('manage_student', id=student.id) }}'" type="button">Manage Student</button>
           {% endif %}
         </td> -->
       </tr>
@@ -53,7 +53,8 @@
     <br>
 
     <button class="btn-border" onclick="location.href='{{ url_for('leaderboard', id=teacher_classes.class_id) }}'" type="button">Leaderboard</button>
-    <button class="btn-border" onclick="location.href='{{ url_for('create_task', id=teacher_classes.class_code) }}'" type="button">New Task</button>
+    <button class="btn-border" onclick="location.href='{{ url_for('task_list', id=teacher_classes.class_id) }}'" type="button">Tasks</button>
+    <button class="btn-border" onclick="location.href='{{ url_for('create_task', id=teacher_classes.class_id) }}'" type="button">New Task</button>
 
   </div>
 </div>

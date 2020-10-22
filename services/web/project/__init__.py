@@ -66,10 +66,6 @@ def loginPage():
                     else:
                         return redirect(url_for('.profile'))
 
-                    # if student.student_status == 'accepted':
-                    #     return redirect(url_for('home'))
-                    # else:
-                    #     return redirect(url_for('.profile'))
                 return redirect(url_for('home'))
         print("Fail1")
     print("Fail2")
@@ -166,12 +162,12 @@ def upload_file():
 @app.route('/create-task/<id>', methods=['GET', 'POST'])
 def create_task(id):
     teacher = Teacher.query.filter_by(email=session['username']).first()
-    
+
     if id is None:
         available_classes = teacher.classes.all()
         class_list = [(i.class_id, i.class_name) for i in available_classes]
     else:
-        available_classes = TeacherClasses.query.filter_by(class_code=id).first()
+        available_classes = TeacherClasses.query.filter_by(class_id=id).first()
         class_list = [(available_classes.class_id, available_classes.class_name)]
 
     available_resource = Resource.query.all()
@@ -188,12 +184,16 @@ def create_task(id):
                     required_approval=form.required_approval.data)
         db.session.add(task)
         db.session.commit()
-        return redirect(url_for('.task_list'))
+        if id is None:
+            return redirect(url_for('.task_list'))
+        else:
+            return redirect(url_for('.task_list', id=id))
     return render_template('create_task.html', form=form)
 
 
-@app.route("/task-list")
-def task_list():
+@app.route('/task-list', defaults={'id': None})
+@app.route('/task-list/<id>')
+def task_list(id):
     if session['role'] == "student":
         student = Student.query.filter_by(email=session['username']).first()
         class_members = student.classes_student.first()
@@ -201,7 +201,10 @@ def task_list():
         task_list = teacher_classes.class_task.all()
     else:
         teacher = Teacher.query.filter_by(email=session['username']).first()
-        task_list = teacher.tasks.all()
+        if id is None:
+            task_list = teacher.tasks.all()
+        else:
+            task_list = teacher.tasks.filter_by(class_id=id)
 
     tasks = []
 
@@ -263,17 +266,16 @@ def task_completed():
     return json.dumps({'status': status, 'task_id': task_id, 'student_id': student_id, 'task_status': task_status})
 
 
-@app.route("/learn")
-def learn():
-    resource_list = Resource.query.all()
-    print(resource_list)
-    return render_template('learn.html', resource_list=resource_list)
-
-
-@app.route("/learn/<id>")
-def resource_details(id):
-    resource = Resource.query.get(id)
-    return render_template('learn_details.html', resource=resource)
+@app.route('/learn', defaults={'id': None})
+@app.route('/learn/<id>')
+def learn(id):
+    if id is None:
+        resource_list = Resource.query.all()
+        print(resource_list)
+        return render_template('learn.html', resource_list=resource_list)
+    else:
+        resource = Resource.query.get(id)
+        return render_template('learn_details.html', resource=resource)
 
 
 @app.route("/class")
@@ -291,10 +293,10 @@ def class_list():
     return render_template('class_list.html', class_list=class_list, total_student=total_student)
 
 
-@app.route("/manage/<id>")
+@app.route("/manage-class/<id>")
 def manage_class(id):
     print(id)
-    teacher_classes = TeacherClasses.query.filter_by(class_code=id).first()
+    teacher_classes = TeacherClasses.query.filter_by(class_id=id).first()
     session['award_class_id'] = id
     session['award_class_name'] = teacher_classes.class_name
     print(teacher_classes)
@@ -325,8 +327,8 @@ def manage_class(id):
     return render_template('manage_class.html', student_list=student_list, teacher_classes=teacher_classes)
 
 
-@app.route("/student-task/<id>")
-def student_task(id):
+@app.route("/manage-student/<id>")
+def manage_student(id):
     print(id)
     user = User.query.get(id)
     student = user.student_email.first()
@@ -779,7 +781,7 @@ def give_award_directly(id):
     return render_template('award.html', form=form, student_id=id, class_name=session['award_class_name'])
 
 
-@app.route("/view_awards/<id>")
+@app.route("/view-awards/<id>")
 def view_awards(id):
     # pass on student and his badges
     print(id)
@@ -789,7 +791,7 @@ def view_awards(id):
 
     badge_list = get_all_badges(student.student_id)
     print(badge_list)
-    return render_template('view_awards.html', student=student, badge_list=badge_list)
+    return render_template('view_awards.html', user=user, student=student, badge_list=badge_list)
 
 
 def get_class_name(id):

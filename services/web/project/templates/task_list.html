@@ -35,7 +35,7 @@
         {% elif session['role'] == 'student' %}
         <button class="task-button incomplete" name="task-complete" id="{{task.0.task_id}}" type="button">Task Complete</button>
         {% endif %}
-        <button class="task-button" onclick="location.href='learn/{{task.0.resource_id}}'" name="learn-more" type="button">Learn More</button>
+        <button class="task-button" onclick="location.href='{{ url_for('learn', id=task.0.resource_id) }}'" name="learn-more" type="button">Learn More</button>
       </form>
     </div>
     {% endfor %}
