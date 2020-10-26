@@ -49,6 +49,7 @@ class RegisterForm(FlaskForm):
             raise ValidationError("Class doesn't exist")
 
 
+
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -61,9 +62,11 @@ class LoginForm(FlaskForm):
                 self.email.errors += (ValidationError("Email is not registered"),)
                 return False
             else:
-                check_password = User.query.filter_by(
-                    email=self.email.data, password=self.password.data).first()
-                if check_password is None:
+                user = User.query.filter_by(
+                email=self.email.data).first()
+                hash = user.check_password(self.password.data)
+
+                if not hash:
                     self.password.errors += (ValidationError("Wrong password"),)
                     return False
         else:
@@ -81,17 +84,14 @@ class ClassForm(FlaskForm):
 
 
 class StudentClassForm(FlaskForm):
-    class_code = StringField('Class Code', validators=[DataRequired()])
-    submit = SubmitField('Create')
+    class_code = StringField('Enter class code to continue', validators=[DataRequired()])
+    submit = SubmitField('Enter class')
 
     def validate_class_code(self, class_code):
-        print("check")
         teacher_classes = TeacherClasses.query.filter_by(
             class_code=class_code.data).first()
-        print(teacher_classes)
         if teacher_classes is None:
-            print("doesnt")
-            raise ValidationError("Class doesn't exist")
+            raise ValidationError("Class does not exist")
 
 class AwardForm(FlaskForm):
     # class_id = StringField('Class Name', validators=[DataRequired()])

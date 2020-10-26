@@ -328,7 +328,7 @@ input[type="submit"] {
 
 .task form {
   position:absolute;
-  left: 17%;
+  margin-left: 17%;
   bottom: 10px;
 }
 

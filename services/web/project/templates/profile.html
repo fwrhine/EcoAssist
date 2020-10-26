@@ -50,9 +50,10 @@
       {% elif role == 'Student' and student_status == 'empty' %}
       <form class="p-4 bg-light" action='' method="post" novalidate>
         {{ form.hidden_tag() }}
+        <br>
         <p>
-          {{ form.class_code.label }}<br>
-          {{ form.class_code(size=32) }}
+          {{ form.class_code.label(style="width:250px;") }}<br>
+          {{ form.class_code(size=32, style="padding: 10px;") }}
           {% for error in form.class_code.errors %}
           <span style="color: red;">[{{ error }}]</span>
           {% endfor %}
@@ -71,7 +72,7 @@
     <button class="btn-border" onclick="location.href='{{ url_for('leaderboard', id=teacher_classes.class_id) }}'" type="button">Leaderboard</button>
     {% else %}
     <button class="btn-border" onclick="location.href='{{ url_for('leaderboard') }}'" type="button">Leaderboard</button>
-    <button class="btn-border" onclick="location.href='{{ url_for('task_list')}}'" type="button">Tasks</button>
+    <button class="btn-border" onclick="location.href='{{ url_for('task_list') }}'" type="button">Tasks</button>
     {% endif %}
     {% endif %}
   </div>

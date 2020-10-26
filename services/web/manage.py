@@ -13,10 +13,12 @@ def create_db():
     db.create_all()
     db.session.commit()
 
+
 @cli.command("create_db_prod")
 def create_db():
     db.create_all()
     db.session.commit()
+
 
 @cli.command("seed_db")
 def seed_db():
@@ -26,12 +28,15 @@ def seed_db():
 
 @cli.command("seed_tasks")
 def seed_tasks():
-    user_1 = User(email="teacher@gmail.com", password="teacher",
+    user_1 = User(email="teacher@gmail.com",
                   role="teacher", first_name="Chris", last_name="Fagan", school="University of Queensland")
-    user_2 = User(email="student1@gmail.com", password="student",
+    user_2 = User(email="student1@gmail.com",
                   role="student", first_name="Harris", last_name="Andrews", school="University of Queensland")
-    user_3 = User(email="student2@gmail.com", password="student",
+    user_3 = User(email="student2@gmail.com",
                   role="student", first_name="Dustin", last_name="Martin", school="University of Queensland")
+    user_1.set_password("teacher")
+    user_2.set_password("student")
+    user_3.set_password("student")
     db.session.add(user_1)
     db.session.add(user_2)
     db.session.add(user_3)
@@ -53,8 +58,10 @@ def seed_tasks():
     db.session.add(class_2)
     db.session.add(class_3)
 
-    class_members_1 = ClassMembers(class_=class_1, student=student_1, student_status="accepted")
-    class_members_2 = ClassMembers(class_=class_1, student=student_2, student_status="pending")
+    class_members_1 = ClassMembers(
+        class_=class_1, student=student_1, student_status="accepted")
+    class_members_2 = ClassMembers(
+        class_=class_1, student=student_2, student_status="pending")
 
     db.session.add(class_members_1)
     db.session.add(class_members_2)
@@ -67,9 +74,9 @@ def seed_tasks():
     db.session.add(resource_2)
 
     task_1 = Task(task_name="Collect rubbish", task_detail="Collect rubbish...",
-                  points=10, class_=class_1, resource=resource_2, teacher=teacher, required_approval= True)
+                  points=10, class_=class_1, resource=resource_2, teacher=teacher, required_approval=True)
     task_2 = Task(task_name="Plant a tree", task_detail="Choose a tree seed...",
-                  points=5, class_=class_1, resource=resource_1, teacher=teacher, required_approval= False)
+                  points=5, class_=class_1, resource=resource_1, teacher=teacher, required_approval=False)
     db.session.add(task_1)
     db.session.add(task_2)
 

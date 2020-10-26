@@ -10,7 +10,7 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(128), unique=True, nullable=False)
-    password = db.Column(db.String(50), nullable=False)
+    password = db.Column(db.String(), nullable=False)
     role = db.Column(db.String(128), nullable=False)
     school = db.Column(db.String(100), nullable=False)
     first_name = db.Column(db.String(100), nullable=False)
@@ -21,6 +21,14 @@ class User(db.Model):
     student_email = db.relationship(
         'Student', backref='student', lazy='dynamic')
 
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        print("masuk")
+        print(self.password)
+        print(password)
+        return check_password_hash(self.password, password)
 
 class Teacher(db.Model):
     __tablename__ = 'teachers'

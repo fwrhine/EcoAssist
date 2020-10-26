@@ -2,7 +2,8 @@ import string
 import random
 import os
 
-from werkzeug.utils import secure_filename
+from werkzeug.utisecls import secure_filename
+
 from flask import (
     Flask,
     jsonify,
@@ -36,39 +37,29 @@ def home():
 def loginPage():
     form = LoginForm()
     if form.validate_on_submit():
-        reqUsername = form.email.data
-        reqPassword = form.password.data
+        user = User.query.filter_by(email=form.email.data).first()
+        session['logged_in'] = True
+        session['username'] = user.email
+        session['first_name'] = user.first_name
+        session['last_name'] = user.last_name
+        session['role'] = user.role
+        session['school'] = user.school
 
-        user = db.session.execute('select * from users')
-        for i in user:
-            userDict = dict(i)
-            username = userDict['email']
-            first_name = userDict['first_name']
-            last_name = userDict['last_name']
-            role = userDict['role']
-            password = userDict['password']
-            school = userDict['school']
+        if session['role'] == 'student':
+            student = Student.query.filter_by(email=user.email).first()
+            class_members = student.classes_student.first()
+            if class_members:
+                if class_members.student_status == "accepted":
+                    return redirect(url_for('home'))
+                else:
+                    return redirect(url_for('.profile'))
+            else:
+                return redirect(url_for('.profile'))
+            session['status'] = class_members.student_status
 
-            if username == reqUsername and password == reqPassword:
-                print("login success")
-                session['logged_in'] = True
-                session['username'] = username
-                session['first_name'] = first_name
-                session['last_name'] = last_name
-                session['role'] = role
-                session['school'] = school
-                if role == 'student':
-                    student = Student.query.filter_by(email=username).first()
-                    class_members = student.classes_student.first()
-                    session['status'] = class_members.student_status
-                    if class_members.student_status == "accepted":
-                        return redirect(url_for('home'))
-                    else:
-                        return redirect(url_for('.profile'))
 
-                return redirect(url_for('home'))
-        print("Fail1")
-    print("Fail2")
+        return redirect(url_for('home'))
+
     return render_template("login.html", form=form)
 
 
@@ -76,8 +67,10 @@ def loginPage():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        user = User(email=form.email.data, role=session['role'], password=form.password.data,
+        user = User(email=form.email.data, role=session['role'],
                     first_name=form.first_name.data, last_name=form.last_name.data, school=form.school.data)
+
+        user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
         if session['role'] == 'teacher':
@@ -190,7 +183,7 @@ def create_task(id):
             return redirect(url_for('.task_list', id=id))
     return render_template('create_task.html', form=form)
 
-
+@app.route('/task-list', defaults={'id': None})
 @app.route('/task-list/<id>')
 def task_list(id):
     class_name = ""
