@@ -11,31 +11,28 @@
     </a>
   </div>
   <div class="inner-content">
-    {% if class_title != "" %}
-    <h2>Tasks - Class {{class_title}}</h2>
+    {% if session['role'] == 'teacher' %}
+    <h2>Tasks - Class {{class_name}}</h2>
+    <button class="btn-icon" onclick="location.href='{{ url_for('create_task', id=class_id) }}'">
+      New Task<i class="fa fa-plus" style="padding-left:10px;"></i></button>
+    <br>
     {% else %}
     <h2>Tasks</h2>
     {% endif %}
     {% for task in tasks %}
     <div class="task">
-      <h2>{{task.0.task_name}}</h2>
-      <br>
-      <h3>{{task.0.points}} points</h3>
-      <p>{{task.0.task_detail}}</p>
-      {% if session['role'] == 'teacher' %}
-      <p>Assigned to: Class {{task.1}}</p>
-      {% endif %}
-      <br>
-      <br>
+      <h3 class="task-title">{{task.0.task_name}}</h3>
+      <h3 style="margin-top: 30px;">{{task.0.points}} points</h3>
+      <p class="task-detail">{{task.0.task_detail}}</p>
       <form method="post">
-        {% if session['role'] == 'student' and task.2 %}
-          {% if task.3 == 'pending' %}
-          <button class="task-button pending" name="task-complete" id="{{task.0.task_id}}" type="button">Pending</button>
-          {% elif task.3 == 'accepted' %}
-          <button class="task-button completed" name="task-complete" id="{{task.0.task_id}}" type="button">Accepted</button>
-          {% elif task.3 == 'rejected' %}
-          <button class="task-button rejected" name="task-complete" id="{{task.0.task_id}}" type="button">Rejected</button>
-          {% endif %}
+        {% if session['role'] == 'student' and task.1 %}
+        {% if task.2 == 'pending' %}
+        <button class="task-button pending" name="task-complete" id="{{task.0.task_id}}" type="button">Pending</button>
+        {% elif task.2 == 'accepted' %}
+        <button class="task-button completed" name="task-complete" id="{{task.0.task_id}}" type="button">Accepted</button>
+        {% elif task.2 == 'rejected' %}
+        <button class="task-button rejected" name="task-complete" id="{{task.0.task_id}}" type="button">Rejected</button>
+        {% endif %}
         {% elif session['role'] == 'student' %}
         <button class="task-button incomplete" name="task-complete" id="{{task.0.task_id}}" type="button">Task Complete</button>
         {% endif %}

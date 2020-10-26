@@ -79,7 +79,7 @@ class Task(db.Model):
     task_id = db.Column(db.Integer, primary_key=True)
 
     task_name = db.Column(db.String(128), nullable=False)
-    task_detail = db.Column(db.String(128), nullable=False)
+    task_detail = db.Column(db.String(), nullable=False)
     points = db.Column(db.Integer, nullable=False)
     class_id = db.Column(db.Integer, db.ForeignKey(
         'teacher_classes.class_id'), nullable=False)

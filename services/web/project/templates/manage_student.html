@@ -16,7 +16,6 @@
       <button class="btn-border" onclick="location.href='{{ url_for('give_award_directly', id=student.student_id) }}'" type="button">Award</button>
       <button class="btn-border" onclick="location.href='{{ url_for('student_profile', id=user.id) }}'" type="button">Profile</button>
     </div>
-    <br>
     <div class="tab">
       <button class="tablinks" onclick="openList(event, 'Pending')" id="defaultOpen">Pending</button>
       <button class="tablinks" onclick="openList(event, 'Completed')">Completed</button>

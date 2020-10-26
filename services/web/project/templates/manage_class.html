@@ -14,6 +14,8 @@
     <h2>Manage Class</h2>
     <br>
     <p>Class | {{ teacher_classes.class_name }} &emsp; Code | {{ teacher_classes.class_code }}</p>
+    <button class="btn-border" onclick="location.href='{{ url_for('leaderboard', id=teacher_classes.class_id) }}'" type="button">Leaderboard</button>
+    <button class="btn-border" onclick="location.href='{{ url_for('task_list', id=teacher_classes.class_id) }}'" type="button">Tasks</button>
     <table class="css-serial">
       <tr>
         <th></th>
@@ -51,11 +53,6 @@
       {% endfor %}
     </table>
     <br>
-
-    <button class="btn-border" onclick="location.href='{{ url_for('leaderboard', id=teacher_classes.class_id) }}'" type="button">Leaderboard</button>
-    <button class="btn-border" onclick="location.href='{{ url_for('task_list', id=teacher_classes.class_id) }}'" type="button">Tasks</button>
-    <button class="btn-border" onclick="location.href='{{ url_for('create_task', id=teacher_classes.class_id) }}'" type="button">New Task</button>
-
   </div>
 </div>
 

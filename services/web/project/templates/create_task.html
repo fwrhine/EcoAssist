@@ -9,9 +9,6 @@
     <a href="{{ url_for('home') }}">
       <h2>Home</h2>
     </a>
-    <a href="{{ url_for('task_list') }}">
-      <h2>Tasks</h2>
-    </a>
   </div>
   <div class="inner-content">
     <h2>New Task</h2>
@@ -39,7 +36,7 @@
       </p>
       <p>
         {{ form.details.label }}<br>
-        {{ form.details(style="margin-left: 30px;") }}
+        {{ form.details(maxlength="300", style="margin-left: 30px;") }}
       </p>
       <p>
         {{ form.points.label }}

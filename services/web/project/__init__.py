@@ -185,35 +185,29 @@ def create_task(id):
         db.session.add(task)
         db.session.commit()
         if id is None:
-            return redirect(url_for('.task_list'))
+            return redirect(url_for('.task_list', id=form.class_id.data))
         else:
             return redirect(url_for('.task_list', id=id))
     return render_template('create_task.html', form=form)
 
 
-@app.route('/task-list', defaults={'id': None})
 @app.route('/task-list/<id>')
 def task_list(id):
+    class_name = ""
     if session['role'] == "student":
         student = Student.query.filter_by(email=session['username']).first()
         class_members = student.classes_student.first()
         teacher_classes = TeacherClasses.query.get(class_members.class_id)
         task_list = teacher_classes.class_task.all()
-        class_title = ""
     else:
         teacher = Teacher.query.filter_by(email=session['username']).first()
-        if id is None:
-            task_list = teacher.tasks.all()
-            class_title = ""
-        else:
-            task_list = teacher.tasks.filter_by(class_id=id)
-            class_title = TeacherClasses.query.filter_by(class_id=id).first().class_name
+        task_list = teacher.tasks.filter_by(class_id=id)
+        class_name = TeacherClasses.query.filter_by(class_id=id).first().class_name
 
     tasks = []
 
     for i in task_list:
         teacher_classes = TeacherClasses.query.get(i.class_id)
-        class_name = teacher_classes.class_name
 
         if session['role'] == "student":
             task_complete = TaskComplete.query.filter_by(
@@ -228,10 +222,10 @@ def task_list(id):
             status = ""
             done = False
 
-        tasks.append([i, class_name, done, status])
+        tasks.append([i, done, status])
 
     tasks.reverse()
-    return render_template('task_list.html', tasks=tasks, class_title=class_title)
+    return render_template('task_list.html', tasks=tasks, class_id=id, class_name=class_name)
 
 
 @app.route('/task-completed', methods=['POST'])

@@ -12,7 +12,8 @@
   </div>
   <div class="inner-content">
     <h2>My Classes</h2>
-    <br>
+    <button class="btn-icon" onclick="location.href='{{ url_for('create_class') }}'">
+      New Class<i class="fa fa-plus" style="padding-left:10px;"></i></button>
     <table class="css-serial">
       <tr>
         <th></th>
@@ -29,9 +30,6 @@
       </tr>
       {% endfor %}
     </table>
-    <br>
-    <button class="btn-icon" onclick="location.href='{{ url_for('create_class') }}'">
-      New Class<i class="fa fa-plus" style="padding-left:10px;"></i></button>
     <!-- <button class="btn-icon" onclick="location.href='{{ url_for('give_class_award') }}'">
       Give Award<i class="fa fa-plus" style="padding-left:10px;"></i></button> -->
   </div>
