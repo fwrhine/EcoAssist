@@ -18,6 +18,7 @@
     <br>
     {% else %}
     <h2>Tasks</h2>
+    <br>
     {% endif %}
     {% for task in tasks %}
     <div class="task">
@@ -38,7 +39,7 @@
         {% endif %}
         <button class="task-button" onclick="location.href='{{ url_for('learn', id=task.0.resource_id) }}'" name="learn-more" type="button">Learn More</button>
         {% if session['role'] == 'teacher' %}
-        <br>
+        <!-- <br> -->
         <button class="task-button delete" onclick='deleteTask({{task.0.task_id}},"{{task.0.task_name}}")' type="button">Delete Task</button>
         {% endif %}
       </form>
