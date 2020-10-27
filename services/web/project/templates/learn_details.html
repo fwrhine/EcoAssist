@@ -11,27 +11,28 @@
     </a>
   </div>
   <div class="inner-content" id="learn-details">
-    <h2>Learn - {{resource.resource_title}}</h2>
-    <br>
+    <h2>Learn</h2>
+    <div class="learn-details">
+    <h2 style="font-size: 32px;">{{resource.resource_title}}</h2>
     {% if resource.resource_title == "Pollution" %}
     <img src="{{ url_for('static', filename='images/learn_images/pollution.jpg') }}"" alt=" pollution">
     <h3>A Little Pollution = Big Problems</h3>
-    <p>Plastic pollution is different from paper or food waste because it never fully decomposes, 
-    or breaks down into pieces that can be reused by nature. Instead, plastic often ends up in water, 
-    where it releases toxic chemicals and can be mistaken for food. In a study conducted by the journal 
-    Science, scientists estimate that 8.8 million tons of plastic enter the ocean every year, 
+    <p>Plastic pollution is different from paper or food waste because it never fully decomposes,
+    or breaks down into pieces that can be reused by nature. Instead, plastic often ends up in water,
+    where it releases toxic chemicals and can be mistaken for food. In a study conducted by the journal
+    Science, scientists estimate that 8.8 million tons of plastic enter the ocean every year,
     threatening over 700 species of marine animals.</p>
-    <p>Plastic trash isn’t the Earth’s only pollution problem. Oil accidentally spilling into the sea, 
-    agriculture products like fertilizers and pesticides seeping into the soil, and even excess noise 
+    <p>Plastic trash isn’t the Earth’s only pollution problem. Oil accidentally spilling into the sea,
+    agriculture products like fertilizers and pesticides seeping into the soil, and even excess noise
     and light can pollute the environment.</p>
-    <p>For instance, the sounds made by ships mess with whale calls, and bright lights can confuse 
+    <p>For instance, the sounds made by ships mess with whale calls, and bright lights can confuse
     animals such as birds and newly hatched sea turtles.</p>
     <h3>Cleaning Up Our Act</h3>
-    <p>Once released into the environment, pollution can affect wildlife habitats for years. It’s easy 
-    to blame factories, but some of the mess comes from everyday human activities. For instance, car 
+    <p>Once released into the environment, pollution can affect wildlife habitats for years. It’s easy
+    to blame factories, but some of the mess comes from everyday human activities. For instance, car
     exhaust fumes and excess garbage can seriously harm Earth’s health.</p>
     <p>You can probably clean your room in a couple of hours. (At least we hope you can!) But you can’t
-    cram Earth’s pollution problem into your closet. We all need to pitch in and clean up the planet. 
+    cram Earth’s pollution problem into your closet. We all need to pitch in and clean up the planet.
     Look at it this way: Just like your room, it’s always better to prevent the Earth from getting dirty
     in the first place.</p>
     <h4><b>Source:</b><a href="https://kids.nationalgeographic.com/explore/science/pollution/">
@@ -39,38 +40,27 @@
     {% elif resource.resource_title == "Deforestation" %}
     <img src="{{ url_for('static', filename='images/learn_images/deforestation.png') }}" alt="deforestation">
     <h3>What is Deforestation?</h3>
-    <p>Deforestation is when forests are cleared, or cut down. This describes the actions of humans 
+    <p>Deforestation is when forests are cleared, or cut down. This describes the actions of humans
     in removing forests, rather than natural events such as hurricanes removing them. People have
     always cut down trees, however in recent years, the amount of forests being lost to deforestation
     has grown massively. Forests are very important for the health of the planet.</p>
-    <p>Every minute, a forest area the size of 20 football fields is cut down! The largest amount 
-    of deforestation is happening in tropical areas in rainforests. Some areas recover from the damage, 
-    but it can take many years. Most areas never recover. By 2030, we could only have 10% of our 
+    <p>Every minute, a forest area the size of 20 football fields is cut down! The largest amount
+    of deforestation is happening in tropical areas in rainforests. Some areas recover from the damage,
+    but it can take many years. Most areas never recover. By 2030, we could only have 10% of our
     forests!</p>
     <h3>Problems Caused by Deforestation</h3>
-    <p>Forests and other green plants produce oxygen and when they are cut down, less oxygen is 
-    released into the atmosphere. Trees also trap carbon dioxide, a gas that contributes to global 
+    <p>Forests and other green plants produce oxygen and when they are cut down, less oxygen is
+    released into the atmosphere. Trees also trap carbon dioxide, a gas that contributes to global
     warming. When they are cut down, this carbon dioxide goes back into the atmosphere.</p>
-    <p>Cutting down trees can also lead to erosion, which is when the soil blows away because the trees 
-    aren’t there to hold it together. Bad weather, such as strong winds or rain, can cause the soil to 
+    <p>Cutting down trees can also lead to erosion, which is when the soil blows away because the trees
+    aren’t there to hold it together. Bad weather, such as strong winds or rain, can cause the soil to
     disappear and can slide down slopes and destroy homes and fields.</p>
-    <p>Lots of animals and plants live in forests. When trees are cut down, they lose their homes or 
+    <p>Lots of animals and plants live in forests. When trees are cut down, they lose their homes or
     are killed. Some animals can become extinct because of deforestation.</p>
     <h4><b>Source:</b><a href="https://kids.earth.org/life-on-land/what-is-deforestation/">
     Earth.org Kids - What is Deforestation?</a></h4>
     {% endif %}
-    <!--
-    <div class="learn">
-      <h3>{{resource.resource_title}}</h3>
-      {% if resource.resource_title == "Pollution" %}
-      <img src="{{ url_for('static', filename='images/learn_images/pollution.jpg') }}"" alt=" pollution">
-      {% elif resource.resource_title == "Deforestation" %}
-      <img src="{{ url_for('static', filename='images/learn_images/deforestation.png') }}" alt="deforestation">
-      {% endif %}
-      <br>
-      <br>
-      <h4>{{resource.resource_detail}}</h4>
-      -->
+    </div>
     </div>
   </div>
 </div>
