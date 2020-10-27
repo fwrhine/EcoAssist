@@ -386,6 +386,8 @@ input[type="submit"] {
   margin-right: 15px;
   margin-bottom: 20px;
   border-radius: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .learn img {
@@ -400,6 +402,20 @@ input[type="submit"] {
   margin-top: 30px;
   margin-bottom: 10px;
   border-radius: 20px;
+}
+
+#learn-details img {
+  max-width: 500px;
+}
+
+#learn-details h3, #learn-details p, #learn-details h4 {
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-bottom: 25px;
+}
+
+#learn-details a {
+  color: blue;
 }
 
 /* ---------------------------- PROFILE ----------------------------*/
