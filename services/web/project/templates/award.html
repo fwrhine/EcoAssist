@@ -27,14 +27,14 @@
           </p>
           <p>
             {{ form.reward.label }}
-            {{ form.reward()}}
+            {{ form.reward(maxlength="128")}}
             {% for error in form.reward.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
           </p>
           <p>
             {{ form.comment.label }}<br>
-            {{ form.comment(style="margin-left: 30px;")}}
+            {{ form.comment(maxlength="300", style="margin-left: 30px;")}}
             {% for error in form.reward.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}

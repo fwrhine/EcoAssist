@@ -17,7 +17,7 @@
       {{ form.hidden_tag() }}
       <p>
         {{ form.title.label }}
-        {{ form.title() }}
+        {{ form.title(maxlength="128") }}
         {% for error in form.title.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}

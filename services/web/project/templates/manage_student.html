@@ -13,8 +13,9 @@
   <div class="inner-content">
     <h2>Manage Student - {{ user.first_name }} {{ user.last_name }}</h2>
     <div>
-      <button class="btn-border" onclick="location.href='{{ url_for('give_award_directly', id=student.student_id) }}'" type="button">Award</button>
-      <button class="btn-border" onclick="location.href='{{ url_for('student_profile', id=user.id) }}'" type="button">Profile</button>
+      <button class="btn-icon" onclick="location.href='{{ url_for('give_award_directly', id=student.student_id) }}'">
+        Assign Award<i class="fa fa-plus" style="padding-left:10px;"></i></button>
+      <button class="btn-icon" onclick="location.href='{{ url_for('student_profile', id=user.id) }}'" type="button">Profile</button>
     </div>
     <div class="tab">
       <button class="tablinks" onclick="openList(event, 'Pending')" id="defaultOpen">Pending</button>
