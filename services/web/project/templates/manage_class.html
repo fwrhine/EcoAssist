@@ -40,6 +40,8 @@
           <button onclick="" style="border-color: #78c288;" class="btn-border approve_student" id={{student.id}}>Accept</button>
           <button onclick="" style="border-color: #ed7b6f;" class="btn-border reject_student" id={{student.id}}>Reject</button>
         </td>
+        {% elif student_list[student][0] == 'rejected' %}
+        <td>Rejected</td>
         {% else %}
         <td>Accepted</td>
         {% endif %}
