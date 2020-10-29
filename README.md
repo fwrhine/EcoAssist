@@ -1,4 +1,17 @@
 # DECO3801 Team Clueless
+A project by Team Clueless for DECO3801 Design Computing Studio.
+
+EcoAssist is a web application that aims to help teachers educate their students about the environment. The app allows teachers to assign environment-related tasks for students to complete. Students will be able to complete these tasks and record their progress. A crucial component of the application is to motivate students by rewarding them based on their progress. This is done by awarding points for completed tasks and ranking students against their classmates in leaderboards. Certain badges can be awarded for specific achievements or points milestones.
+
+Team Members:
+1. Benjamin Costello (43931044)
+2. Sean Lim Han Ming (45054965)
+3. Aghnia Putri Prawira (45610240)
+4. Rizki Maulana Rahmadi (45616747)
+5. Alexander Bayusuto Waanegkirtyo (45616738)
+6. Jordan Monroe (44785280)
+
+---
 
 ##### To run locally:
 ```
