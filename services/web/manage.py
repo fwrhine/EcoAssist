@@ -9,6 +9,9 @@ cli = FlaskGroup(app)
 
 @cli.command("create_db")
 def create_db():
+    '''
+     For development, tables are dropped and recreated every time.
+    '''
     db.drop_all()
     db.create_all()
     db.session.commit()
@@ -16,18 +19,28 @@ def create_db():
 
 @cli.command("create_db_prod")
 def create_db():
+    '''
+     For production, tables are not dropped.
+    '''
     db.create_all()
     db.session.commit()
 
 
 @cli.command("seed_db")
 def seed_db():
+    '''
+     Seed user table only.
+    '''
     db.session.add(User(email="test@gmail.com"))
     db.session.commit()
 
 
 @cli.command("seed_tasks")
 def seed_tasks():
+    '''
+     Seed users, classes, learning resources, and tasks for development purposes
+     only.
+    '''
     user_1 = User(email="teacher@gmail.com",
                   role="teacher", first_name="Chris", last_name="Fagan", school="University of Queensland")
     user_2 = User(email="student1@gmail.com",

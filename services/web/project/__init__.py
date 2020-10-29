@@ -566,13 +566,16 @@ def create_class():
 @app.route('/leaderboard', defaults={'id': None})
 @app.route('/leaderboard/<id>')
 def leaderboard(id):
+    '''
+     Generate a random 5-character combination of uppercase letters and
+     numbers as class code.
+    '''
     if session['role'] == "student":
         student = Student.query.filter_by(email=session['username']).first()
         class_members = student.classes_student.first()
         teacher_classes = TeacherClasses.query.filter_by(
             class_id=class_members.class_id).first()
     elif id != None:
-        # class_members = ClassMembers.query.filter_by(class_id=id).first()
         teacher_classes = TeacherClasses.query.filter_by(class_id=id).first()
 
     if session['role'] == "student" or id != None:
