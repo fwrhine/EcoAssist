@@ -22,12 +22,15 @@ class User(db.Model):
         'Student', backref='student', lazy='dynamic')
 
     def set_password(self, password):
+        '''
+        Set user password with generated hash.
+        '''
         self.password = generate_password_hash(password)
 
     def check_password(self, password):
-        print("masuk")
-        print(self.password)
-        print(password)
+        '''
+        Check if password matches hashed password.
+        '''
         return check_password_hash(self.password, password)
 
 class Teacher(db.Model):
@@ -56,6 +59,9 @@ class Student(db.Model):
 
 
 class TeacherClasses(db.Model):
+    '''
+    Table for all classes with foreign key to associated teacher.
+    '''
     __tablename__ = 'teacher_classes'
 
     class_id = db.Column(db.Integer, primary_key=True)
@@ -71,10 +77,17 @@ class TeacherClasses(db.Model):
 
 
 class ClassMembers(db.Model):
+    '''
+    Table for one-to-many relationship between classes
+    and the members of the class.
+    '''
     __tablename__ = 'class_members'
 
     class_member_id = db.Column(db.Integer, primary_key=True)
+
+    # Student status: approved, pending, or rejected by teacher
     student_status = db.Column(db.String(50), nullable=False)
+
     class_id = db.Column(db.Integer, db.ForeignKey(
         'teacher_classes.class_id'), nullable=False)
     student_id = db.Column(db.Integer, db.ForeignKey(
@@ -101,9 +114,15 @@ class Task(db.Model):
 
 
 class TaskComplete(db.Model):
+    '''
+    Table for many-to-many relationship between tasks and students.
+    Stores task status of individual students.
+    '''
     __tablename__ = 'task_complete'
 
     task_complete_id = db.Column(db.Integer, primary_key=True)
+
+    # Task status: completed, incomplete, accepted, or rejected.
     task_status = db.Column(db.String(50), nullable=False)
 
     student_id = db.Column(db.Integer, db.ForeignKey(
