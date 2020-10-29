@@ -567,9 +567,14 @@ def create_class():
 @app.route('/leaderboard/<id>')
 def leaderboard(id):
     '''
-     Generate a random 5-character combination of uppercase letters and
-     numbers as class code.
+    Renders the leaderboard page.
+
+    If class id is not specified on url, renders leaderboard of all classes the
+    teacher is in charge of.
+    If class id is specified, renders leaderboard of all students of the
+    specified class.
     '''
+    # Get class
     if session['role'] == "student":
         student = Student.query.filter_by(email=session['username']).first()
         class_members = student.classes_student.first()
@@ -579,7 +584,7 @@ def leaderboard(id):
         teacher_classes = TeacherClasses.query.filter_by(class_id=id).first()
 
     if session['role'] == "student" or id != None:
-        # get teacher's name
+        # Get teacher's name
         teacher = Teacher.query.filter_by(
             teacher_id=teacher_classes.teacher_id).first()
         teacher_user = User.query.filter_by(email=teacher.email).first()
@@ -589,12 +594,12 @@ def leaderboard(id):
         else:
             teacher_name = teacher_name + "'s"
 
-        # get all members of class
+        # Get all members of class
         all_members = ClassMembers.query.filter_by(
             class_id=teacher_classes.class_id, student_status="accepted").all()
         leaderboard = {}
 
-        # calculate points
+        # Calculate points
         for i in all_members:
             points = 0
             all_task_completed = TaskComplete.query.filter_by(
@@ -610,7 +615,7 @@ def leaderboard(id):
                 email=current_student.email).first()
             name = current_user.first_name + " " + current_user.last_name
             new = {i.student_id: (name, points)}
-            # key being student_id instead of name is intentional
+            # Key being student_id instead of name is intentional
             leaderboard.update(new)
 
         sorted_leaderboard = sorted(
@@ -618,11 +623,12 @@ def leaderboard(id):
         return render_template('student_leaderboard.html', leaderboard=sorted_leaderboard,
                                teacher=teacher_name, class_name=teacher_classes.class_name)
     else:
+        # Get list of all classes
         teacher = Teacher.query.filter_by(email=session['username']).first()
         class_list = teacher.classes.all()
         leaderboard = {}
 
-        # calculate points
+        # Calculate points
         for i in class_list:
             points = 0
             all_members = ClassMembers.query.filter_by(
@@ -635,9 +641,10 @@ def leaderboard(id):
                         task = Task.query.filter_by(task_id=k.task_id).first()
                         points += task.points
             new = {i.class_id: (i.class_name, points)}
-            # key being class_id instead of name is intentional
+            # Key being class_id instead of name is intentional
             leaderboard.update(new)
 
+        # Sort leaderboard by highest to lowest number of points
         sorted_leaderboard = sorted(
             leaderboard.items(), key=lambda x: x[1][1], reverse=True)
         return render_template('teacher_leaderboard.html', leaderboard=sorted_leaderboard)
@@ -645,6 +652,12 @@ def leaderboard(id):
 
 @app.route("/profile", methods=['POST', 'GET'])
 def profile():
+    '''
+    Renders the profile page.
+
+    If student had not provided class code upon registration, renders a form
+    to enter class code.
+    '''
     form = StudentClassForm()
     if form.validate_on_submit():
         class_code = form.data['class_code']
@@ -667,12 +680,12 @@ def profile():
         user = User.query.filter_by(email=session['username']).first()
         class_members = student.classes_student.first()
 
+        # Get student's leaderboard ranking and total number of points
         if class_members and class_members.student_status == "accepted":
             all_members = ClassMembers.query.filter_by(
                 class_id=class_members.class_id, student_status="accepted").all()
             leaderboard = {}
 
-            # get class name
             class_name = TeacherClasses.query.filter_by(
                 class_id=class_members.class_id).first().class_name
 
@@ -717,17 +730,21 @@ def profile():
 
 @app.route("/student-profile/<id>")
 def student_profile(id):
+    '''
+    Renders profile page of student with the specified student id in url.
+    '''
     user = User.query.get(id)
     student = user.student_email.first()
     class_members = student.classes_student.first()
     teacher_classes = TeacherClasses.query.filter_by(
         class_id=class_members.class_id).first()
+
+    # Get student's leaderboard ranking and total number of points
     if class_members and class_members.student_status == "accepted":
         all_members = ClassMembers.query.filter_by(
             class_id=class_members.class_id, student_status="accepted").all()
         leaderboard = {}
 
-        # get class name
         class_name = TeacherClasses.query.filter_by(
             class_id=class_members.class_id).first().class_name
 
@@ -771,16 +788,25 @@ def student_profile(id):
 
 
 def get_all_badges(id):
+    '''
+    Returns a list of Badge objects owned by student with student id specified
+    in argument.
+    '''
     badge_owned = Badge.query.filter_by(student_id=id).all()
     return badge_owned
 
 
 @app.route('/award0', methods=['GET', 'POST'])
 def give_class_award():
+    '''
+    Renders award0 page where teachers can choose which class they want to
+    give award to.
+    '''
     teacher = Teacher.query.filter_by(email=session['username']).first()
     available_classes = teacher.classes.all()
     class_list = [(i.class_id, i.class_name) for i in available_classes]
 
+    # Set list of classes associated with logged in teacher as choices in form.
     form = ChooseClassForm()
     form.class_id.choices = class_list
 
@@ -794,6 +820,10 @@ def give_class_award():
 
 @app.route('/award', methods=['GET', 'POST'])
 def give_award():
+    '''
+    Renders assign award page where teachers can choose who they want to award
+    from a list of students.
+    '''
     form = AwardForm()
     available_students = ClassMembers.query.filter_by(
         class_id=session['award_class_id']).all()
@@ -810,9 +840,12 @@ def give_award():
     student_list.append((-1, 'All'))
     form.student_names.choices = student_list
 
-    # 2 conditions:
-    # first : for individual students. Student field must be filled out
-    # second: for entire class. Pick all
+    '''
+    2 conditions:
+    1. Chosen student: "All". Award is awarded to all students in class.
+    2. Chosen student: an individual student's name. Award is awarded only
+       to that student.
+    '''
     if form.validate_on_submit():
         data = request.form['student_names']
 
@@ -822,7 +855,9 @@ def give_award():
         badge_comment = request.form['comment']
 
         if data == '-1':
-
+            '''
+            Chosen student: "All". Award is awarded to all students in class.
+            '''
             class_chosen = ClassMembers.query.filter_by(
                 class_id=session['award_class_id']).all()
             student_ids = []
@@ -839,6 +874,10 @@ def give_award():
             return redirect(url_for('.give_class_award'))
 
         else:
+            '''
+            Chosen student: an individual student's name. Award is awarded only
+            to that student.
+            '''
             student = Student.query.filter_by(
                 student_id=request.form['student_names']).first()
             badge_x = Badge(badge_name=badge_name, badge_comment=badge_comment,
@@ -853,6 +892,12 @@ def give_award():
 
 @app.route('/award-direct/<id>', methods=['GET', 'POST'])
 def give_award_directly(id):
+    '''
+    Renders assign award page where teachers can assign award directly to
+    the student with the student id specified in the url.
+
+    On form submission, redirects to view awards page of the awarded student.
+    '''
     form = AwardForm()
     available_students = ClassMembers.query.filter_by(student_id=id).all()
     student_list = []
@@ -889,7 +934,11 @@ def give_award_directly(id):
 
 @app.route("/view-awards/<id>")
 def view_awards(id):
-    # pass on student and his badges
+    '''
+    Renders view awards page.
+    Lists all the awards assigned to the student with the student id
+    specified in the url.
+    '''
     user = User.query.get(id)
     student = user.student_email.first()
 
@@ -898,5 +947,8 @@ def view_awards(id):
 
 
 def get_class_name(id):
+    '''
+    Returns the class name of the class id specified in argument.
+    '''
     teacher_class = TeacherClasses.query.filter_by(class_id=id).first()
     return teacher_class.class_name
