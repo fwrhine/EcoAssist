@@ -21,7 +21,6 @@ class TaskForm(FlaskForm):
     class_id = SelectField('For Class', coerce=int,
                            validators=[InputRequired()])
     required_approval = BooleanField('Requires Approval')
-
     submit = SubmitField('Create')
 
 
@@ -35,16 +34,21 @@ class RegisterForm(FlaskForm):
     submit = SubmitField('Register')
 
     def validate_email(self, email):
+        '''
+        If user exist in database, raise validation error.
+        '''
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError('Please use a different email address.')
 
     def validate_class_code(self, class_code):
+        '''
+        If class code does not exist in database, raise validation error.
+        '''
         if not self.class_code.data:
             return True
         teacher_classes = TeacherClasses.query.filter_by(
             class_code=class_code.data).first()
-        print(teacher_classes)
         if teacher_classes is None:
             raise ValidationError("Class doesn't exist")
 
@@ -56,6 +60,9 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
     def validate(self):
+        '''
+        Validate email and password.
+        '''
         if self.email.data and self.password.data:
             user = User.query.filter_by(email=self.email.data).first()
             if user is None:
@@ -88,18 +95,21 @@ class StudentClassForm(FlaskForm):
     submit = SubmitField('Enter class')
 
     def validate_class_code(self, class_code):
+        '''
+        If class code does not exist in database, raise validation error.
+        '''
         teacher_classes = TeacherClasses.query.filter_by(
             class_code=class_code.data).first()
         if teacher_classes is None:
             raise ValidationError("Class does not exist")
 
 class AwardForm(FlaskForm):
-    # class_id = StringField('Class Name', validators=[DataRequired()])
     student_names = SelectField('Student', coerce=int,
                            validators=[InputRequired()])
     reward = StringField('Title', validators=[DataRequired()])
     comment = TextAreaField('Comment', validators=[DataRequired()])
 
+    # Choices for badge image are taken from static folder "images/badge_images"
     images_dir = os.listdir(os.path.join(app.static_folder, "images/badge_images"))
     choices = []
     for x in images_dir:
