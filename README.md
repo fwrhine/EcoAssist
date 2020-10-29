@@ -1,5 +1,5 @@
 # EcoAssist
-A project by Team Clueless for DECO3801 Design Computing Studio.
+A project by Team Clueless for DECO3801 Design Computing Studio 3 - Build.
 
 ![image](./EcoAssist.png?raw=true)
 
