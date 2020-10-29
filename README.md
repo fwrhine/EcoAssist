@@ -3,9 +3,15 @@ A project by Team Clueless for DECO3801 Design Computing Studio.
 
 ![image](./EcoAssist.png?raw=true)
 
-EcoAssist is a web application that aims to help teachers educate their students about the environment. The app allows teachers to assign environment-related tasks for students to complete. Students will be able to complete these tasks and record their progress. A crucial component of the application is to motivate students by rewarding them based on their progress. This is done by awarding points for completed tasks and ranking students against their classmates in leaderboards. Certain badges can be awarded for specific achievements or points milestones.
+EcoAssist is a web application that aims to help teachers educate their students about the environment. 
 
-Team Members:
+##### Features:
+- Teachers can assign environment-related tasks for students to complete.
+- Students can complete these tasks, be awarded points, and ranked in a class leaderboard.
+- Students can learn background information about the environment.
+- Teachers can award badges for specific achievements.
+
+##### Team Members:
 1. Benjamin Costello (43931044)
 2. Sean Lim Han Ming (45054965)
 3. Aghnia Putri Prawira (45610240)
