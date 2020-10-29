@@ -29,7 +29,7 @@ $ docker-compose exec db psql --username=team_clueless --dbname=team_clueless_de
 
 ##### AWS server:
 
-http://18.216.185.212:1337/
+http://18.216.185.212:5000/
 <br />
 <br />
 
