@@ -211,14 +211,14 @@ def create_task(id):
     '''
     if id is None:
         '''
-        If class id is not specified on route, lists all classes associated
+        If class id is not specified on url, lists all classes associated
         with logged in teacher.
         '''
         available_classes = teacher.classes.all()
         class_list = [(i.class_id, i.class_name) for i in available_classes]
     else:
         '''
-        If class id is specified on route, list only the specified class.
+        If class id is specified on url, list only the specified class.
         '''
         available_classes = TeacherClasses.query.filter_by(class_id=id).first()
         class_list = [(available_classes.class_id,
@@ -348,6 +348,10 @@ def task_completed():
 
 @app.route('/task-delete', methods=['POST'])
 def task_delete():
+    '''
+    Delete task from database.
+    Returns a json response.
+    '''
     task_id = request.form.get("task_id")
     task_complete = TaskComplete.query.filter_by(task_id=task_id).delete()
     task = Task.query.get(task_id)
@@ -360,19 +364,32 @@ def task_delete():
 @app.route('/learn', defaults={'id': None})
 @app.route('/learn/<id>')
 def learn(id):
+    '''
+    Renders learning resources page.
+    '''
     if id is None:
+        '''
+        If id of resource is not specified on url, query all learning resources.
+        '''
         resource_list = Resource.query.all()
         return render_template('learn.html', resource_list=resource_list)
     else:
+        '''
+        If id of resource is specified on url, query only the specified resource.
+        '''
         resource = Resource.query.get(id)
         return render_template('learn_details.html', resource=resource)
 
 
 @app.route("/class")
 def class_list():
+    '''
+    Renders class list page.
+    '''
     teacher = Teacher.query.filter_by(email=session['username']).first()
     class_list = teacher.classes.all()
     total_student = {}
+    # Count number of students in each class
     for i in class_list:
         class_no = i.class_no.all()
         total = len(class_no)
@@ -382,10 +399,13 @@ def class_list():
 
 @app.route("/manage-class/<id>")
 def manage_class(id):
+    '''
+    Renders manage class page.
+    '''
     teacher_classes = TeacherClasses.query.filter_by(class_id=id).first()
     session['award_class_id'] = id
     session['award_class_name'] = teacher_classes.class_name
-    class_no = teacher_classes.class_no.all()
+    class_no = teacher_classes.class_no.all() # List of all students in class
 
     student_list = {}
     for i in class_no:
@@ -394,11 +414,15 @@ def manage_class(id):
         student = Student.query.get(i.student_id)
         class_members = student.classes_student.first()
         all_task = student.student_task_done.all()
+
+        # Count the number of pending tasks the student has
         for task in all_task:
             if task.task_status == "pending":
                 total += 1
+
         status.append(class_members.student_status)
         status.append(total)
+
         user = User.query.filter_by(email=student.email).first()
         new = {user: status}
         student_list.update(new)
