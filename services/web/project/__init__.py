@@ -407,15 +407,21 @@ def manage_class(id):
     session['award_class_name'] = teacher_classes.class_name
     class_no = teacher_classes.class_no.all() # List of all students in class
 
+    '''
+    List of students
+    Key: User object
+    Value: [student status, number of pending tasks the student has]
+    Student status is either pending, accepted, or rejected.
+    '''
     student_list = {}
     for i in class_no:
-        total = 0
+        total = 0 # Number of pending tasks
         status = []
         student = Student.query.get(i.student_id)
         class_members = student.classes_student.first()
         all_task = student.student_task_done.all()
 
-        # Count the number of pending tasks the student has
+        # Count the number of pending tasks
         for task in all_task:
             if task.task_status == "pending":
                 total += 1
@@ -432,23 +438,33 @@ def manage_class(id):
 
 @app.route("/manage-student/<id>")
 def manage_student(id):
+    '''
+    Renders manage student page.
+    Breaks down list of all tasks into list of tasks with status:
+    incomplete, completed, pending, and rejected.
+    '''
     user = User.query.get(id)
     student = user.student_email.first()
     student_class = student.classes_student.first()
     task_list = Task.query.filter_by(class_id=student_class.class_id).all()
     completed_task = student.student_task_done.all()
-    incomplete = []
-    completeds = []
-    pending = {}
+
+    # List of Task objects
+    incomplete_list = []
+    completed_list = []
     pending_list = []
-    rejected = []
+    rejected_list = []
+
+    # Map of {Task object: TaskComplete object}
+    pending = {}
+
     for task in task_list:
         if len(completed_task) == 0:
-            incomplete.append(task)
+            incomplete_list.append(task)
         else:
             for completed in completed_task:
                 if task.task_id == completed.task_id and completed.task_status == "accepted":
-                    completeds.append(task)
+                    completed_list.append(task)
                     break
                 elif task.task_id == completed.task_id and completed.task_status == "pending":
                     pending_list.append(task)
@@ -456,22 +472,26 @@ def manage_student(id):
                     pending.update(new)
                     break
                 elif task.task_id == completed.task_id and completed.task_status == "rejected":
-                    rejected.append(task)
+                    rejected_list.append(task)
                     break
                 else:
-                    if task not in incomplete:
-                        incomplete.append(task)
+                    if task not in incomplete_list:
+                        incomplete_list.append(task)
 
-    for task in incomplete[:]:
-        if task in completeds or task in rejected or task in pending_list:
-            incomplete.remove(task)
+    for task in incomplete_list[:]:
+        if task in completed_list or task in rejected_list or task in pending_list:
+            incomplete_list.remove(task)
 
-    return render_template('manage_student.html', incomplete=incomplete,
-                           completed=completeds, pending=pending, rejected=rejected, user=user, student=student)
+    return render_template('manage_student.html', incomplete=incomplete_list,
+                           completed=completed_list, pending=pending, rejected=rejected_list, user=user, student=student)
 
 
 @app.route("/approve-task/<id>")
 def approve_task(id):
+    '''
+    Approve task by changing status of task in database to "accepted".
+    Returns a json response.
+    '''
     task = TaskComplete.query.get(id)
     task.task_status = "accepted"
     db.session.commit()
@@ -480,6 +500,10 @@ def approve_task(id):
 
 @app.route("/reject-task/<id>")
 def reject_task(id):
+    '''
+    Reject task by changing status of task in database to "rejected".
+    Returns a json response.
+    '''
     task = TaskComplete.query.get(id)
     task.task_status = "rejected"
     db.session.commit()
@@ -488,6 +512,10 @@ def reject_task(id):
 
 @app.route("/approve-student/<id>")
 def approve_student(id):
+    '''
+    Approve student by changing status of student in database to "accepted".
+    Returns a json response.
+    '''
     user = User.query.get(id)
     student = user.student_email.first()
     class_members = student.classes_student.first()
@@ -498,6 +526,10 @@ def approve_student(id):
 
 @app.route("/reject-student/<id>")
 def reject_student(id):
+    '''
+    Reject student by changing status of student in database to "rejected".
+    Returns a json response.
+    '''
     user = User.query.get(id)
     student = user.student_email.first()
     class_members = student.classes_student.first()
@@ -508,12 +540,21 @@ def reject_student(id):
 
 @app.route('/create-class', methods=['GET', 'POST'])
 def create_class():
+    '''
+    Renders create class form.
+    On form submission, adds new class to database and redirects to class list.
+    '''
     form = ClassForm()
-
     if form.validate_on_submit():
         teacher = Teacher.query.filter_by(email=session['username']).first()
+
+        '''
+         Generate a random 5-character combination of uppercase letters and
+         numbers as class code.
+        '''
         code = ''.join(random.choice(string.ascii_uppercase +
                                      string.digits) for _ in range(5))
+
         teacher_classes = TeacherClasses(
             class_name=form.class_name.data, class_code=code, teacher=teacher)
         db.session.add(teacher_classes)
