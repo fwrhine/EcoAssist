@@ -21,6 +21,12 @@ EcoAssist is a web application that aims to help teachers educate their students
 
 ---
 
+##### AWS server:
+
+http://18.216.185.212:5000/
+<br />
+<br />
+
 ##### To run locally:
 ```
 $ docker-compose up -d --build
@@ -46,12 +52,6 @@ Then open: http://your_docker_machine_ip:5000
 ```
 $ docker-compose exec db psql --username=team_clueless --dbname=team_clueless_dev
 ```
-<br />
-
-##### AWS server:
-
-http://18.216.185.212:5000/
-<br />
 <br />
 
 ##### If you find this error ```standard_init_linux.go:211: exec user process caused "no such file or directory"```:
