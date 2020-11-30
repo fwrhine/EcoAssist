@@ -57,3 +57,14 @@ Try checking the line ending type of the file ```entrypoint.sh```.
 If type is CRLF, change to LF.
 
 ![image](./LF.jpg?raw=true)
+
+## Dependencies
+```
+Flask==1.1.1
+Flask-SQLAlchemy==2.4.1
+gunicorn==20.0.4
+psycopg2-binary==2.8.4
+flask-wtf
+flask-login
+email-validator
+```
