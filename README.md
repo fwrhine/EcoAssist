@@ -1,7 +1,7 @@
 # EcoAssist
 A project by Team Clueless for DECO3801 Design Computing Studio 3 - Build.
 
-![image](./EcoAssist.png?raw=true)
+<img src="https://raw.githubusercontent.com/fwrhine/EcoAssist/master/images/ecoassist.gif" height="430" />
 
 EcoAssist is a web application that aims to help teachers educate their students about the environment. 
 
