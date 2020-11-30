@@ -64,7 +64,7 @@ Flask==1.1.1
 Flask-SQLAlchemy==2.4.1
 gunicorn==20.0.4
 psycopg2-binary==2.8.4
-flask-wtf
-flask-login
-email-validator
+flask-wtf==0.14.3
+flask-login==0.5.0
+email-validator==1.1.2
 ```
