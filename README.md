@@ -1,21 +1,21 @@
 # EcoAssist
 A project by Team Clueless for DECO3801 Design Computing Studio 3 - Build.
 
-![image](./EcoAssist.png?raw=true)
+<img src="https://raw.githubusercontent.com/fwrhine/EcoAssist/master/images/ecoassist.gif" height="430" />
 
 EcoAssist is a web application that aims to help teachers educate their students about the environment. 
 
-## Features:
+## Features
 - Teachers can assign environment-related tasks for students to complete.
 - Students can complete these tasks, be awarded points, and ranked in a class leaderboard.
 - Students can learn background information about the environment.
 - Teachers can award badges for specific achievements.
 
 
-## AWS server:
+## AWS server
 http://18.216.185.212:5000/
 
-## Team Members:
+## Team Members
 1. Benjamin Costello (43931044)
 2. Sean Lim Han Ming (45054965)
 3. Aghnia Putri Prawira (45610240)
@@ -64,7 +64,7 @@ Flask==1.1.1
 Flask-SQLAlchemy==2.4.1
 gunicorn==20.0.4
 psycopg2-binary==2.8.4
-flask-wtf
-flask-login
-email-validator
+flask-wtf==0.14.3
+flask-login==0.5.0
+email-validator==1.1.2
 ```
